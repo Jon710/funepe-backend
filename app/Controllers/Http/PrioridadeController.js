@@ -4,10 +4,13 @@
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
-class GrupoController {
+/**
+ * Resourceful controller for interacting with prioridades
+ */
+class PrioridadeController {
   /**
-   * Show a list of all grupos.
-   * GET grupos
+   * Show a list of all prioridades.
+   * GET prioridades
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -18,20 +21,31 @@ class GrupoController {
   }
 
   /**
-   * Render a form to be used for creating a new grupo.
-   * GET grupos/create
+   * Render a form to be used for creating a new prioridade.
+   * GET prioridades/create
    *
    * @param {object} ctx
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
+  async create ({ request, response, view }) {
+  }
+
+  /**
+   * Create/save a new prioridade.
+   * POST prioridades
+   *
+   * @param {object} ctx
+   * @param {Request} ctx.request
+   * @param {Response} ctx.response
+   */
   async store ({ request, response }) {
   }
 
   /**
-   * Display a single grupo.
-   * GET grupos/:id
+   * Display a single prioridade.
+   * GET prioridades/:id
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -42,8 +56,8 @@ class GrupoController {
   }
 
   /**
-   * Render a form to update an existing grupo.
-   * GET grupos/:id/edit
+   * Render a form to update an existing prioridade.
+   * GET prioridades/:id/edit
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -54,8 +68,8 @@ class GrupoController {
   }
 
   /**
-   * Update grupo details.
-   * PUT or PATCH grupos/:id
+   * Update prioridade details.
+   * PUT or PATCH prioridades/:id
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -65,8 +79,8 @@ class GrupoController {
   }
 
   /**
-   * Delete a grupo with id.
-   * DELETE grupos/:id
+   * Delete a prioridade with id.
+   * DELETE prioridades/:id
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -76,4 +90,4 @@ class GrupoController {
   }
 }
 
-module.exports = GrupoController
+module.exports = PrioridadeController

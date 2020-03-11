@@ -4,10 +4,13 @@
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
-class GrupoController {
+/**
+ * Resourceful controller for interacting with despachos
+ */
+class DespachoController {
   /**
-   * Show a list of all grupos.
-   * GET grupos
+   * Show a list of all despachos.
+   * GET despachos
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -18,20 +21,31 @@ class GrupoController {
   }
 
   /**
-   * Render a form to be used for creating a new grupo.
-   * GET grupos/create
+   * Render a form to be used for creating a new despacho.
+   * GET despachos/create
    *
    * @param {object} ctx
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
+  async create ({ request, response, view }) {
+  }
+
+  /**
+   * Create/save a new despacho.
+   * POST despachos
+   *
+   * @param {object} ctx
+   * @param {Request} ctx.request
+   * @param {Response} ctx.response
+   */
   async store ({ request, response }) {
   }
 
   /**
-   * Display a single grupo.
-   * GET grupos/:id
+   * Display a single despacho.
+   * GET despachos/:id
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -42,8 +56,8 @@ class GrupoController {
   }
 
   /**
-   * Render a form to update an existing grupo.
-   * GET grupos/:id/edit
+   * Render a form to update an existing despacho.
+   * GET despachos/:id/edit
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -54,8 +68,8 @@ class GrupoController {
   }
 
   /**
-   * Update grupo details.
-   * PUT or PATCH grupos/:id
+   * Update despacho details.
+   * PUT or PATCH despachos/:id
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -65,8 +79,8 @@ class GrupoController {
   }
 
   /**
-   * Delete a grupo with id.
-   * DELETE grupos/:id
+   * Delete a despacho with id.
+   * DELETE despachos/:id
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -76,4 +90,4 @@ class GrupoController {
   }
 }
 
-module.exports = GrupoController
+module.exports = DespachoController
