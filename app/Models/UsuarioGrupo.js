@@ -4,6 +4,13 @@
 const Model = use('Model')
 
 class UsuarioGrupo extends Model {
+  usuario () {
+    return this.belongsTo('App/Models/Usuario')
+  }
+
+  grupo () {
+    return this.belongsTo('App/Models/Grupo')
+  }
 }
 
 module.exports = UsuarioGrupo

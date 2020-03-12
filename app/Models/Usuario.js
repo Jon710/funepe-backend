@@ -4,6 +4,22 @@
 const Model = use('Model')
 
 class Usuario extends Model {
+  gruposUsuario () {
+    return this.hasMany('App/Models/UsuarioGrupo')
+  }
+
+  funcao () {
+    return this.belongsTo('App/Models/Funcao')
+  }
+
+  caixasEntrada () {
+    return this.hasMany('App/Models/CaixaEntrada')
+  }
+
+  documentos () {
+    return this.hasMany('App/Models/Documento')
+  }
+
   static get table () {
     return 'arq_usuario'
   }
