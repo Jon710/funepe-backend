@@ -8,10 +8,6 @@ class CaixaEntrada extends Model {
     return this.belongsTo('App/Models/Usuario')
   }
 
-  despachos () {
-    return this.hasMany('App/Models/Despacho')
-  }
-
   documento () {
     return this.belongsTo('App/Models/Documento')
   }

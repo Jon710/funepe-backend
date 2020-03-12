@@ -20,6 +20,10 @@ class Usuario extends Model {
     return this.hasMany('App/Models/Documento')
   }
 
+  despachos () {
+    return this.hasMany('App/Models/Despacho')
+  }
+
   static get table () {
     return 'arq_usuario'
   }

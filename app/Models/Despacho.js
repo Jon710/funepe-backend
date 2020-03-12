@@ -11,6 +11,10 @@ class Despacho extends Model {
   despachoPadrao () {
     return this.belongsTo('App/Models/Despacho')
   }
+
+  despacho () {
+    return this.belongsTo('App/Models/Usuario')
+  }
 }
 
 module.exports = Despacho
