@@ -23,6 +23,26 @@ class Documento extends Model {
   prioridade () {
     return this.belongsTo('App/Models/Prioridade')
   }
+
+  static get table () {
+    return 'proto_documento'
+  }
+
+  static get primaryKey () {
+    return 'iddocumento'
+  }
+
+  static get createdAtColumn () {
+    return null
+  }
+
+  static get updatedAtColumn () {
+    return null
+  }
+
+  static get incrementing () {
+    return false
+  }
 }
 
 module.exports = Documento

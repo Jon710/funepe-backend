@@ -11,6 +11,26 @@ class CaixaEntrada extends Model {
   documento () {
     return this.belongsTo('App/Models/Documento')
   }
+
+  static get table () {
+    return 'proto_caixaentrada'
+  }
+
+  static get primaryKey () {
+    'idcaixaentrada'
+  }
+
+  static get createdAtColumn () {
+    return null
+  }
+
+  static get updatedAtColumn () {
+    return null
+  }
+
+  static get incrementing () {
+    return false
+  }
 }
 
 module.exports = CaixaEntrada

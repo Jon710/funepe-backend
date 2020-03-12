@@ -15,6 +15,26 @@ class Despacho extends Model {
   despacho () {
     return this.belongsTo('App/Models/Usuario')
   }
+
+  static get table () {
+    return 'proto_despacho'
+  }
+
+  static get primaryKey () {
+    return 'iddespacho'
+  }
+
+  static get createdAtColumn () {
+    return null
+  }
+
+  static get updatedAtColumn () {
+    return null
+  }
+
+  static get incrementing () {
+    return false
+  }
 }
 
 module.exports = Despacho
