@@ -4,9 +4,6 @@
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
-/**
- * Resourceful controller for interacting with despachopadraos
- */
 class DespachoPadraoController {
   /**
    * Show a list of all despachopadraos.
@@ -18,18 +15,6 @@ class DespachoPadraoController {
    * @param {View} ctx.view
    */
   async index ({ request, response, view }) {
-  }
-
-  /**
-   * Render a form to be used for creating a new despachopadrao.
-   * GET despachopadraos/create
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async create ({ request, response, view }) {
   }
 
   /**
@@ -53,18 +38,6 @@ class DespachoPadraoController {
    * @param {View} ctx.view
    */
   async show ({ params, request, response, view }) {
-  }
-
-  /**
-   * Render a form to update an existing despachopadrao.
-   * GET despachopadraos/:id/edit
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async edit ({ params, request, response, view }) {
   }
 
   /**

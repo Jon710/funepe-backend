@@ -4,9 +4,6 @@
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
-/**
- * Resourceful controller for interacting with prioridades
- */
 class PrioridadeController {
   /**
    * Show a list of all prioridades.
@@ -21,18 +18,6 @@ class PrioridadeController {
   }
 
   /**
-   * Render a form to be used for creating a new prioridade.
-   * GET prioridades/create
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async create ({ request, response, view }) {
-  }
-
-  /**
    * Create/save a new prioridade.
    * POST prioridades
    *
@@ -41,18 +26,6 @@ class PrioridadeController {
    * @param {Response} ctx.response
    */
   async store ({ request, response }) {
-  }
-
-  /**
-   * Display a single prioridade.
-   * GET prioridades/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async show ({ params, request, response, view }) {
   }
 
   /**

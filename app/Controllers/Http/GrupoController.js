@@ -30,18 +30,6 @@ class GrupoController {
   }
 
   /**
-   * Display a single grupo.
-   * GET grupos/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async edit ({ params, request, response, view }) {
-  }
-
-  /**
    * Update grupo details.
    * PUT or PATCH grupos/:id
    *
@@ -60,6 +48,9 @@ class GrupoController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
+  async destroy ({ params, request, response }) {
+
+  }
 }
 
 module.exports = GrupoController
