@@ -29,10 +29,6 @@ class HistoricoController {
   async update ({ params, request, response }) {
   }
 
-  /**
-   * Delete a historico with id.
-   * DELETE historicos/:id
-   */
   async destroy ({ params, request, response }) {
   }
 }
