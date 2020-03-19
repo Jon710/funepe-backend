@@ -3,6 +3,12 @@
 const Usuario = use('App/Models/Usuario')
 
 class UsuarioController {
+  async index () {
+    const users = await Usuario.all()
+
+    return users
+  }
+
   async store ({ request }) {
     console.log('entrou?')
     const data = request.all()
@@ -11,10 +17,12 @@ class UsuarioController {
     return user
   }
 
-  async getUsuarioById ({ request }) {
+  async getUsuarioById ({ params }) {
     console.log('Pegou user?')
 
-    const user = await Usuario.find(2)
+    const { idusuario } = params
+    console.log('Qual usuario?', idusuario)
+    const user = await Usuario.find(idusuario)
 
     return user
   }

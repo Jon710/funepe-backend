@@ -1,19 +1,14 @@
 'use strict'
 
-/** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
 const Model = use('Model')
 
 class Despacho extends Model {
-  caixaEntrada () {
-    return this.belongsTo('App/Models/CaixaEntrada')
+  documento () {
+    return this.belongsTo('App/Models/Documento', 'iddocumento', 'iddocumento')
   }
 
-  despachoPadrao () {
-    return this.belongsTo('App/Models/Despacho')
-  }
-
-  despacho () {
-    return this.belongsTo('App/Models/Usuario')
+  usuario () {
+    return this.belongsTo('App/Models/Usuario', 'idusuario', 'idusuario')
   }
 
   static get table () {

@@ -1,65 +1,71 @@
+/* eslint-disable camelcase */
 'use strict'
-
-/** @typedef {import('@adonisjs/framework/src/Request')} Request */
-/** @typedef {import('@adonisjs/framework/src/Response')} Response */
-/** @typedef {import('@adonisjs/framework/src/View')} View */
+const Despacho = use('App/Models/Despacho')
 
 class DespachoController {
   /**
    * Show a list of all despachos.
    * GET despachos
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
    */
-  async index ({ request, response, view }) {
+  async index ({ params }) {
+    const { documents_id } = params
+    console.log(documents_id)
+    const despachos = await Despacho.query()
+      .where('iddocumento', documents_id)
+      .with('documento')
+      .with('usuario')
+      .fetch()
+
+    return despachos
   }
 
   /**
    * Create/save a new despacho.
    * POST despachos
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
    */
-  async store ({ request, response }) {
+  async store ({ request, params }) {
+    const { documents_id } = params
+    const data = request.all()
+    const despacho = await Despacho.create({ ...data, iddocumento: documents_id })
+
+    return despacho
   }
 
   /**
    * Display a single despacho.
    * GET despachos/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
    */
-  async show ({ params, request, response, view }) {
+  async show ({ params }) {
+    const { id } = params
+    const despacho = await Despacho.findOrFail(id)
+
+    return despacho
   }
 
   /**
    * Update despacho details.
    * PUT or PATCH despachos/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
    */
-  async update ({ params, request, response }) {
+  async update ({ params, request }) {
+    const { id } = params
+    const despacho = await Despacho.findOrFail(id)
+    const data = request.all()
+
+    despacho.merge(data)
+    await despacho.save()
+
+    return despacho
   }
 
   /**
    * Delete a despacho with id.
    * DELETE despachos/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
    */
-  async destroy ({ params, request, response }) {
+  async destroy ({ params }) {
+    const { id } = params
+    const despacho = await Despacho.findOrFail(id)
+
+    await despacho.delete()
   }
 }
 

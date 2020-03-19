@@ -8,7 +8,7 @@ class Documento extends Model {
     return this.belongsTo('App/Models/Usuario')
   }
 
-  caixaEntradas () {
+  caixasEntrada () {
     return this.hasMany('App/Models/CaixaEntrada')
   }
 
@@ -22,6 +22,10 @@ class Documento extends Model {
 
   prioridade () {
     return this.belongsTo('App/Models/Prioridade')
+  }
+
+  despachos () {
+    return this.hasMany('App/Models/Despacho')
   }
 
   static get table () {

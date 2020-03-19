@@ -3,63 +3,67 @@
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
+const Funcao = use('App/Models/Funcao')
 
 class FuncaoController {
   /**
    * Show a list of all funcaos.
    * GET funcaos
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
    */
   async index ({ request, response, view }) {
+    const roles = await Funcao.all()
+
+    return roles
   }
 
   /**
-   * Create/save a new funcao.
+   * Create/save a new funcao = role.
    * POST funcaos
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
    */
   async store ({ request, response }) {
+    const data = request.all()
+
+    const role = await Funcao.create(data)
+
+    return role
   }
 
   /**
    * Display a single funcao.
    * GET funcaos/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
    */
-  async show ({ params, request, response, view }) {
+  async show ({ params }) {
+    const { id } = params
+
+    const role = await Funcao.findOrFail(id)
+
+    return role
   }
 
   /**
    * Update funcao details.
    * PUT or PATCH funcaos/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
    */
   async update ({ params, request, response }) {
+    const { id } = params
+    const role = await Funcao.findOrFail(id)
+    const data = request.all()
+
+    role.merge(data)
+    await role.save()
+
+    return role
   }
 
   /**
    * Delete a funcao with id.
    * DELETE funcaos/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
    */
-  async destroy ({ params, request, response }) {
+  async destroy ({ params }) {
+    const { id } = params
+    const role = await Funcao.findOrFail(id)
+
+    await role.delete()
   }
 }
 

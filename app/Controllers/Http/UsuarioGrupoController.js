@@ -11,10 +11,6 @@ class UsuarioGrupoController {
   /**
    * Create/save a new usuariogrupo.
    * POST usuariogrupos
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
    */
   async store ({ request, response }) {
   }
@@ -22,11 +18,6 @@ class UsuarioGrupoController {
   /**
    * Display a single usuariogrupo.
    * GET usuariogrupos/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
    */
   async show ({ params, request, response, view }) {
   }
@@ -34,10 +25,6 @@ class UsuarioGrupoController {
   /**
    * Update usuariogrupo details.
    * PUT or PATCH usuariogrupos/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
    */
   async update ({ params, request, response }) {
   }
@@ -45,10 +32,6 @@ class UsuarioGrupoController {
   /**
    * Delete a usuariogrupo with id.
    * DELETE usuariogrupos/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
    */
   async destroy ({ params, request, response }) {
   }

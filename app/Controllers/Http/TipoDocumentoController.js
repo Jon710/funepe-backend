@@ -1,65 +1,64 @@
 'use strict'
-
-/** @typedef {import('@adonisjs/framework/src/Request')} Request */
-/** @typedef {import('@adonisjs/framework/src/Response')} Response */
-/** @typedef {import('@adonisjs/framework/src/View')} View */
+const TipoDocumento = use('App/Models/TipoDocumento')
 
 class TipoDocumentoController {
   /**
    * Show a list of all tipodocumentos.
    * GET tipodocumentos
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
    */
-  async index ({ request, response, view }) {
+  async index () {
+    const types = await TipoDocumento.all()
+    return types
   }
 
   /**
    * Create/save a new tipodocumento.
    * POST tipodocumentos
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
    */
-  async store ({ request, response }) {
+  async store ({ request }) {
+    const data = request.all()
+
+    const type = await TipoDocumento.create(data)
+
+    return type
   }
 
   /**
    * Display a single tipodocumento.
    * GET tipodocumentos/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
    */
-  async show ({ params, request, response, view }) {
+  async show ({ params }) {
+    const { id } = params
+
+    const type = await TipoDocumento.findOrFail(id)
+
+    return type
   }
 
   /**
    * Update tipodocumento details.
    * PUT or PATCH tipodocumentos/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
    */
-  async update ({ params, request, response }) {
+  async update ({ params, request }) {
+    const { id } = params
+    const type = await TipoDocumento.findOrFail(id)
+    const data = request.all()
+
+    type.merge(data)
+    await type.save()
+
+    return type
   }
 
   /**
    * Delete a tipodocumento with id.
    * DELETE tipodocumentos/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
    */
   async destroy ({ params, request, response }) {
+    const { id } = params
+    const type = await TipoDocumento.findOrFail(id)
+
+    await type.delete()
   }
 }
 

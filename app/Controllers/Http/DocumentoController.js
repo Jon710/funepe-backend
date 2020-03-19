@@ -1,65 +1,67 @@
 'use strict'
 
-/** @typedef {import('@adonisjs/framework/src/Request')} Request */
-/** @typedef {import('@adonisjs/framework/src/Response')} Response */
-/** @typedef {import('@adonisjs/framework/src/View')} View */
+const Document = use('App/Models/Documento')
 
 class DocumentoController {
   /**
    * Show a list of all documentos.
    * GET documentos
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
    */
-  async index ({ request, response, view }) {
+  async index () {
+    const documents = await Document.all()
+    console.log(documents)
+    return documents
   }
 
   /**
    * Create/save a new documento.
    * POST documentos
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
    */
-  async store ({ request, response }) {
+  async store ({ request }) {
+    const data = request.all()
+    const document = await Document.create(data)
+
+    return document
   }
 
   /**
    * Display a single documento.
    * GET documentos/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
    */
-  async show ({ params, request, response, view }) {
+  async show ({ params }) {
+    const { id } = params
+    console.log('ID Doc', id)
+
+    const document = await Document.findOrFail(id)
+
+    return document
   }
 
   /**
    * Update documento details.
    * PUT or PATCH documentos/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
    */
-  async update ({ params, request, response }) {
+  async update ({ params, request }) {
+    const { id } = params
+    const document = await Document.findOrFail(id)
+    const data = request.all()
+
+    document.merge(data)
+
+    await document.save()
+
+    return document
   }
 
   /**
    * Delete a documento with id.
    * DELETE documentos/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
    */
-  async destroy ({ params, request, response }) {
+  async destroy ({ params }) {
+    const { id } = params
+    const document = await Document.findOrFail(id)
+
+    await document.delete()
   }
 }
 

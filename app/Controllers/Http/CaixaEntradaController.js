@@ -1,65 +1,70 @@
+/* eslint-disable camelcase */
 'use strict'
 
-/** @typedef {import('@adonisjs/framework/src/Request')} Request */
-/** @typedef {import('@adonisjs/framework/src/Response')} Response */
-/** @typedef {import('@adonisjs/framework/src/View')} View */
+const CaixaEntrada = use('App/Models/CaixaEntrada')
 
 class CaixaEntradaController {
   /**
    * Show a list of all caixaentradas.
    * GET caixaentradas
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
    */
-  async index ({ request, response, view }) {
+  async index ({ params }) {
+    const { documents_id } = params
+    console.log(documents_id)
+    const caixaentradas = await CaixaEntrada.query()
+      .where('iddocumento', documents_id)
+      .with('documento')
+      .with('usuario')
+      .fetch()
+
+    return caixaentradas
   }
 
   /**
    * Create/save a new caixaentrada.
    * POST caixaentradas
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
    */
-  async store ({ request, response }) {
+  async store ({ request, params }) {
+    const { documents_id } = params
+    const data = request.all()
+    const caixaentrada = await CaixaEntrada.create({ ...data, iddocumento: documents_id })
+
+    return caixaentrada
   }
 
   /**
    * Display a single caixaentrada.
    * GET caixaentradas/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
    */
-  async show ({ params, request, response, view }) {
+  async show ({ params }) {
+    const { id } = params
+    const caixaentrada = await CaixaEntrada.findOrFail(id)
+
+    return caixaentrada
   }
 
   /**
    * Update caixaentrada details.
    * PUT or PATCH caixaentradas/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
    */
-  async update ({ params, request, response }) {
+  async update ({ params, request }) {
+    const { id } = params
+    console.log(id)
+    const caixaentrada = await CaixaEntrada.findOrFail(id)
+    console.log(caixaentrada)
+    const data = request.all()
+
+    caixaentrada.merge(data)
+    await caixaentrada.save()
+
+    return caixaentrada
   }
 
-  /**
-   * Delete a caixaentrada with id.
-   * DELETE caixaentradas/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async destroy ({ params, request, response }) {
+  async destroy ({ params }) {
+    const { id } = params
+    const caixaentrada = await CaixaEntrada.findOrFail(id)
+
+    await caixaentrada.delete()
   }
 }
 

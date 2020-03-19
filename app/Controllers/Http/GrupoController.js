@@ -1,55 +1,63 @@
 'use strict'
 
-/** @typedef {import('@adonisjs/framework/src/Request')} Request */
-/** @typedef {import('@adonisjs/framework/src/Response')} Response */
-/** @typedef {import('@adonisjs/framework/src/View')} View */
+const Grupo = use('App/Models/Grupo')
 
 class GrupoController {
   /**
    * Show a list of all grupos.
    * GET grupos
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
    */
-  async index ({ request, response, view }) {
+  async index () {
+    const groups = await Grupo.all()
+    // console.log(documents)
+    return groups
+  }
+
+  async show ({ params }) {
+    const { id } = params
+    // console.log('ID Doc', id)
+
+    const group = await Grupo.findOrFail(id)
+
+    return group
   }
 
   /**
    * Render a form to be used for creating a new grupo.
    * GET grupos/create
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
    */
   async store ({ request, response }) {
+    const data = request.all()
+
+    const group = await Grupo.create(data)
+
+    return group
   }
 
   /**
    * Update grupo details.
    * PUT or PATCH grupos/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
    */
-  async update ({ params, request, response }) {
+  async update ({ params, request }) {
+    const { id } = params
+    const group = await Grupo.findOrFail(id)
+    const data = request.all()
+
+    group.merge(data)
+    await group.save()
+
+    return group
   }
 
   /**
    * Delete a grupo with id.
    * DELETE grupos/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
    */
-  async destroy ({ params, request, response }) {
+  async destroy ({ params }) {
+    const { id } = params
+    const group = await Grupo.findOrFail(id)
 
+    await group.delete()
   }
 }
 
