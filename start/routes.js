@@ -9,7 +9,7 @@ Route.post('sessions', 'SessionController.store')
 Route.get('usuarios/:idusuario', 'UsuarioController.getUsuarioById')
 
 Route.group(() => {
-  Route.resource('usuarios', 'UsuarioController').apiOnly()
+  Route.resource('usuarios', 'UsuarioController').apiOnly().middleware(['auth'])
   Route.resource('usuarios.documents', 'DocumentoController').apiOnly()
   Route.resource('groups', 'GrupoController').apiOnly()
   Route.resource('roles', 'FuncaoController').apiOnly()
