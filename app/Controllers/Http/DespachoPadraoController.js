@@ -1,65 +1,51 @@
+/* eslint-disable camelcase */
 'use strict'
 
-/** @typedef {import('@adonisjs/framework/src/Request')} Request */
-/** @typedef {import('@adonisjs/framework/src/Response')} Response */
-/** @typedef {import('@adonisjs/framework/src/View')} View */
+const DespachoPadrao = use('App/Models/DespachoPadrao')
 
 class DespachoPadraoController {
-  /**
-   * Show a list of all despachopadraos.
-   * GET despachopadraos
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async index ({ request, response, view }) {
+  async index () {
+    const despachospadrao = await DespachoPadrao.all()
+
+    return despachospadrao
   }
 
   /**
    * Create/save a new despachopadrao.
-   * POST despachopadraos
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
    */
-  async store ({ request, response }) {
+  async store ({ request }) {
+    const data = request.all()
+    const despachopadrao = await DespachoPadrao.create(data)
+
+    return despachopadrao
   }
 
   /**
    * Display a single despachopadrao.
-   * GET despachopadraos/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
    */
-  async show ({ params, request, response, view }) {
+  async show ({ params }) {
+    const { id } = params
+    const despachopadrao = await DespachoPadrao.findOrFail(id)
+
+    return despachopadrao
   }
 
-  /**
-   * Update despachopadrao details.
-   * PUT or PATCH despachopadraos/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async update ({ params, request, response }) {
+  async update ({ params, request }) {
+    const { id } = params
+    const despachopadrao = await DespachoPadrao.findOrFail(id)
+    const data = request.all()
+
+    despachopadrao.merge(data)
+    await despachopadrao.save()
+
+    return despachopadrao
   }
 
-  /**
-   * Delete a despachopadrao with id.
-   * DELETE despachopadraos/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async destroy ({ params, request, response }) {
+  async destroy ({ params }) {
+    const { id } = params
+    const despachopadrao = await DespachoPadrao.findOrFail(id)
+
+    await despachopadrao.delete()
   }
 }
 

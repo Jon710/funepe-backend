@@ -1,11 +1,10 @@
 'use strict'
 
-/** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
 const Model = use('Model')
 
 class ArquivoAnexo extends Model {
   documento () {
-    return this.belongsTo('App/Models/Documento')
+    return this.belongsTo('App/Models/Documento', 'iddocumento', 'iddocumento')
   }
 
   static get table () {
