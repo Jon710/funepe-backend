@@ -3,10 +3,6 @@
 const Document = use('App/Models/Documento')
 
 class DocumentoController {
-  /**
-   * Show a list of all documentos.
-   * GET documentos
-   */
   async index () {
     const documents = await Document.all()
     console.log(documents)
@@ -24,10 +20,6 @@ class DocumentoController {
     return document
   }
 
-  /**
-   * Display a single documento.
-   * GET documentos/:id
-   */
   async show ({ params }) {
     const { id } = params
     console.log('ID Doc', id)

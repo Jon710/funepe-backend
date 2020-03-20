@@ -4,28 +4,15 @@
 const UsuarioGrupo = use('App/Models/UsuarioGrupo')
 
 class UsuarioGrupoController {
-  async index ({ params }) {
-    const { documents_id } = params
-    console.log(documents_id)
-    const usuariosgrupo = await UsuarioGrupo.query()
-      .where('iddocumento', documents_id)
-      .with('documento')
-      .with('usuario')
-      .fetch()
+  async index () {
+    const usuariosgrupo = await UsuarioGrupo.all()
 
     return usuariosgrupo
   }
 
-  /**
-   * Create/save a new usuariogrupo.
-   * POST usuariogrupos
-   */
   async store ({ request, params }) {
-    const { documents_id } = params
-    console.log(documents_id)
-
     const data = request.all()
-    const usuariogrupo = await UsuarioGrupo.create({ ...data, iddocumento: documents_id })
+    const usuariogrupo = await UsuarioGrupo.create(data)
 
     return usuariogrupo
   }

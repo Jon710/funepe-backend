@@ -19,4 +19,5 @@ Route.group(() => {
   Route.resource('documents.arquivoanexo', 'ArquivoAnexoController').apiOnly()
   Route.resource('despachopadrao', 'DespachoPadraoController').apiOnly()
   Route.resource('usuariogrupo', 'UsuarioGrupoController').apiOnly()
+  Route.resource('prioridade', 'PrioridadeController').apiOnly()
 })

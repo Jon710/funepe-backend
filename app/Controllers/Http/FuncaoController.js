@@ -7,7 +7,7 @@ class FuncaoController {
    * Show a list of all funcaos.
    * GET funcaos
    */
-  async index ({ request, response, view }) {
+  async index () {
     const roles = await Funcao.all()
 
     return roles
