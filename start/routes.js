@@ -10,7 +10,7 @@ Route.get('usuarios/:idusuario', 'UsuarioController.getUsuarioById')
 
 Route.group(() => {
   Route.resource('usuarios', 'UsuarioController').apiOnly()
-  Route.resource('documents', 'DocumentoController').apiOnly()
+  Route.resource('usuarios.documents', 'DocumentoController').apiOnly()
   Route.resource('groups', 'GrupoController').apiOnly()
   Route.resource('roles', 'FuncaoController').apiOnly()
   Route.resource('types', 'TipoDocumentoController').apiOnly()
