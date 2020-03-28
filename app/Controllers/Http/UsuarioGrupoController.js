@@ -1,56 +1,55 @@
+/* eslint-disable class-methods-use-this */
 /* eslint-disable camelcase */
-'use strict'
 
-const UsuarioGrupo = use('App/Models/UsuarioGrupo')
+const UsuarioGrupo = use('App/Models/UsuarioGrupo');
 
 class UsuarioGrupoController {
-  async index () {
-    const usuariosgrupo = await UsuarioGrupo.all()
-
-    return usuariosgrupo
+  async index() {
+    const usuariosgrupo = await UsuarioGrupo.all();
+    return usuariosgrupo;
   }
 
-  async store ({ request, params }) {
-    const data = request.all()
-    const usuariogrupo = await UsuarioGrupo.create(data)
+  async store({ request }) {
+    const data = request.all();
+    const usuariogrupo = await UsuarioGrupo.create(data);
 
-    return usuariogrupo
+    return usuariogrupo;
   }
 
   /**
    * Display a single usuariogrupo.
    * GET usuariogrupos/:id
    */
-  async show ({ params }) {
-    const { id } = params
-    const usuariogrupo = await UsuarioGrupo.findOrFail(id)
+  async show({ params }) {
+    const { id } = params;
+    const usuariogrupo = await UsuarioGrupo.findOrFail(id);
 
-    return usuariogrupo
+    return usuariogrupo;
   }
 
   /**
    * Update usuariogrupo details.
    */
-  async update ({ params, request }) {
-    const { id } = params
-    const usuariogrupo = await UsuarioGrupo.findOrFail(id)
-    const data = request.all()
+  async update({ params, request }) {
+    const { id } = params;
+    const usuariogrupo = await UsuarioGrupo.findOrFail(id);
+    const data = request.all();
 
-    usuariogrupo.merge(data)
-    await usuariogrupo.save()
+    usuariogrupo.merge(data);
+    await usuariogrupo.save();
 
-    return usuariogrupo
+    return usuariogrupo;
   }
 
   /**
    * Delete a usuariogrupo with id.
    */
-  async destroy ({ params }) {
-    const { id } = params
-    const usuariogrupo = await UsuarioGrupo.findOrFail(id)
+  async destroy({ params }) {
+    const { id } = params;
+    const usuariogrupo = await UsuarioGrupo.findOrFail(id);
 
-    await usuariogrupo.delete()
+    await usuariogrupo.delete();
   }
 }
 
-module.exports = UsuarioGrupoController
+module.exports = UsuarioGrupoController;

@@ -1,31 +1,30 @@
-'use strict'
 
-const Usuario = use('App/Models/Usuario')
+const Usuario = use('App/Models/Usuario');
 
 class UsuarioController {
-  async index () {
-    const users = await Usuario.all()
+  async index() {
+    const users = await Usuario.all();
 
-    return users
+    return users;
   }
 
-  async store ({ request }) {
-    console.log('entrou?')
-    const data = request.all()
-    const user = await Usuario.create(data)
+  async store({ request }) {
+    console.log('entrou?');
+    const data = request.all();
+    const user = await Usuario.create(data);
 
-    return user
+    return user;
   }
 
-  async getUsuarioById ({ params }) {
-    console.log('Pegou user?')
+  async getUsuarioById({ params }) {
+    console.log('Pegou user?');
 
-    const { idusuario } = params
-    console.log('Qual usuario?', idusuario)
-    const user = await Usuario.find(idusuario)
+    const { idusuario } = params;
+    console.log('Qual usuario?', idusuario);
+    const user = await Usuario.find(idusuario);
 
-    return user
+    return user;
   }
 }
 
-module.exports = UsuarioController
+module.exports = UsuarioController;

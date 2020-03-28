@@ -1,8 +1,11 @@
 'use strict'
 
 class SessionController {
-  async store ({ request, response, auth }) {
-    const { username, senha } = request.all()
+  async store ({ request, auth }) {
+    const { username, senha } = request.only([
+      'username',
+      'senha'
+    ]);
 
     const token = await auth.attempt(username, senha)
 
