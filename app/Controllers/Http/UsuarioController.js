@@ -1,4 +1,3 @@
-
 const Usuario = use('App/Models/Usuario');
 
 class UsuarioController {
@@ -24,6 +23,14 @@ class UsuarioController {
     const user = await Usuario.find(idusuario);
 
     return user;
+  }
+
+
+  async destroy ({ params }) {
+    const { id } = params
+    const users = await Usuario.findOrFail(id)
+
+    await users.delete()
   }
 }
 

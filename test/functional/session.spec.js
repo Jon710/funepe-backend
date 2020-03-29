@@ -6,11 +6,12 @@ const Factory = use('Factory')
 /** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
 const Usuario = use('App/Models/Usuario')
 trait('Test/ApiClient');
+trait('DatabaseTransactions')
 
 test('it should return JWT token when session is created', async ({ assert, client }) => {
   const sessionPayload = {
   idFuncao: 1,
-	idusuario: 10,
+	idusuario: 11,
 	senha: "selva",
 	username: "jao",
 	md5: "j",
@@ -25,7 +26,7 @@ test('it should return JWT token when session is created', async ({ assert, clie
 	cpfusuario: "123"
   }
 
-  const usuario = await Factory
+  await Factory
     .model('App/Models/Usuario')
     .create(sessionPayload);
 
