@@ -1,15 +1,31 @@
 'use strict'
+const Usuario = use('App/Models/Usuario')
 
 class SessionController {
-  async store ({ request, auth }) {
+  async store ({ request, auth, response }) {
     const { username, senha } = request.only([
       'username',
       'senha'
     ]);
 
-    const token = await auth.attempt(username, senha)
+    try {
+      const user = await Usuario.findByOrFail({ username })
+      console.log(user)
+      if (!(await user.isSame(senha))) {
+        console.log('Senha incorreta');
+        return response.status(401).json({ error: 'Senha incorreta.' });
+      }
 
-    return token
+      const { token } = await auth.attempt(username, senha)
+
+      return response.json({
+        user,
+        token
+      })
+      
+    } catch (error) {
+      return response.status(404).json({ error: 'Missing Database ROW' });
+     }
   }
 }
 

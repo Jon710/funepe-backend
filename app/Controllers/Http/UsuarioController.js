@@ -1,9 +1,10 @@
 const Usuario = use('App/Models/Usuario');
+const Hash = use('Hash')
 
 class UsuarioController {
-  async index() {
+  async index({ request }) {
+    console.log(request)
     const users = await Usuario.all()
-    const users = await Usuario.all();
 
     return users;
   }
@@ -12,9 +13,6 @@ class UsuarioController {
     console.log('entrou?')
     const data = request.all()
     const user = await Usuario.create(data)
-    console.log('entrou?');
-    const data = request.all();
-    const user = await Usuario.create(data);
 
     return user;
   }
@@ -29,22 +27,11 @@ class UsuarioController {
     return user;
   }
 
-  async destroy ({ params }) {
+  async destroy({ params }) {
     const { id } = params
     const users = await Usuario.findOrFail(id)
 
     await users.delete()
-  }
-
-  async getUsuario({ request, params }) {
-    console.log('REQUEST', request._all)
-    console.log('PARAMS', params.body)
-
-    const { username, senha } = request._all
-    console.log('Qual usuario?', username)
-    const user = await Usuario.findBy({ username, senha })
-
-    return user
   }
 }
 

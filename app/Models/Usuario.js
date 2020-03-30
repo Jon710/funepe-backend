@@ -14,6 +14,12 @@ class Usuario extends Model {
     })
   }
 
+  isSame(password) {
+    console.log('Entrou aqui?', password)
+    console.log(this.senha)
+    return Hash.verify(password, this.senha)
+  }
+
   tokens () {
     return this.hasMany('App/Models/Token')
   }
