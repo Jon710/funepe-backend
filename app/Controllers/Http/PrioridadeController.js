@@ -1,39 +1,45 @@
+/* eslint-disable camelcase */
 'use strict'
 
+const Prioridade = use('App/Models/Prioridade')
+
 class PrioridadeController {
-  /**
-   * Show a list of all prioridades.
-   * GET prioridades
-   */
-  async index ({ request, response, view }) {
+  async index () {
+    const prioridades = await Prioridade.all()
+
+    return prioridades
   }
 
-  /**
-   * Create/save a new prioridade.
-   * POST prioridades
-   */
-  async store ({ request, response }) {
+  async store ({ request }) {
+    const data = request.all()
+    const prioridade = await Prioridade.create(data)
+
+    return prioridade
   }
 
-  /**
-   * Render a form to update an existing prioridade.
-   * GET prioridades/:id/edit
-   */
-  async edit ({ params, request, response, view }) {
+  async show ({ params }) {
+    const { id } = params
+    const prioridade = await Prioridade.findOrFail(id)
+
+    return prioridade
   }
 
-  /**
-   * Update prioridade details.
-   * PUT or PATCH prioridades/:id
-   */
-  async update ({ params, request, response }) {
+  async update ({ params, request }) {
+    const { id } = params
+    const prioridade = await Prioridade.findOrFail(id)
+    const data = request.all()
+
+    prioridade.merge(data)
+    await prioridade.save()
+
+    return prioridade
   }
 
-  /**
-   * Delete a prioridade with id.
-   * DELETE prioridades/:id
-   */
-  async destroy ({ params, request, response }) {
+  async destroy ({ params }) {
+    const { id } = params
+    const prioridade = await Prioridade.findOrFail(id)
+
+    await prioridade.delete()
   }
 }
 

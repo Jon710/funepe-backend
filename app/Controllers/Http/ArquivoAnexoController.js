@@ -1,65 +1,65 @@
+/* eslint-disable camelcase */
 'use strict'
 
-/** @typedef {import('@adonisjs/framework/src/Request')} Request */
-/** @typedef {import('@adonisjs/framework/src/Response')} Response */
-/** @typedef {import('@adonisjs/framework/src/View')} View */
+const ArquivoAnexo = use('App/Models/ArquivoAnexo')
 
 class ArquivoAnexoController {
-  /**
-   * Show a list of all arquivoanexos.
-   * GET arquivoanexos
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async index ({ request, response, view }) {
+  async index ({ params }) {
+    const { documents_id } = params
+    console.log(documents_id)
+    const arquivosanexo = await ArquivoAnexo.query()
+      .where('iddocumento', documents_id)
+      .with('documento')
+      .fetch()
+
+    return arquivosanexo
   }
 
   /**
    * Create/save a new arquivoanexo.
-   * POST arquivoanexos
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
    */
-  async store ({ request, response }) {
+  async store ({ request, params }) {
+    const { documents_id } = params
+    console.log(documents_id)
+
+    const data = request.all()
+    const arquivoanexo = await ArquivoAnexo.create({ ...data, iddocumento: documents_id })
+
+    return arquivoanexo
   }
 
   /**
    * Display a single arquivoanexo.
-   * GET arquivoanexos/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
    */
-  async show ({ params, request, response, view }) {
+  async show ({ params }) {
+    const { id } = params
+    const arquivoanexo = await ArquivoAnexo.findOrFail(id)
+
+    return arquivoanexo
   }
 
   /**
    * Update arquivoanexo details.
-   * PUT or PATCH arquivoanexos/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
    */
-  async update ({ params, request, response }) {
+  async update ({ params, request }) {
+    const { id } = params
+    const arquivoanexo = await ArquivoAnexo.findOrFail(id)
+    const data = request.all()
+
+    arquivoanexo.merge(data)
+    await arquivoanexo.save()
+
+    return arquivoanexo
   }
 
   /**
    * Delete a arquivoanexo with id.
-   * DELETE arquivoanexos/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
    */
-  async destroy ({ params, request, response }) {
+  async destroy ({ params }) {
+    const { id } = params
+    const arquivoanexo = await ArquivoAnexo.findOrFail(id)
+
+    await arquivoanexo.delete()
   }
 }
 

@@ -5,11 +5,11 @@ const Model = use('Model')
 
 class UsuarioGrupo extends Model {
   usuario () {
-    return this.belongsTo('App/Models/Usuario')
+    return this.belongsTo('App/Models/Usuario', 'idusuario', 'idusuario')
   }
 
   grupo () {
-    return this.belongsTo('App/Models/Grupo')
+    return this.belongsTo('App/Models/Grupo', 'idgrupo', 'idgrupo')
   }
 
   static get table () {

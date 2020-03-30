@@ -4,15 +4,11 @@
 const CaixaEntrada = use('App/Models/CaixaEntrada')
 
 class CaixaEntradaController {
-  /**
-   * Show a list of all caixaentradas.
-   * GET caixaentradas
-   */
   async index ({ params }) {
-    const { documents_id } = params
-    console.log(documents_id)
+    const { usuarios_id } = params
+    console.log(usuarios_id)
     const caixaentradas = await CaixaEntrada.query()
-      .where('iddocumento', documents_id)
+      .where('iddestinatario', usuarios_id)
       .with('documento')
       .with('usuario')
       .fetch()
@@ -25,9 +21,9 @@ class CaixaEntradaController {
    * POST caixaentradas
    */
   async store ({ request, params }) {
-    const { documents_id } = params
+    const { usuarios_id } = params
     const data = request.all()
-    const caixaentrada = await CaixaEntrada.create({ ...data, iddocumento: documents_id })
+    const caixaentrada = await CaixaEntrada.create({ ...data, iddestinatario: usuarios_id })
 
     return caixaentrada
   }

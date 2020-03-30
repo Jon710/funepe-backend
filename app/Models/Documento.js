@@ -5,7 +5,7 @@ const Model = use('Model')
 
 class Documento extends Model {
   usuario () {
-    return this.belongsTo('App/Models/Usuario')
+    return this.belongsTo('App/Models/Usuario', 'idexpedidor', 'idusuario')
   }
 
   caixasEntrada () {
@@ -17,11 +17,11 @@ class Documento extends Model {
   }
 
   tipoDocumento () {
-    return this.belongsTo('App/Models/TipoDocumento')
+    return this.belongsTo('App/Models/TipoDocumento', 'idtipodocumento', 'idtipo')
   }
 
   prioridade () {
-    return this.belongsTo('App/Models/Prioridade')
+    return this.belongsTo('App/Models/Prioridade', 'idprioridade', 'idprioridade')
   }
 
   despachos () {

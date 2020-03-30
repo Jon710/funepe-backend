@@ -9,11 +9,11 @@ class Prioridade extends Model {
   }
 
   static get table () {
-    return 'proto_prioridades'
+    return 'proto_prioridade'
   }
 
   static get primaryKey () {
-    return 'idprioridades'
+    return 'idprioridade'
   }
 
   static get createdAtColumn () {

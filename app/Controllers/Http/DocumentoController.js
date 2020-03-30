@@ -1,38 +1,39 @@
+/* eslint-disable camelcase */
 'use strict'
 
-const Document = use('App/Models/Documento')
+const Documento = use('App/Models/Documento')
 
 class DocumentoController {
-  /**
-   * Show a list of all documentos.
-   * GET documentos
-   */
-  async index () {
-    const documents = await Document.all()
-    console.log(documents)
-    return documents
+  async index ({ params }) {
+    const { usuarios_id } = params
+    console.log(usuarios_id)
+    const documentos = await Documento.query()
+      .where('idexpedidor', usuarios_id)
+      .with('prioridade')
+      .with('usuario')
+      .with('tipoDocumento')
+      .fetch()
+
+    return documentos
   }
 
   /**
    * Create/save a new documento.
    * POST documentos
    */
-  async store ({ request }) {
+  async store ({ params, request }) {
+    const { usuarios_id } = params
     const data = request.all()
-    const document = await Document.create(data)
+    const documento = await Documento.create({ ...data, idexpedidor: usuarios_id })
 
-    return document
+    return documento
   }
 
-  /**
-   * Display a single documento.
-   * GET documentos/:id
-   */
   async show ({ params }) {
     const { id } = params
     console.log('ID Doc', id)
 
-    const document = await Document.findOrFail(id)
+    const document = await Documento.findOrFail(id)
 
     return document
   }
@@ -43,7 +44,7 @@ class DocumentoController {
    */
   async update ({ params, request }) {
     const { id } = params
-    const document = await Document.findOrFail(id)
+    const document = await Documento.findOrFail(id)
     const data = request.all()
 
     document.merge(data)
@@ -59,7 +60,7 @@ class DocumentoController {
    */
   async destroy ({ params }) {
     const { id } = params
-    const document = await Document.findOrFail(id)
+    const document = await Documento.findOrFail(id)
 
     await document.delete()
   }

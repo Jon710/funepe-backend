@@ -1,40 +1,55 @@
-'use strict'
+/* eslint-disable class-methods-use-this */
+/* eslint-disable camelcase */
 
-/** @typedef {import('@adonisjs/framework/src/Request')} Request */
-/** @typedef {import('@adonisjs/framework/src/Response')} Response */
-/** @typedef {import('@adonisjs/framework/src/View')} View */
+const UsuarioGrupo = use('App/Models/UsuarioGrupo');
 
 class UsuarioGrupoController {
-  async index ({ request, response, view }) {
+  async index() {
+    const usuariosgrupo = await UsuarioGrupo.all();
+    return usuariosgrupo;
   }
 
-  /**
-   * Create/save a new usuariogrupo.
-   * POST usuariogrupos
-   */
-  async store ({ request, response }) {
+  async store({ request }) {
+    const data = request.all();
+    const usuariogrupo = await UsuarioGrupo.create(data);
+
+    return usuariogrupo;
   }
 
   /**
    * Display a single usuariogrupo.
    * GET usuariogrupos/:id
    */
-  async show ({ params, request, response, view }) {
+  async show({ params }) {
+    const { id } = params;
+    const usuariogrupo = await UsuarioGrupo.findOrFail(id);
+
+    return usuariogrupo;
   }
 
   /**
    * Update usuariogrupo details.
-   * PUT or PATCH usuariogrupos/:id
    */
-  async update ({ params, request, response }) {
+  async update({ params, request }) {
+    const { id } = params;
+    const usuariogrupo = await UsuarioGrupo.findOrFail(id);
+    const data = request.all();
+
+    usuariogrupo.merge(data);
+    await usuariogrupo.save();
+
+    return usuariogrupo;
   }
 
   /**
    * Delete a usuariogrupo with id.
-   * DELETE usuariogrupos/:id
    */
-  async destroy ({ params, request, response }) {
+  async destroy({ params }) {
+    const { id } = params;
+    const usuariogrupo = await UsuarioGrupo.findOrFail(id);
+
+    await usuariogrupo.delete();
   }
 }
 
-module.exports = UsuarioGrupoController
+module.exports = UsuarioGrupoController;

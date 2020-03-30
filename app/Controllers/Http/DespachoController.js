@@ -21,7 +21,6 @@ class DespachoController {
 
   /**
    * Create/save a new despacho.
-   * POST despachos
    */
   async store ({ request, params }) {
     const { documents_id } = params
@@ -57,7 +56,7 @@ class DespachoController {
     return despacho
   }
 
-  /**
+  /*
    * Delete a despacho with id.
    * DELETE despachos/:id
    */

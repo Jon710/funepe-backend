@@ -4,10 +4,9 @@
         "node": true
     },
     "extends": [
-        "standard"
-    ],
+        "airbnb-base",
+        ],
     "globals": {
-        "use": true,
         "Atomics": "readonly",
         "SharedArrayBuffer": "readonly"
     },
