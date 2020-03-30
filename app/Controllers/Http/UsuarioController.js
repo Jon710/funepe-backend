@@ -2,21 +2,16 @@ const Usuario = use('App/Models/Usuario');
 
 class UsuarioController {
   async index() {
-<<<<<<< HEAD
     const users = await Usuario.all()
-=======
     const users = await Usuario.all();
->>>>>>> 3ed5c61dd8210f0935929e827e9bae0c21a9506c
 
     return users;
   }
 
   async store({ request }) {
-<<<<<<< HEAD
     console.log('entrou?')
     const data = request.all()
     const user = await Usuario.create(data)
-=======
     console.log('entrou?');
     const data = request.all();
     const user = await Usuario.create(data);
@@ -30,16 +25,9 @@ class UsuarioController {
     const { idusuario } = params;
     console.log('Qual usuario?', idusuario);
     const user = await Usuario.find(idusuario);
->>>>>>> 3ed5c61dd8210f0935929e827e9bae0c21a9506c
 
     return user;
   }
-
-<<<<<<< HEAD
-  async getUsuarioById({ params }) {
-    console.log('Pegou user?')
-=======
->>>>>>> 3ed5c61dd8210f0935929e827e9bae0c21a9506c
 
   async destroy ({ params }) {
     const { id } = params
