@@ -1,69 +1,71 @@
 /* eslint-disable camelcase */
-'use strict'
 
-const Documento = use('App/Models/Documento')
+const Documento = use('App/Models/Documento');
 
 class DocumentoController {
-  async index ({ params }) {
-    const { usuarios_id } = params
-    console.log(usuarios_id)
+  async index({ params }) {
+    const { usuarios_id } = params;
+    // console.log(usuarios_id);
     const documentos = await Documento.query()
       .where('idexpedidor', usuarios_id)
       .with('prioridade')
       .with('usuario')
       .with('tipoDocumento')
-      .fetch()
+      .fetch();
 
-    return documentos
+    return documentos;
   }
 
   /**
    * Create/save a new documento.
    * POST documentos
    */
-  async store ({ params, request }) {
-    const { usuarios_id } = params
-    const data = request.all()
-    const documento = await Documento.create({ ...data, idexpedidor: usuarios_id })
+  async store({ params, request }) {
+    const { usuarios_id } = params;
+    const data = request.all();
+    const documento = await Documento.create({
+      ...data,
+      idexpedidor: usuarios_id,
+    });
 
-    return documento
+    return documento;
   }
 
-  async show ({ params }) {
-    const { id } = params
-    console.log('ID Doc', id)
+  async show({ params }) {
+    const { id } = params;
+    // console.log('ID Doc', id);
 
-    const document = await Documento.findOrFail(id)
+    const document = await Documento.findOrFail(id);
 
-    return document
+    return document;
   }
 
   /**
    * Update documento details.
    * PUT or PATCH documentos/:id
    */
-  async update ({ params, request }) {
-    const { id } = params
-    const document = await Documento.findOrFail(id)
-    const data = request.all()
+  async update({ params, request }) {
+    const { id } = params;
+    const document = await Documento.findOrFail(id);
+    const data = request.all();
 
-    document.merge(data)
+    document.merge(data);
 
-    await document.save()
+    await document.save();
 
-    return document
+    return document;
   }
 
   /**
    * Delete a documento with id.
    * DELETE documentos/:id
    */
-  async destroy ({ params }) {
-    const { id } = params
-    const document = await Documento.findOrFail(id)
+  async destroy({ params }) {
+    const { id } = params;
+    const document = await Documento.findOrFail(id);
 
-    await document.delete()
+    await document.delete();
   }
 }
 
-module.exports = DocumentoController
+module.exports = DocumentoController;

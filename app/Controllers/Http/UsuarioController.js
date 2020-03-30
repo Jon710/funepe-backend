@@ -1,37 +1,36 @@
 const Usuario = use('App/Models/Usuario');
-const Hash = use('Hash')
 
 class UsuarioController {
-  async index({ request }) {
-    console.log(request)
-    const users = await Usuario.all()
+  async index() {
+    // console.log(request);
+    const users = await Usuario.all();
 
     return users;
   }
 
   async store({ request }) {
-    console.log('entrou?')
-    const data = request.all()
-    const user = await Usuario.create(data)
+    // console.log('entrou?');
+    const data = request.all();
+    const user = await Usuario.create(data);
 
     return user;
   }
 
   async getUsuarioById({ params }) {
-    console.log('Pegou user?');
+    // console.log('Pegou user?');
 
     const { idusuario } = params;
-    console.log('Qual usuario?', idusuario);
+    // console.log('Qual usuario?', idusuario);
     const user = await Usuario.find(idusuario);
 
     return user;
   }
 
   async destroy({ params }) {
-    const { id } = params
-    const users = await Usuario.findOrFail(id)
+    const { id } = params;
+    const users = await Usuario.findOrFail(id);
 
-    await users.delete()
+    await users.delete();
   }
 }
 
