@@ -4,7 +4,7 @@ const { test, trait } = use('Test/Suite')('Session');
 const Factory = use('Factory')
 
 /** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
-const Usuario = use('App/Models/Usuario')
+// const Usuario = use('App/Models/Usuario')
 trait('Test/ApiClient');
 trait('DatabaseTransactions')
 

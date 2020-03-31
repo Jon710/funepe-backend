@@ -1,5 +1,7 @@
+'use strict'
+
 /** @type {import('@adonisjs/framework/src/Env')} */
-const Env = use('Env');
+const Env = use('Env')
 
 module.exports = {
   connection: Env.get('DB_CONNECTION', 'pg'),
@@ -11,8 +13,8 @@ module.exports = {
       port: Env.get('DB_PORT', ''),
       user: Env.get('DB_USER', ''),
       password: Env.get('DB_PASSWORD', ''),
-      database: Env.get('DB_DATABASE', ''),
+      database: Env.get('DB_DATABASE', '')
     },
-    debug: Env.get('DB_DEBUG', false),
-  },
-};
+    debug: Env.get('DB_DEBUG', false)
+  }
+}

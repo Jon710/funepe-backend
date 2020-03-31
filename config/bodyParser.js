@@ -1,3 +1,5 @@
+'use strict'
+
 module.exports = {
   /*
   |--------------------------------------------------------------------------
@@ -45,8 +47,8 @@ module.exports = {
       'application/json',
       'application/json-patch+json',
       'application/vnd.api+json',
-      'application/csp-report',
-    ],
+      'application/csp-report'
+    ]
   },
 
   /*
@@ -58,7 +60,9 @@ module.exports = {
   |
   */
   raw: {
-    types: ['text/*'],
+    types: [
+      'text/*'
+    ]
   },
 
   /*
@@ -70,7 +74,9 @@ module.exports = {
   |
   */
   form: {
-    types: ['application/x-www-form-urlencoded'],
+    types: [
+      'application/x-www-form-urlencoded'
+    ]
   },
 
   /*
@@ -82,7 +88,9 @@ module.exports = {
   |
   */
   files: {
-    types: ['multipart/form-data'],
+    types: [
+      'multipart/form-data'
+    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -125,7 +133,7 @@ module.exports = {
     | is to true. Otherwise everything is processed manually.
     |
     */
-    processManually: [],
+    processManually: []
 
     /*
     |--------------------------------------------------------------------------
@@ -145,5 +153,5 @@ module.exports = {
     | }
     |
     */
-  },
-};
+  }
+}

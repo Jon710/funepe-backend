@@ -1,7 +1,10 @@
+'use strict'
+
 /** @type {import('@adonisjs/framework/src/Env')} */
-const Env = use('Env');
+const Env = use('Env')
 
 module.exports = {
+
   /*
   |--------------------------------------------------------------------------
   | Application Name
@@ -79,6 +82,7 @@ module.exports = {
     */
     jsonpCallback: 'callback',
 
+
     /*
     |--------------------------------------------------------------------------
     | Etag
@@ -90,7 +94,7 @@ module.exports = {
     | response.send('Hello', { ignoreEtag: true })
     |
     */
-    etag: false,
+    etag: false
   },
 
   views: {
@@ -103,7 +107,7 @@ module.exports = {
     | production to optimize view loading time.
     |
     */
-    cache: Env.get('CACHE_VIEWS', true),
+    cache: Env.get('CACHE_VIEWS', true)
   },
 
   static: {
@@ -142,7 +146,7 @@ module.exports = {
     | that exists will be served. Example: ['html', 'htm'].
     |
     */
-    extensions: false,
+    extensions: false
   },
 
   locales: {
@@ -169,7 +173,7 @@ module.exports = {
     | based on HTTP headers/query string.
     |
     */
-    locale: 'en',
+    locale: 'en'
   },
 
   logger: {
@@ -198,7 +202,7 @@ module.exports = {
     console: {
       driver: 'console',
       name: 'adonis-app',
-      level: 'info',
+      level: 'info'
     },
 
     /*
@@ -216,8 +220,8 @@ module.exports = {
       driver: 'file',
       name: 'adonis-app',
       filename: 'adonis.log',
-      level: 'info',
-    },
+      level: 'info'
+    }
   },
 
   /*
@@ -234,6 +238,6 @@ module.exports = {
     httpOnly: true,
     sameSite: false,
     path: '/',
-    maxAge: 7200,
-  },
-};
+    maxAge: 7200
+  }
+}
