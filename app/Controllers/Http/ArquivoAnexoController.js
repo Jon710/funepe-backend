@@ -1,66 +1,68 @@
 /* eslint-disable camelcase */
-'use strict'
 
-const ArquivoAnexo = use('App/Models/ArquivoAnexo')
+const ArquivoAnexo = use('App/Models/ArquivoAnexo');
 
 class ArquivoAnexoController {
-  async index ({ params }) {
-    const { documents_id } = params
-    console.log(documents_id)
+  async index({ params }) {
+    const { documents_id } = params;
+    // console.log(documents_id);
     const arquivosanexo = await ArquivoAnexo.query()
       .where('iddocumento', documents_id)
       .with('documento')
-      .fetch()
+      .fetch();
 
-    return arquivosanexo
+    return arquivosanexo;
   }
 
   /**
    * Create/save a new arquivoanexo.
    */
-  async store ({ request, params }) {
-    const { documents_id } = params
-    console.log(documents_id)
+  async store({ request, params }) {
+    const { documents_id } = params;
+    //  console.log(documents_id);
 
-    const data = request.all()
-    const arquivoanexo = await ArquivoAnexo.create({ ...data, iddocumento: documents_id })
+    const data = request.all();
+    const arquivoanexo = await ArquivoAnexo.create({
+      ...data,
+      iddocumento: documents_id,
+    });
 
-    return arquivoanexo
+    return arquivoanexo;
   }
 
   /**
    * Display a single arquivoanexo.
    */
-  async show ({ params }) {
-    const { id } = params
-    const arquivoanexo = await ArquivoAnexo.findOrFail(id)
+  async show({ params }) {
+    const { id } = params;
+    const arquivoanexo = await ArquivoAnexo.findOrFail(id);
 
-    return arquivoanexo
+    return arquivoanexo;
   }
 
   /**
    * Update arquivoanexo details.
    */
-  async update ({ params, request }) {
-    const { id } = params
-    const arquivoanexo = await ArquivoAnexo.findOrFail(id)
-    const data = request.all()
+  async update({ params, request }) {
+    const { id } = params;
+    const arquivoanexo = await ArquivoAnexo.findOrFail(id);
+    const data = request.all();
 
-    arquivoanexo.merge(data)
-    await arquivoanexo.save()
+    arquivoanexo.merge(data);
+    await arquivoanexo.save();
 
-    return arquivoanexo
+    return arquivoanexo;
   }
 
   /**
    * Delete a arquivoanexo with id.
    */
-  async destroy ({ params }) {
-    const { id } = params
-    const arquivoanexo = await ArquivoAnexo.findOrFail(id)
+  async destroy({ params }) {
+    const { id } = params;
+    const arquivoanexo = await ArquivoAnexo.findOrFail(id);
 
-    await arquivoanexo.delete()
+    await arquivoanexo.delete();
   }
 }
 
-module.exports = ArquivoAnexoController
+module.exports = ArquivoAnexoController;

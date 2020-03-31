@@ -1,35 +1,33 @@
-'use strict'
-
-const Model = use('Model')
+const Model = use('Model');
 
 class CaixaEntrada extends Model {
-  usuario () {
-    return this.belongsTo('App/Models/Usuario', 'iddestinatario', 'idusuario')
+  usuario() {
+    return this.belongsTo('App/Models/Usuario', 'iddestinatario', 'idusuario');
   }
 
-  documento () {
-    return this.belongsTo('App/Models/Documento', 'iddocumento', 'iddocumento')
+  documento() {
+    return this.belongsTo('App/Models/Documento', 'iddocumento', 'iddocumento');
   }
 
-  static get table () {
-    return 'proto_caixaentrada'
+  static get table() {
+    return 'proto_caixaentrada';
   }
 
-  static get primaryKey () {
-    return 'idcaixaentrada'
+  static get primaryKey() {
+    return 'idcaixaentrada';
   }
 
-  static get createdAtColumn () {
-    return null
+  static get createdAtColumn() {
+    return null;
   }
 
-  static get updatedAtColumn () {
-    return null
+  static get updatedAtColumn() {
+    return null;
   }
 
-  static get incrementing () {
-    return false
+  static get incrementing() {
+    return false;
   }
 }
 
-module.exports = CaixaEntrada
+module.exports = CaixaEntrada;

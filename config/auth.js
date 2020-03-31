@@ -1,6 +1,4 @@
-'use strict'
-
-const Env = use('Env')
+const Env = use('Env');
 
 module.exports = {
   /*
@@ -26,7 +24,7 @@ module.exports = {
     uid: 'username',
     password: 'senha',
     options: {
-      secret: Env.get('APP_KEY')
-    }
-  }
-}
+      secret: Env.get('APP_KEY'),
+    },
+  },
+};
