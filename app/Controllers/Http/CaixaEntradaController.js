@@ -3,7 +3,7 @@
 const CaixaEntrada = use('App/Models/CaixaEntrada');
 
 class CaixaEntradaController {
-  async index({ params }) {
+  async index({ params, response }) {
     const { usuarios_id } = params;
     // console.log(usuarios_id);
     const caixaentradas = await CaixaEntrada.query()
@@ -11,15 +11,18 @@ class CaixaEntradaController {
       .with('documento')
       .with('usuario')
       .fetch();
+    // console.log("caixaentradas");
+    return response.json({
+      caixaentradas,
+    });
 
-    return caixaentradas;
   }
 
   /**
    * Create/save a new caixaentrada.
    * POST caixaentradas
    */
-  async store({ request, params }) {
+  async store({ request, params, response }) {
     const { usuarios_id } = params;
     const data = request.all();
     const caixaentrada = await CaixaEntrada.create({
@@ -27,7 +30,9 @@ class CaixaEntradaController {
       iddestinatario: usuarios_id,
     });
 
-    return caixaentrada;
+    return response.json({
+      caixaentrada,
+    });
   }
 
   /**
@@ -41,7 +46,7 @@ class CaixaEntradaController {
     return caixaentrada;
   }
 
-  /**
+  /**0111111
    * Update caixaentrada details.
    * PUT or PATCH caixaentradas/:id
    */

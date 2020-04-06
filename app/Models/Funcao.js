@@ -22,9 +22,6 @@ class Funcao extends Model {
     return null;
   }
 
-  static get incrementing() {
-    return false;
-  }
 }
 
 module.exports = Funcao;

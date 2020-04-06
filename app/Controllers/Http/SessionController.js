@@ -6,12 +6,11 @@ class SessionController {
 
     try {
       const user = await Usuario.findByOrFail({ username });
-      // console.log(user);
+      // console.log(user.username);
       if (!(await user.isSame(senha))) {
         // console.log('Senha incorreta');
         return response.status(401).json({ error: 'Senha incorreta.' });
       }
-
       const { token } = await auth.attempt(username, senha);
 
       return response.json({

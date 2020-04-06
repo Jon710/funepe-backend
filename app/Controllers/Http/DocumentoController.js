@@ -20,15 +20,18 @@ class DocumentoController {
    * Create/save a new documento.
    * POST documentos
    */
-  async store({ params, request }) {
+  async store({ params, request, response }) {
     const { usuarios_id } = params;
+    // console.log(request)
     const data = request.all();
     const documento = await Documento.create({
       ...data,
       idexpedidor: usuarios_id,
     });
-
-    return documento;
+    
+    return response.json({
+      documento,
+    });
   }
 
   async show({ params }) {

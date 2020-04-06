@@ -21,9 +21,6 @@ class DespachoPadrao extends Model {
     return null;
   }
 
-  static get incrementing() {
-    return false;
-  }
 }
 
 module.exports = DespachoPadrao;
