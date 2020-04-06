@@ -5,10 +5,12 @@ class FuncaoController {
    * Show a list of all funcaos.
    * GET funcaos
    */
-  async index() {
+  async index({response}) {
     const roles = await Funcao.all();
 
-    return roles;
+    return response.json({
+      roles,
+    });
   }
 
   /**
@@ -27,12 +29,14 @@ class FuncaoController {
    * Display a single funcao.
    * GET funcaos/:id
    */
-  async show({ params }) {
+  async show({ params, response }) {
     const { id } = params;
 
     const role = await Funcao.findOrFail(id);
 
-    return role;
+    return response.json({
+      role,
+    });
   }
 
   /**
