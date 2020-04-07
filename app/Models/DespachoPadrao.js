@@ -20,7 +20,6 @@ class DespachoPadrao extends Model {
   static get updatedAtColumn() {
     return null;
   }
-
 }
 
 module.exports = DespachoPadrao;

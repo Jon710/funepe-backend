@@ -21,7 +21,6 @@ class Funcao extends Model {
   static get updatedAtColumn() {
     return null;
   }
-
 }
 
 module.exports = Funcao;

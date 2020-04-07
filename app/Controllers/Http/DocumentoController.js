@@ -3,9 +3,9 @@
 const Documento = use('App/Models/Documento');
 
 class DocumentoController {
-  async index({ params }) {
+  async index({ params, response }) {
     const { usuarios_id } = params;
-    // console.log(usuarios_id);
+
     const documentos = await Documento.query()
       .where('idexpedidor', usuarios_id)
       .with('prioridade')
@@ -13,41 +13,35 @@ class DocumentoController {
       .with('tipoDocumento')
       .fetch();
 
-    return documentos;
+    return response.json({
+      documentos,
+    });
   }
 
-  /**
-   * Create/save a new documento.
-   * POST documentos
-   */
   async store({ params, request, response }) {
     const { usuarios_id } = params;
-    // console.log(request)
     const data = request.all();
     const documento = await Documento.create({
       ...data,
       idexpedidor: usuarios_id,
     });
-    
+
     return response.json({
       documento,
     });
   }
 
-  async show({ params }) {
+  async show({ params, response }) {
     const { id } = params;
-    // console.log('ID Doc', id);
 
     const document = await Documento.findOrFail(id);
 
-    return document;
+    return response.json({
+      document,
+    });
   }
 
-  /**
-   * Update documento details.
-   * PUT or PATCH documentos/:id
-   */
-  async update({ params, request }) {
+  async update({ params, request, response }) {
     const { id } = params;
     const document = await Documento.findOrFail(id);
     const data = request.all();
@@ -56,13 +50,11 @@ class DocumentoController {
 
     await document.save();
 
-    return document;
+    return response.json({
+      document,
+    });
   }
 
-  /**
-   * Delete a documento with id.
-   * DELETE documentos/:id
-   */
   async destroy({ params }) {
     const { id } = params;
     const document = await Documento.findOrFail(id);

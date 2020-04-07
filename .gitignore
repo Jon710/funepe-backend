@@ -1,5 +1,7 @@
 # Node modules
 node_modules
+.vscode
+
 
 # Adonis directory for storing tmp files
 tmp

@@ -1,49 +1,54 @@
 /* eslint-disable camelcase */
-
 const ArquivoAnexo = use('App/Models/ArquivoAnexo');
+const Documento = use('App/Models/Documento');
+const Helpers = use('Helpers');
 
 class ArquivoAnexoController {
-  async index({ params }) {
+  async index({ params, response }) {
     const { documents_id } = params;
-    // console.log(documents_id);
+
     const arquivosanexo = await ArquivoAnexo.query()
       .where('iddocumento', documents_id)
       .with('documento')
       .fetch();
 
-    return arquivosanexo;
-  }
-
-  /**
-   * Create/save a new arquivoanexo.
-   */
-  async store({ request, params }) {
-    const { documents_id } = params;
-    //  console.log(documents_id);
-
-    const data = request.all();
-    const arquivoanexo = await ArquivoAnexo.create({
-      ...data,
-      iddocumento: documents_id,
+    return response.json({
+      arquivosanexo,
     });
-
-    return arquivoanexo;
   }
 
-  /**
-   * Display a single arquivoanexo.
-   */
-  async show({ params }) {
-    const { id } = params;
-    const arquivoanexo = await ArquivoAnexo.findOrFail(id);
+  async store({ request, params, response }) {
+    const document = await Documento.findOrFail(params.documents_id);
 
-    return arquivoanexo;
+    const arquivoanexo = request.file('image');
+    await arquivoanexo.moveAll(Helpers.tmpPath('uploads'), (file) => ({
+      name: `${Date.now()}-${file.clientName}`,
+    }));
+
+    if (!arquivoanexo.movedAll()) {
+      return arquivoanexo.errors();
+    }
+
+    await Promise.all(
+      arquivoanexo.movedList().map((image) =>
+        document.arquivosAnexo().create({
+          patharquivo: image.fileName,
+          tipo: 1,
+          observacao: 'obs',
+        })
+      )
+    );
+
+    return response.json({
+      arquivoanexo,
+    });
   }
 
-  /**
-   * Update arquivoanexo details.
-   */
-  async update({ params, request }) {
+  async show({ params, response }) {
+    return response.download(Helpers.tmpPath(`uploads/${params.path}`));
+  }
+
+  async update({ params, request, response }) {
     const { id } = params;
     const arquivoanexo = await ArquivoAnexo.findOrFail(id);
     const data = request.all();
@@ -51,12 +56,11 @@ class ArquivoAnexoController {
     arquivoanexo.merge(data);
     await arquivoanexo.save();
 
-    return arquivoanexo;
+    return response.json({
+      arquivoanexo,
+    });
   }
 
-  /**
-   * Delete a arquivoanexo with id.
-   */
   async destroy({ params }) {
     const { id } = params;
     const arquivoanexo = await ArquivoAnexo.findOrFail(id);

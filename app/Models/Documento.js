@@ -11,7 +11,11 @@ class Documento extends Model {
   }
 
   arquivosAnexo() {
-    return this.hasMany('App/Models/ArquivoAnexo');
+    return this.hasMany(
+      'App/Models/ArquivoAnexo',
+      'iddocumento',
+      'iddocumento'
+    );
   }
 
   tipoDocumento() {
@@ -49,7 +53,6 @@ class Documento extends Model {
   static get updatedAtColumn() {
     return null;
   }
-
 }
 
 module.exports = Documento;

@@ -13,8 +13,6 @@ class Usuario extends Model {
   }
 
   isSame(password) {
-    // console.log('Entrou aqui?', password);
-    // console.log(this.senha);
     return Hash.verify(password, this.senha);
   }
 
@@ -57,7 +55,6 @@ class Usuario extends Model {
   static get updatedAtColumn() {
     return null;
   }
-
 }
 
 module.exports = Usuario;

@@ -24,7 +24,6 @@ class Despacho extends Model {
   static get updatedAtColumn() {
     return null;
   }
-
 }
 
 module.exports = Despacho;

@@ -25,7 +25,6 @@ class UsuarioGrupo extends Model {
   static get updatedAtColumn() {
     return null;
   }
-
 }
 
 module.exports = UsuarioGrupo;

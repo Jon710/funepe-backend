@@ -1,4 +1,5 @@
 const Model = use('Model');
+const Env = use('Env');
 
 class ArquivoAnexo extends Model {
   documento() {
@@ -21,6 +22,13 @@ class ArquivoAnexo extends Model {
     return null;
   }
 
+  static get computed() {
+    return ['url'];
+  }
+
+  getUrl({ path }) {
+    return `${Env.get('APP_URL')}/anexo/${path}`;
+  }
 }
 
 module.exports = ArquivoAnexo;

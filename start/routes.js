@@ -5,6 +5,8 @@ Route.post('users', 'UserController.store');
 Route.post('sessions', 'SessionController.store');
 // .validator('Session');
 
+Route.get('anexo/:path', 'ArquivoAnexoController.show');
+
 Route.get(
   'usuarios/:idusuario',
   'UsuarioController.getUsuarioById'

@@ -1,29 +1,30 @@
 const Usuario = use('App/Models/Usuario');
 
 class UsuarioController {
-  async index() {
-    // console.log(request);
+  async index({ response }) {
     const users = await Usuario.all();
 
-    return users;
+    return response.json({
+      users,
+    });
   }
 
-  async store({ request }) {
-    // console.log('entrou?');
+  async store({ request, response }) {
     const data = request.all();
     const user = await Usuario.create(data);
 
-    return user;
+    return response.json({
+      user,
+    });
   }
 
-  async getUsuarioById({ params }) {
-    // console.log('Pegou user?');
-
+  async getUsuarioById({ params, response }) {
     const { idusuario } = params;
-    // console.log('Qual usuario?', idusuario);
     const user = await Usuario.find(idusuario);
 
-    return user;
+    return response.json({
+      user,
+    });
   }
 
   async destroy({ params }) {

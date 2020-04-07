@@ -24,7 +24,6 @@ class CaixaEntrada extends Model {
   static get updatedAtColumn() {
     return null;
   }
-
 }
 
 module.exports = CaixaEntrada;
