@@ -2,8 +2,7 @@ const Route = use('Route');
 
 Route.post('users', 'UserController.store');
 
-Route.post('sessions', 'SessionController.store');
-// .validator('Session');
+Route.post('sessions', 'SessionController.store').validator('Session');
 
 Route.get('anexo/:path', 'ArquivoAnexoController.show');
 
@@ -15,31 +14,23 @@ Route.get(
 Route.group(() => {
   Route.resource('usuarios', 'UsuarioController')
     .apiOnly()
-    .middleware(['auth']);
-  Route.resource('usuarios.documents', 'DocumentoController')
-    .apiOnly()
-    .middleware(['auth']);
-  Route.resource('groups', 'GrupoController').apiOnly().middleware(['auth']);
-  Route.resource('roles', 'FuncaoController').apiOnly().middleware(['auth']);
-  Route.resource('types', 'TipoDocumentoController')
-    .apiOnly()
-    .middleware(['auth']);
-  Route.resource('documents.despachos', 'DespachoController')
-    .apiOnly()
-    .middleware(['auth']);
-  Route.resource('usuarios.caixaentrada', 'CaixaEntradaController')
-    .apiOnly()
-    .middleware(['auth']);
-  Route.resource('documents.arquivoanexo', 'ArquivoAnexoController')
-    .apiOnly()
-    .middleware(['auth']);
-  Route.resource('despachopadrao', 'DespachoPadraoController')
-    .apiOnly()
-    .middleware(['auth']);
-  Route.resource('usuariogrupo', 'UsuarioGrupoController')
-    .apiOnly()
-    .middleware(['auth']);
-  Route.resource('prioridade', 'PrioridadeController')
-    .apiOnly()
-    .middleware(['auth']);
-});
+    .validator(new Map([[['usuarios.store'], ['Usuario']]]));
+
+  Route.resource('usuarios.documents', 'DocumentoController').apiOnly();
+
+  Route.resource('groups', 'GrupoController').apiOnly();
+  Route.resource('roles', 'FuncaoController').apiOnly();
+  Route.resource('types', 'TipoDocumentoController').apiOnly();
+
+  Route.resource('documents.despachos', 'DespachoController').apiOnly();
+
+  Route.resource('usuarios.caixaentrada', 'CaixaEntradaController').apiOnly();
+
+  Route.resource('documents.arquivoanexo', 'ArquivoAnexoController').apiOnly();
+
+  Route.resource('despachopadrao', 'DespachoPadraoController').apiOnly();
+
+  Route.resource('usuariogrupo', 'UsuarioGrupoController').apiOnly();
+
+  Route.resource('prioridade', 'PrioridadeController').apiOnly();
+}).middleware(['auth']);

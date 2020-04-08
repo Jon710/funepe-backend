@@ -1,9 +1,13 @@
 class Session {
+  get validateAll() {
+    return true;
+  }
+
   get rules() {
     return {
-      username: 'users|required',
+      username: 'required',
       senha: 'required',
-      token: 'required',
+      // token: 'required',
     };
   }
 }
