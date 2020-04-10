@@ -4,26 +4,32 @@
 const UsuarioGrupo = use('App/Models/UsuarioGrupo');
 
 class UsuarioGrupoController {
-  async index() {
+  async index({ response }) {
     const usuariosgrupo = await UsuarioGrupo.all();
-    return usuariosgrupo;
+    return response.json({
+      usuariosgrupo,
+    });
   }
 
-  async store({ request }) {
+  async store({ request, response }) {
     const data = request.all();
     const usuariogrupo = await UsuarioGrupo.create(data);
 
-    return usuariogrupo;
+    return response.json({
+      usuariogrupo,
+    });
   }
 
-  async show({ params }) {
+  async show({ params, response }) {
     const { id } = params;
     const usuariogrupo = await UsuarioGrupo.findOrFail(id);
 
-    return usuariogrupo;
+    return response.json({
+      usuariogrupo,
+    });
   }
 
-  async update({ params, request }) {
+  async update({ params, request, response }) {
     const { id } = params;
     const usuariogrupo = await UsuarioGrupo.findOrFail(id);
     const data = request.all();
@@ -31,7 +37,9 @@ class UsuarioGrupoController {
     usuariogrupo.merge(data);
     await usuariogrupo.save();
 
-    return usuariogrupo;
+    return response.json({
+      usuariogrupo,
+    });
   }
 
   async destroy({ params }) {

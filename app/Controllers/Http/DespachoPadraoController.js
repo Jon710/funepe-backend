@@ -3,27 +3,33 @@
 const DespachoPadrao = use('App/Models/DespachoPadrao');
 
 class DespachoPadraoController {
-  async index() {
+  async index({ response }) {
     const despachospadrao = await DespachoPadrao.all();
 
-    return despachospadrao;
+    return response.json({
+      despachospadrao,
+    });
   }
 
-  async store({ request }) {
+  async store({ request, response }) {
     const data = request.all();
     const despachopadrao = await DespachoPadrao.create(data);
 
-    return despachopadrao;
+    return response.json({
+      despachopadrao,
+    });
   }
 
-  async show({ params }) {
+  async show({ params, response }) {
     const { id } = params;
     const despachopadrao = await DespachoPadrao.findOrFail(id);
 
-    return despachopadrao;
+    return response.json({
+      despachopadrao,
+    });
   }
 
-  async update({ params, request }) {
+  async update({ params, request, response }) {
     const { id } = params;
     const despachopadrao = await DespachoPadrao.findOrFail(id);
     const data = request.all();
@@ -31,7 +37,9 @@ class DespachoPadraoController {
     despachopadrao.merge(data);
     await despachopadrao.save();
 
-    return despachopadrao;
+    return response.json({
+      despachopadrao,
+    });
   }
 
   async destroy({ params }) {

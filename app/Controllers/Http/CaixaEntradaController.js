@@ -32,14 +32,16 @@ class CaixaEntradaController {
     });
   }
 
-  async show({ params }) {
+  async show({ params, response }) {
     const { id } = params;
     const caixaentrada = await CaixaEntrada.findOrFail(id);
 
-    return caixaentrada;
+    return response.json({
+      caixaentrada,
+    });
   }
 
-  async update({ params, request }) {
+  async update({ params, request, response }) {
     const { id } = params;
 
     const caixaentrada = await CaixaEntrada.findOrFail(id);
@@ -49,7 +51,9 @@ class CaixaEntradaController {
     caixaentrada.merge(data);
     await caixaentrada.save();
 
-    return caixaentrada;
+    return response.json({
+      caixaentrada,
+    });
   }
 
   async destroy({ params }) {

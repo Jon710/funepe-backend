@@ -1,28 +1,34 @@
 const Grupo = use('App/Models/Grupo');
 
 class GrupoController {
-  async index() {
+  async index({ response }) {
     const groups = await Grupo.all();
-    return groups;
+    return response.json({
+      groups,
+    });
   }
 
-  async show({ params }) {
+  async show({ params, response }) {
     const { id } = params;
 
     const group = await Grupo.findOrFail(id);
 
-    return group;
+    return response.json({
+      group,
+    });
   }
 
-  async store({ request }) {
+  async store({ request, response }) {
     const data = request.all();
 
     const group = await Grupo.create(data);
 
-    return group;
+    return response.json({
+      group,
+    });
   }
 
-  async update({ params, request }) {
+  async update({ params, request, response }) {
     const { id } = params;
     const group = await Grupo.findOrFail(id);
     const data = request.all();
@@ -30,7 +36,9 @@ class GrupoController {
     group.merge(data);
     await group.save();
 
-    return group;
+    return response.json({
+      group,
+    });
   }
 
   async destroy({ params }) {
