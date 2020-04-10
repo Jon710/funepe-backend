@@ -16,10 +16,6 @@ class UsuarioGrupoController {
     return usuariogrupo;
   }
 
-  /**
-   * Display a single usuariogrupo.
-   * GET usuariogrupos/:id
-   */
   async show({ params }) {
     const { id } = params;
     const usuariogrupo = await UsuarioGrupo.findOrFail(id);
@@ -27,9 +23,6 @@ class UsuarioGrupoController {
     return usuariogrupo;
   }
 
-  /**
-   * Update usuariogrupo details.
-   */
   async update({ params, request }) {
     const { id } = params;
     const usuariogrupo = await UsuarioGrupo.findOrFail(id);
@@ -41,9 +34,6 @@ class UsuarioGrupoController {
     return usuariogrupo;
   }
 
-  /**
-   * Delete a usuariogrupo with id.
-   */
   async destroy({ params }) {
     const { id } = params;
     const usuariogrupo = await UsuarioGrupo.findOrFail(id);

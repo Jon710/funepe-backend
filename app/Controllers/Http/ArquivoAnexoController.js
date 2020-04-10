@@ -19,18 +19,12 @@ class ArquivoAnexoController {
 
   async store({ request, params, response }) {
     const document = await Documento.findOrFail(params.documents_id);
-    console.log('DOC: ', request.all());
-    // console.log('DOC: ', request.file('arquivos'));
 
     const arquivoanexo = request.file('arquivos');
-    // const myfiles = arquivoanexo;
-    console.log('ARQUIVOS');
-    
+
     await arquivoanexo.moveAll(Helpers.tmpPath('uploads'), (file) => ({
       name: `${Date.now()}-${file.clientName}`,
     }));
-
-    console.log('ARQUIVO2');
 
     if (!arquivoanexo.movedAll()) {
       return arquivoanexo.errors();
