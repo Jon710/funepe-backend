@@ -9,6 +9,8 @@ class CaixaEntradaController {
     const caixaentradas = await CaixaEntrada.query()
       .where('iddestinatario', usuarios_id)
       .with('documento')
+      .with('documento.tipoDocumento')
+      .with('documento.usuario')
       .with('usuario')
       .fetch();
     // console.log("caixaentradas");
@@ -25,6 +27,7 @@ class CaixaEntradaController {
   async store({ request, params, response }) {
     const { usuarios_id } = params;
     const data = request.all();
+    console.log('cxdata: ', data);
     const caixaentrada = await CaixaEntrada.create({
       ...data,
       iddestinatario: usuarios_id,
