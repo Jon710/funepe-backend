@@ -3,27 +3,33 @@
 const Prioridade = use('App/Models/Prioridade');
 
 class PrioridadeController {
-  async index() {
+  async index({ response }) {
     const prioridades = await Prioridade.all();
 
-    return prioridades;
+    return response.json({
+      prioridades,
+    });
   }
 
-  async store({ request }) {
+  async store({ request, response }) {
     const data = request.all();
     const prioridade = await Prioridade.create(data);
 
-    return prioridade;
+    return response.json({
+      prioridade,
+    });
   }
 
-  async show({ params }) {
+  async show({ params, response }) {
     const { id } = params;
     const prioridade = await Prioridade.findOrFail(id);
 
-    return prioridade;
+    return response.json({
+      prioridade,
+    });
   }
 
-  async update({ params, request }) {
+  async update({ params, request, response }) {
     const { id } = params;
     const prioridade = await Prioridade.findOrFail(id);
     const data = request.all();
@@ -31,7 +37,9 @@ class PrioridadeController {
     prioridade.merge(data);
     await prioridade.save();
 
-    return prioridade;
+    return response.json({
+      prioridade,
+    });
   }
 
   async destroy({ params }) {

@@ -5,40 +5,46 @@ class TipoDocumentoController {
    * Show a list of all tipodocumentos.
    * GET tipodocumentos
    */
-  async index() {
+  async index({ response }) {
     const types = await TipoDocumento.all();
-    return types;
+    return response.json({
+      types,
+    });
   }
 
   /**
    * Create/save a new tipodocumento.
    * POST tipodocumentos
    */
-  async store({ request }) {
+  async store({ request, response }) {
     const data = request.all();
 
     const type = await TipoDocumento.create(data);
 
-    return type;
+    return response.json({
+      type,
+    });
   }
 
   /**
    * Display a single tipodocumento.
    * GET tipodocumentos/:id
    */
-  async show({ params }) {
+  async show({ params, response }) {
     const { id } = params;
 
     const type = await TipoDocumento.findOrFail(id);
 
-    return type;
+    return response.json({
+      type,
+    });
   }
 
   /**
    * Update tipodocumento details.
    * PUT or PATCH tipodocumentos/:id
    */
-  async update({ params, request }) {
+  async update({ params, request, response }) {
     const { id } = params;
     const type = await TipoDocumento.findOrFail(id);
     const data = request.all();
@@ -46,7 +52,9 @@ class TipoDocumentoController {
     type.merge(data);
     await type.save();
 
-    return type;
+    return response.json({
+      type,
+    });
   }
 
   /**
