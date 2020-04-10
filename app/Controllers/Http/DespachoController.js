@@ -3,10 +3,6 @@
 const Despacho = use('App/Models/Despacho');
 
 class DespachoController {
-  /**
-   * Show a list of all despachos.
-   * GET despachos
-   */
   async index({ params }) {
     const { documents_id } = params;
     // console.log(documents_id);

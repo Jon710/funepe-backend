@@ -9,9 +9,6 @@ class DespachoPadraoController {
     return despachospadrao;
   }
 
-  /**
-   * Create/save a new despachopadrao.
-   */
   async store({ request }) {
     const data = request.all();
     const despachopadrao = await DespachoPadrao.create(data);
@@ -19,9 +16,6 @@ class DespachoPadraoController {
     return despachopadrao;
   }
 
-  /**
-   * Display a single despachopadrao.
-   */
   async show({ params }) {
     const { id } = params;
     const despachopadrao = await DespachoPadrao.findOrFail(id);
