@@ -42,11 +42,14 @@ class FuncaoController {
     });
   }
 
-  async destroy({ params }) {
+  async destroy({ params, response }) {
     const { id } = params;
     const role = await Funcao.findOrFail(id);
 
     await role.delete();
+    return response.json({
+      message: 'Excluído com Sucesso!'
+    });
   }
 }
 
