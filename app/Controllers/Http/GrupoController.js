@@ -41,11 +41,14 @@ class GrupoController {
     });
   }
 
-  async destroy({ params }) {
+  async destroy({ params, response }) {
     const { id } = params;
     const group = await Grupo.findOrFail(id);
 
     await group.delete();
+    return response.json({
+      message: 'Excluído com sucesso.',
+    });
   }
 }
 

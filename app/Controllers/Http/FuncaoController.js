@@ -48,7 +48,7 @@ class FuncaoController {
 
     await role.delete();
     return response.json({
-      message: 'Excluído com Sucesso!'
+      message: 'Excluído com Sucesso!',
     });
   }
 }
