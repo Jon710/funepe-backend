@@ -42,11 +42,14 @@ class DespachoPadraoController {
     });
   }
 
-  async destroy({ params }) {
+  async destroy({ params, response }) {
     const { id } = params;
     const despachopadrao = await DespachoPadrao.findOrFail(id);
 
     await despachopadrao.delete();
+    return response.json({
+      message: 'Excluído com sucesso.',
+    });
   }
 }
 

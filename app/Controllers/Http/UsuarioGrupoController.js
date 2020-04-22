@@ -42,11 +42,14 @@ class UsuarioGrupoController {
     });
   }
 
-  async destroy({ params }) {
+  async destroy({ params, response }) {
     const { id } = params;
     const usuariogrupo = await UsuarioGrupo.findOrFail(id);
 
     await usuariogrupo.delete();
+    return response.json({
+      message: 'Excluído com sucesso.',
+    });
   }
 }
 

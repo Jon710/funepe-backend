@@ -41,11 +41,14 @@ class TipoDocumentoController {
     });
   }
 
-  async destroy({ params }) {
+  async destroy({ params, response }) {
     const { id } = params;
     const type = await TipoDocumento.findOrFail(id);
 
     await type.delete();
+    return response.json({
+      message: 'Excluído com sucesso.',
+    });
   }
 }
 
