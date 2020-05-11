@@ -1,93 +1,58 @@
-'use strict'
-
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
-/** @typedef {import('@adonisjs/framework/src/View')} View */
+const ItemRequisicao = use('App/Models/Compras/ItemRequisicao');
 
-/**
- * Resourceful controller for interacting with itemrequisicaos
- */
 class ItemRequisicaoController {
-  /**
-   * Show a list of all itemrequisicaos.
-   * GET itemrequisicaos
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async index ({ request, response, view }) {
+  async index({ response }) {
+    const itensrequisicao = await ItemRequisicao.all();
+
+    return response.json({
+      itensrequisicao,
+    });
   }
 
-  /**
-   * Render a form to be used for creating a new itemrequisicao.
-   * GET itemrequisicaos/create
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async create ({ request, response, view }) {
+  async store({ request, response }) {
+    const data = request.all();
+
+    const itemrequisicao = await ItemRequisicao.create(data);
+
+    return response.json({
+      itemrequisicao,
+    });
   }
 
-  /**
-   * Create/save a new itemrequisicao.
-   * POST itemrequisicaos
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async store ({ request, response }) {
+  async show({ params, response }) {
+    const { id } = params;
+
+    const empresa = await Empresa.findOrFail(id);
+
+    return response.json({
+      empresa,
+    });
   }
 
-  /**
-   * Display a single itemrequisicao.
-   * GET itemrequisicaos/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async show ({ params, request, response, view }) {
+  async update({ params, request, response }) {
+    const { id } = params;
+    const itemrequisicao = await ItemRequisicao.findOrFail(id);
+    const data = request.all();
+
+    itemrequisicao.merge(data);
+    await itemrequisicao.save();
+
+    return response.json({
+      itemrequisicao,
+    });
   }
 
-  /**
-   * Render a form to update an existing itemrequisicao.
-   * GET itemrequisicaos/:id/edit
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async edit ({ params, request, response, view }) {
-  }
+  async destroy({ params, response }) {
+    const { id } = params;
+    const itemrequisicao = await ItemRequisicao.findOrFail(id);
 
-  /**
-   * Update itemrequisicao details.
-   * PUT or PATCH itemrequisicaos/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async update ({ params, request, response }) {
-  }
-
-  /**
-   * Delete a itemrequisicao with id.
-   * DELETE itemrequisicaos/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async destroy ({ params, request, response }) {
+    await itemrequisicao.delete();
+    return response.json({
+      message: 'Excluído com Sucesso!',
+    });
   }
 }
 
-module.exports = ItemRequisicaoController
+module.exports = ItemRequisicaoController;

@@ -1,4 +1,4 @@
-const TipoDocumento = use('App/Models/TipoDocumento');
+const TipoDocumento = use('App/Models/Protocolo/TipoDocumento');
 
 class TipoDocumentoController {
   async index({ response }) {

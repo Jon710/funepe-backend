@@ -1,93 +1,58 @@
-'use strict'
-
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
-/** @typedef {import('@adonisjs/framework/src/View')} View */
+const HistoricoRequisicao = use('App/Models/Compras/HistoricoRequisicao');
 
-/**
- * Resourceful controller for interacting with historicorequisicaos
- */
 class HistoricoRequisicaoController {
-  /**
-   * Show a list of all historicorequisicaos.
-   * GET historicorequisicaos
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async index ({ request, response, view }) {
+  async index({ response }) {
+    const historicosrequisicao = await HistoricoRequisicao.all();
+
+    return response.json({
+      historicosrequisicao,
+    });
   }
 
-  /**
-   * Render a form to be used for creating a new historicorequisicao.
-   * GET historicorequisicaos/create
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async create ({ request, response, view }) {
+  async store({ request, response }) {
+    const data = request.all();
+
+    const historicorequisicao = await HistoricoRequisicao.create(data);
+
+    return response.json({
+      historicorequisicao,
+    });
   }
 
-  /**
-   * Create/save a new historicorequisicao.
-   * POST historicorequisicaos
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async store ({ request, response }) {
+  async show({ params, response }) {
+    const { id } = params;
+
+    const historicorequisicao = await HistoricoRequisicao.findOrFail(id);
+
+    return response.json({
+      historicorequisicao,
+    });
   }
 
-  /**
-   * Display a single historicorequisicao.
-   * GET historicorequisicaos/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async show ({ params, request, response, view }) {
+  async update({ params, request, response }) {
+    const { id } = params;
+    const historicorequisicao = await HistoricoRequisicao.findOrFail(id);
+    const data = request.all();
+
+    historicorequisicao.merge(data);
+    await historicorequisicao.save();
+
+    return response.json({
+      historicorequisicao,
+    });
   }
 
-  /**
-   * Render a form to update an existing historicorequisicao.
-   * GET historicorequisicaos/:id/edit
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async edit ({ params, request, response, view }) {
-  }
+  async destroy({ params, response }) {
+    const { id } = params;
+    const historicorequisicao = await HistoricoRequisicao.findOrFail(id);
 
-  /**
-   * Update historicorequisicao details.
-   * PUT or PATCH historicorequisicaos/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async update ({ params, request, response }) {
-  }
-
-  /**
-   * Delete a historicorequisicao with id.
-   * DELETE historicorequisicaos/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async destroy ({ params, request, response }) {
+    await historicorequisicao.delete();
+    return response.json({
+      message: 'Excluído com Sucesso!',
+    });
   }
 }
 
-module.exports = HistoricoRequisicaoController
+module.exports = HistoricoRequisicaoController;

@@ -1,93 +1,58 @@
-'use strict'
-
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
-/** @typedef {import('@adonisjs/framework/src/View')} View */
+const Fornecedor = use('App/Models/Compras/Fornecedor');
 
-/**
- * Resourceful controller for interacting with fornecedors
- */
 class FornecedorController {
-  /**
-   * Show a list of all fornecedors.
-   * GET fornecedors
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async index ({ request, response, view }) {
+  async index({ response }) {
+    const fornecedores = await Fornecedor.all();
+
+    return response.json({
+      fornecedores,
+    });
   }
 
-  /**
-   * Render a form to be used for creating a new fornecedor.
-   * GET fornecedors/create
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async create ({ request, response, view }) {
+  async store({ request, response }) {
+    const data = request.all();
+
+    const fornecedor = await Fornecedor.create(data);
+
+    return response.json({
+      fornecedor,
+    });
   }
 
-  /**
-   * Create/save a new fornecedor.
-   * POST fornecedors
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async store ({ request, response }) {
+  async show({ params, response }) {
+    const { id } = params;
+
+    const fornecedor = await Fornecedor.findOrFail(id);
+
+    return response.json({
+      fornecedor,
+    });
   }
 
-  /**
-   * Display a single fornecedor.
-   * GET fornecedors/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async show ({ params, request, response, view }) {
+  async update({ params, request, response }) {
+    const { id } = params;
+    const fornecedor = await Fornecedor.findOrFail(id);
+    const data = request.all();
+
+    fornecedor.merge(data);
+    await fornecedor.save();
+
+    return response.json({
+      fornecedor,
+    });
   }
 
-  /**
-   * Render a form to update an existing fornecedor.
-   * GET fornecedors/:id/edit
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async edit ({ params, request, response, view }) {
-  }
+  async destroy({ params, response }) {
+    const { id } = params;
+    const fornecedor = await Fornecedor.findOrFail(id);
 
-  /**
-   * Update fornecedor details.
-   * PUT or PATCH fornecedors/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async update ({ params, request, response }) {
-  }
-
-  /**
-   * Delete a fornecedor with id.
-   * DELETE fornecedors/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async destroy ({ params, request, response }) {
+    await fornecedor.delete();
+    return response.json({
+      message: 'Excluído com Sucesso!',
+    });
   }
 }
 
-module.exports = FornecedorController
+module.exports = FornecedorController;

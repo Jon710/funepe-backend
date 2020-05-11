@@ -1,4 +1,4 @@
-const Grupo = use('App/Models/Grupo');
+const Grupo = use('App/Models/Protocolo/Grupo');
 
 class GrupoController {
   async index({ response }) {

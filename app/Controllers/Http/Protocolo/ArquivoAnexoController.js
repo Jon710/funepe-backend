@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
-const ArquivoAnexo = use('App/Models/ArquivoAnexo');
-const Documento = use('App/Models/Documento');
+const ArquivoAnexo = use('App/Models/Protocolo/ArquivoAnexo');
+const Documento = use('App/Models/Protocolo/Documento');
 const Helpers = use('Helpers');
 
 class ArquivoAnexoController {

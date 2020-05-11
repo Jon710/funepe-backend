@@ -1,93 +1,58 @@
-'use strict'
-
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
-/** @typedef {import('@adonisjs/framework/src/View')} View */
+const EnderecoFornecedor = use('App/Models/Compras/EnderecoFornecedor');
 
-/**
- * Resourceful controller for interacting with enderecofornecedors
- */
 class EnderecoFornecedorController {
-  /**
-   * Show a list of all enderecofornecedors.
-   * GET enderecofornecedors
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async index ({ request, response, view }) {
+  async index({ response }) {
+    const enderecosfornecedor = await EnderecoFornecedor.all();
+
+    return response.json({
+      enderecosfornecedor,
+    });
   }
 
-  /**
-   * Render a form to be used for creating a new enderecofornecedor.
-   * GET enderecofornecedors/create
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async create ({ request, response, view }) {
+  async store({ request, response }) {
+    const data = request.all();
+
+    const enderecofornecedor = await EnderecoFornecedor.create(data);
+
+    return response.json({
+      enderecofornecedor,
+    });
   }
 
-  /**
-   * Create/save a new enderecofornecedor.
-   * POST enderecofornecedors
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async store ({ request, response }) {
+  async show({ params, response }) {
+    const { id } = params;
+
+    const enderecofornecedor = await EnderecoFornecedor.findOrFail(id);
+
+    return response.json({
+      enderecofornecedor,
+    });
   }
 
-  /**
-   * Display a single enderecofornecedor.
-   * GET enderecofornecedors/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async show ({ params, request, response, view }) {
+  async update({ params, request, response }) {
+    const { id } = params;
+    const enderecofornecedor = await EnderecoFornecedor.findOrFail(id);
+    const data = request.all();
+
+    enderecofornecedor.merge(data);
+    await enderecofornecedor.save();
+
+    return response.json({
+      enderecofornecedor,
+    });
   }
 
-  /**
-   * Render a form to update an existing enderecofornecedor.
-   * GET enderecofornecedors/:id/edit
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async edit ({ params, request, response, view }) {
-  }
+  async destroy({ params, response }) {
+    const { id } = params;
+    const enderecofornecedor = await EnderecoFornecedor.findOrFail(id);
 
-  /**
-   * Update enderecofornecedor details.
-   * PUT or PATCH enderecofornecedors/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async update ({ params, request, response }) {
-  }
-
-  /**
-   * Delete a enderecofornecedor with id.
-   * DELETE enderecofornecedors/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async destroy ({ params, request, response }) {
+    await enderecofornecedor.delete();
+    return response.json({
+      message: 'Excluído com Sucesso!',
+    });
   }
 }
 
-module.exports = EnderecoFornecedorController
+module.exports = EnderecoFornecedorController;

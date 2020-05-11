@@ -1,93 +1,58 @@
-'use strict'
-
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
-/** @typedef {import('@adonisjs/framework/src/View')} View */
+const Fornecimento = use('App/Models/Compras/Fornecimento');
 
-/**
- * Resourceful controller for interacting with fornecimentos
- */
 class FornecimentoController {
-  /**
-   * Show a list of all fornecimentos.
-   * GET fornecimentos
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async index ({ request, response, view }) {
+  async index({ response }) {
+    const fornecimentos = await Fornecimento.all();
+
+    return response.json({
+      fornecimentos,
+    });
   }
 
-  /**
-   * Render a form to be used for creating a new fornecimento.
-   * GET fornecimentos/create
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async create ({ request, response, view }) {
+  async store({ request, response }) {
+    const data = request.all();
+
+    const fornecimento = await Fornecimento.create(data);
+
+    return response.json({
+      fornecimento,
+    });
   }
 
-  /**
-   * Create/save a new fornecimento.
-   * POST fornecimentos
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async store ({ request, response }) {
+  async show({ params, response }) {
+    const { id } = params;
+
+    const fornecimento = await Fornecimento.findOrFail(id);
+
+    return response.json({
+      fornecimento,
+    });
   }
 
-  /**
-   * Display a single fornecimento.
-   * GET fornecimentos/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async show ({ params, request, response, view }) {
+  async update({ params, request, response }) {
+    const { id } = params;
+    const fornecimento = await Fornecimento.findOrFail(id);
+    const data = request.all();
+
+    fornecimento.merge(data);
+    await fornecimento.save();
+
+    return response.json({
+      fornecimento,
+    });
   }
 
-  /**
-   * Render a form to update an existing fornecimento.
-   * GET fornecimentos/:id/edit
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async edit ({ params, request, response, view }) {
-  }
+  async destroy({ params, response }) {
+    const { id } = params;
+    const fornecimento = await Fornecimento.findOrFail(id);
 
-  /**
-   * Update fornecimento details.
-   * PUT or PATCH fornecimentos/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async update ({ params, request, response }) {
-  }
-
-  /**
-   * Delete a fornecimento with id.
-   * DELETE fornecimentos/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async destroy ({ params, request, response }) {
+    await fornecimento.delete();
+    return response.json({
+      message: 'Excluído com Sucesso!',
+    });
   }
 }
 
-module.exports = FornecimentoController
+module.exports = FornecimentoController;

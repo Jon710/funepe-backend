@@ -1,6 +1,5 @@
 /* eslint-disable camelcase */
-
-const DespachoPadrao = use('App/Models/DespachoPadrao');
+const DespachoPadrao = use('App/Models/Protocolo/DespachoPadrao');
 
 class DespachoPadraoController {
   async index({ response }) {

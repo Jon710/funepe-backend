@@ -1,4 +1,4 @@
-const Usuario = use('App/Models/Usuario');
+const Usuario = use('App/Models/Protocolo/Usuario');
 
 class SessionController {
   async store({ request, auth, response }) {

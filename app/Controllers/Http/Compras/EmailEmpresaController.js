@@ -1,93 +1,58 @@
-'use strict'
-
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
-/** @typedef {import('@adonisjs/framework/src/View')} View */
+const EmailEmpresa = use('App/Models/Compras/EmailEmpresa');
 
-/**
- * Resourceful controller for interacting with emailempresas
- */
 class EmailEmpresaController {
-  /**
-   * Show a list of all emailempresas.
-   * GET emailempresas
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async index ({ request, response, view }) {
+  async index({ response }) {
+    const emailsempresa = await EmailEmpresa.all();
+
+    return response.json({
+      emailsempresa,
+    });
   }
 
-  /**
-   * Render a form to be used for creating a new emailempresa.
-   * GET emailempresas/create
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async create ({ request, response, view }) {
+  async store({ request, response }) {
+    const data = request.all();
+
+    const emailempresa = await EmailEmpresa.create(data);
+
+    return response.json({
+      emailempresa,
+    });
   }
 
-  /**
-   * Create/save a new emailempresa.
-   * POST emailempresas
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async store ({ request, response }) {
+  async show({ params, response }) {
+    const { id } = params;
+
+    const emailempresa = await EmailEmpresa.findOrFail(id);
+
+    return response.json({
+      emailempresa,
+    });
   }
 
-  /**
-   * Display a single emailempresa.
-   * GET emailempresas/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async show ({ params, request, response, view }) {
+  async update({ params, request, response }) {
+    const { id } = params;
+    const emailempresa = await EmailEmpresa.findOrFail(id);
+    const data = request.all();
+
+    emailempresa.merge(data);
+    await emailempresa.save();
+
+    return response.json({
+      emailempresa,
+    });
   }
 
-  /**
-   * Render a form to update an existing emailempresa.
-   * GET emailempresas/:id/edit
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async edit ({ params, request, response, view }) {
-  }
+  async destroy({ params, response }) {
+    const { id } = params;
+    const emailempresa = await EmailEmpresa.findOrFail(id);
 
-  /**
-   * Update emailempresa details.
-   * PUT or PATCH emailempresas/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async update ({ params, request, response }) {
-  }
-
-  /**
-   * Delete a emailempresa with id.
-   * DELETE emailempresas/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async destroy ({ params, request, response }) {
+    await emailempresa.delete();
+    return response.json({
+      message: 'Excluído com Sucesso!',
+    });
   }
 }
 
-module.exports = EmailEmpresaController
+module.exports = EmailEmpresaController;

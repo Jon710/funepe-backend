@@ -1,93 +1,58 @@
-'use strict'
-
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
-/** @typedef {import('@adonisjs/framework/src/View')} View */
+const TelefoneFavorecido = use('App/Models/Compras/TelefoneFavorecido');
 
-/**
- * Resourceful controller for interacting with telefonefavorecidos
- */
 class TelefoneFavorecidoController {
-  /**
-   * Show a list of all telefonefavorecidos.
-   * GET telefonefavorecidos
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async index ({ request, response, view }) {
+  async index({ response }) {
+    const telefonesfavorecido = await TelefoneFavorecido.all();
+
+    return response.json({
+      telefonesfavorecido,
+    });
   }
 
-  /**
-   * Render a form to be used for creating a new telefonefavorecido.
-   * GET telefonefavorecidos/create
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async create ({ request, response, view }) {
+  async store({ request, response }) {
+    const data = request.all();
+
+    const telefonefavorecido = await TelefoneFavorecido.create(data);
+
+    return response.json({
+      telefonefavorecido,
+    });
   }
 
-  /**
-   * Create/save a new telefonefavorecido.
-   * POST telefonefavorecidos
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async store ({ request, response }) {
+  async show({ params, response }) {
+    const { id } = params;
+
+    const telefonefavorecido = await TelefoneFavorecido.findOrFail(id);
+
+    return response.json({
+      telefonefavorecido,
+    });
   }
 
-  /**
-   * Display a single telefonefavorecido.
-   * GET telefonefavorecidos/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async show ({ params, request, response, view }) {
+  async update({ params, request, response }) {
+    const { id } = params;
+    const telefonefavorecido = await TelefoneFavorecido.findOrFail(id);
+    const data = request.all();
+
+    telefonefavorecido.merge(data);
+    await telefonefavorecido.save();
+
+    return response.json({
+      telefonefavorecido,
+    });
   }
 
-  /**
-   * Render a form to update an existing telefonefavorecido.
-   * GET telefonefavorecidos/:id/edit
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async edit ({ params, request, response, view }) {
-  }
+  async destroy({ params, response }) {
+    const { id } = params;
+    const telefonefavorecido = await TelefoneFavorecido.findOrFail(id);
 
-  /**
-   * Update telefonefavorecido details.
-   * PUT or PATCH telefonefavorecidos/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async update ({ params, request, response }) {
-  }
-
-  /**
-   * Delete a telefonefavorecido with id.
-   * DELETE telefonefavorecidos/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async destroy ({ params, request, response }) {
+    await telefonefavorecido.delete();
+    return response.json({
+      message: 'Excluído com Sucesso!',
+    });
   }
 }
 
-module.exports = TelefoneFavorecidoController
+module.exports = TelefoneFavorecidoController;

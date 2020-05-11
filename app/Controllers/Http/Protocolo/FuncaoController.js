@@ -1,4 +1,4 @@
-const Funcao = use('App/Models/Funcao');
+const Funcao = use('App/Models/Protocolo/Funcao');
 
 class FuncaoController {
   async index({ response }) {

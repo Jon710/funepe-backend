@@ -1,6 +1,5 @@
 /* eslint-disable camelcase */
-
-const Documento = use('App/Models/Documento');
+const Documento = use('App/Models/Protocolo/Documento');
 
 class DocumentoController {
   async index({ params, response }) {

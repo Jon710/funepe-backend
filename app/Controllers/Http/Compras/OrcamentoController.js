@@ -1,93 +1,58 @@
-'use strict'
-
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
-/** @typedef {import('@adonisjs/framework/src/View')} View */
+const Orcamento = use('App/Models/Compras/Orcamento');
 
-/**
- * Resourceful controller for interacting with orcamentos
- */
 class OrcamentoController {
-  /**
-   * Show a list of all orcamentos.
-   * GET orcamentos
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async index ({ request, response, view }) {
+  async index({ response }) {
+    const orcamentos = await Orcamento.all();
+
+    return response.json({
+      orcamentos,
+    });
   }
 
-  /**
-   * Render a form to be used for creating a new orcamento.
-   * GET orcamentos/create
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async create ({ request, response, view }) {
+  async store({ request, response }) {
+    const data = request.all();
+
+    const orcamento = await Orcamento.create(data);
+
+    return response.json({
+      orcamento,
+    });
   }
 
-  /**
-   * Create/save a new orcamento.
-   * POST orcamentos
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async store ({ request, response }) {
+  async show({ params, response }) {
+    const { id } = params;
+
+    const orcamento = await Orcamento.findOrFail(id);
+
+    return response.json({
+      orcamento,
+    });
   }
 
-  /**
-   * Display a single orcamento.
-   * GET orcamentos/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async show ({ params, request, response, view }) {
+  async update({ params, request, response }) {
+    const { id } = params;
+    const orcamento = await Orcamento.findOrFail(id);
+    const data = request.all();
+
+    orcamento.merge(data);
+    await orcamento.save();
+
+    return response.json({
+      orcamento,
+    });
   }
 
-  /**
-   * Render a form to update an existing orcamento.
-   * GET orcamentos/:id/edit
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async edit ({ params, request, response, view }) {
-  }
+  async destroy({ params, response }) {
+    const { id } = params;
+    const orcamento = await Orcamento.findOrFail(id);
 
-  /**
-   * Update orcamento details.
-   * PUT or PATCH orcamentos/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async update ({ params, request, response }) {
-  }
-
-  /**
-   * Delete a orcamento with id.
-   * DELETE orcamentos/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async destroy ({ params, request, response }) {
+    await orcamento.delete();
+    return response.json({
+      message: 'Excluído com Sucesso!',
+    });
   }
 }
 
-module.exports = OrcamentoController
+module.exports = OrcamentoController;

@@ -1,93 +1,58 @@
-'use strict'
-
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
-/** @typedef {import('@adonisjs/framework/src/View')} View */
+const TipoEmpresa = use('App/Models/Compras/TipoEmpresa');
 
-/**
- * Resourceful controller for interacting with tipoempresas
- */
 class TipoEmpresaController {
-  /**
-   * Show a list of all tipoempresas.
-   * GET tipoempresas
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async index ({ request, response, view }) {
+  async index({ response }) {
+    const tiposempresa = await TipoEmpresa.all();
+
+    return response.json({
+      tiposempresa,
+    });
   }
 
-  /**
-   * Render a form to be used for creating a new tipoempresa.
-   * GET tipoempresas/create
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async create ({ request, response, view }) {
+  async store({ request, response }) {
+    const data = request.all();
+
+    const tipoempresa = await TipoEmpresa.create(data);
+
+    return response.json({
+      tipoempresa,
+    });
   }
 
-  /**
-   * Create/save a new tipoempresa.
-   * POST tipoempresas
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async store ({ request, response }) {
+  async show({ params, response }) {
+    const { id } = params;
+
+    const tipoempresa = await TipoEmpresa.findOrFail(id);
+
+    return response.json({
+      tipoempresa,
+    });
   }
 
-  /**
-   * Display a single tipoempresa.
-   * GET tipoempresas/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async show ({ params, request, response, view }) {
+  async update({ params, request, response }) {
+    const { id } = params;
+    const tipoempresa = await TipoEmpresa.findOrFail(id);
+    const data = request.all();
+
+    tipoempresa.merge(data);
+    await tipoempresa.save();
+
+    return response.json({
+      tipoempresa,
+    });
   }
 
-  /**
-   * Render a form to update an existing tipoempresa.
-   * GET tipoempresas/:id/edit
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async edit ({ params, request, response, view }) {
-  }
+  async destroy({ params, response }) {
+    const { id } = params;
+    const tipoempresa = await TipoEmpresa.findOrFail(id);
 
-  /**
-   * Update tipoempresa details.
-   * PUT or PATCH tipoempresas/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async update ({ params, request, response }) {
-  }
-
-  /**
-   * Delete a tipoempresa with id.
-   * DELETE tipoempresas/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async destroy ({ params, request, response }) {
+    await tipoempresa.delete();
+    return response.json({
+      message: 'Excluído com Sucesso!',
+    });
   }
 }
 
-module.exports = TipoEmpresaController
+module.exports = TipoEmpresaController;

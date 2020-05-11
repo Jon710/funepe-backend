@@ -1,93 +1,58 @@
-'use strict'
-
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
-/** @typedef {import('@adonisjs/framework/src/View')} View */
+const Departamento = use('App/Models/Compras/Departamento');
 
-/**
- * Resourceful controller for interacting with departamentos
- */
 class DepartamentoController {
-  /**
-   * Show a list of all departamentos.
-   * GET departamentos
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async index ({ request, response, view }) {
+  async index({ response }) {
+    const departamentos = await Departamento.all();
+
+    return response.json({
+      departamentos,
+    });
   }
 
-  /**
-   * Render a form to be used for creating a new departamento.
-   * GET departamentos/create
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async create ({ request, response, view }) {
+  async store({ request, response }) {
+    const data = request.all();
+
+    const departamento = await Departamento.create(data);
+
+    return response.json({
+      departamento,
+    });
   }
 
-  /**
-   * Create/save a new departamento.
-   * POST departamentos
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async store ({ request, response }) {
+  async show({ params, response }) {
+    const { id } = params;
+
+    const departamento = await Departamento.findOrFail(id);
+
+    return response.json({
+      departamento,
+    });
   }
 
-  /**
-   * Display a single departamento.
-   * GET departamentos/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async show ({ params, request, response, view }) {
+  async update({ params, request, response }) {
+    const { id } = params;
+    const departamento = await Departamento.findOrFail(id);
+    const data = request.all();
+
+    departamento.merge(data);
+    await departamento.save();
+
+    return response.json({
+      departamento,
+    });
   }
 
-  /**
-   * Render a form to update an existing departamento.
-   * GET departamentos/:id/edit
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async edit ({ params, request, response, view }) {
-  }
+  async destroy({ params, response }) {
+    const { id } = params;
+    const departamento = await Departamento.findOrFail(id);
 
-  /**
-   * Update departamento details.
-   * PUT or PATCH departamentos/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async update ({ params, request, response }) {
-  }
-
-  /**
-   * Delete a departamento with id.
-   * DELETE departamentos/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async destroy ({ params, request, response }) {
+    await departamento.delete();
+    return response.json({
+      message: 'Excluído com Sucesso!',
+    });
   }
 }
 
-module.exports = DepartamentoController
+module.exports = DepartamentoController;

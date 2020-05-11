@@ -1,6 +1,5 @@
 /* eslint-disable camelcase */
-
-const CaixaEntrada = use('App/Models/CaixaEntrada');
+const CaixaEntrada = use('App/Models/Protocolo/CaixaEntrada');
 
 class CaixaEntradaController {
   async index({ params, response }) {

@@ -1,93 +1,58 @@
-'use strict'
-
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
-/** @typedef {import('@adonisjs/framework/src/View')} View */
+const TipoFornecedor = use('App/Models/Compras/TipoFornecedor');
 
-/**
- * Resourceful controller for interacting with tipofornecedors
- */
 class TipoFornecedorController {
-  /**
-   * Show a list of all tipofornecedors.
-   * GET tipofornecedors
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async index ({ request, response, view }) {
+  async index({ response }) {
+    const tiposfornecedor = await TipoFornecedor.all();
+
+    return response.json({
+      tiposfornecedor,
+    });
   }
 
-  /**
-   * Render a form to be used for creating a new tipofornecedor.
-   * GET tipofornecedors/create
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async create ({ request, response, view }) {
+  async store({ request, response }) {
+    const data = request.all();
+
+    const tipofornecedor = await TipoFornecedor.create(data);
+
+    return response.json({
+      tipofornecedor,
+    });
   }
 
-  /**
-   * Create/save a new tipofornecedor.
-   * POST tipofornecedors
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async store ({ request, response }) {
+  async show({ params, response }) {
+    const { id } = params;
+
+    const tipofornecedor = await TipoFornecedor.findOrFail(id);
+
+    return response.json({
+      tipofornecedor,
+    });
   }
 
-  /**
-   * Display a single tipofornecedor.
-   * GET tipofornecedors/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async show ({ params, request, response, view }) {
+  async update({ params, request, response }) {
+    const { id } = params;
+    const tipofornecedor = await TipoFornecedor.findOrFail(id);
+    const data = request.all();
+
+    tipofornecedor.merge(data);
+    await tipofornecedor.save();
+
+    return response.json({
+      tipofornecedor,
+    });
   }
 
-  /**
-   * Render a form to update an existing tipofornecedor.
-   * GET tipofornecedors/:id/edit
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async edit ({ params, request, response, view }) {
-  }
+  async destroy({ params, response }) {
+    const { id } = params;
+    const tipofornecedor = await TipoFornecedor.findOrFail(id);
 
-  /**
-   * Update tipofornecedor details.
-   * PUT or PATCH tipofornecedors/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async update ({ params, request, response }) {
-  }
-
-  /**
-   * Delete a tipofornecedor with id.
-   * DELETE tipofornecedors/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async destroy ({ params, request, response }) {
+    await tipofornecedor.delete();
+    return response.json({
+      message: 'Excluído com Sucesso!',
+    });
   }
 }
 
-module.exports = TipoFornecedorController
+module.exports = TipoFornecedorController;

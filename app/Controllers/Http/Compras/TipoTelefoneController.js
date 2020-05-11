@@ -1,93 +1,58 @@
-'use strict'
-
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
-/** @typedef {import('@adonisjs/framework/src/View')} View */
+const TipoTelefone = use('App/Models/Compras/TipoTelefone');
 
-/**
- * Resourceful controller for interacting with tipotelefones
- */
 class TipoTelefoneController {
-  /**
-   * Show a list of all tipotelefones.
-   * GET tipotelefones
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async index ({ request, response, view }) {
+  async index({ response }) {
+    const tipostelefone = await TipoTelefone.all();
+
+    return response.json({
+      tipostelefone,
+    });
   }
 
-  /**
-   * Render a form to be used for creating a new tipotelefone.
-   * GET tipotelefones/create
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async create ({ request, response, view }) {
+  async store({ request, response }) {
+    const data = request.all();
+
+    const tipotelefone = await TipoTelefone.create(data);
+
+    return response.json({
+      tipotelefone,
+    });
   }
 
-  /**
-   * Create/save a new tipotelefone.
-   * POST tipotelefones
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async store ({ request, response }) {
+  async show({ params, response }) {
+    const { id } = params;
+
+    const tipotelefone = await TipoTelefone.findOrFail(id);
+
+    return response.json({
+      tipotelefone,
+    });
   }
 
-  /**
-   * Display a single tipotelefone.
-   * GET tipotelefones/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async show ({ params, request, response, view }) {
+  async update({ params, request, response }) {
+    const { id } = params;
+    const tipotelefone = await TipoTelefone.findOrFail(id);
+    const data = request.all();
+
+    tipotelefone.merge(data);
+    await tipotelefone.save();
+
+    return response.json({
+      tipotelefone,
+    });
   }
 
-  /**
-   * Render a form to update an existing tipotelefone.
-   * GET tipotelefones/:id/edit
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async edit ({ params, request, response, view }) {
-  }
+  async destroy({ params, response }) {
+    const { id } = params;
+    const tipotelefone = await TipoTelefone.findOrFail(id);
 
-  /**
-   * Update tipotelefone details.
-   * PUT or PATCH tipotelefones/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async update ({ params, request, response }) {
-  }
-
-  /**
-   * Delete a tipotelefone with id.
-   * DELETE tipotelefones/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async destroy ({ params, request, response }) {
+    await tipotelefone.delete();
+    return response.json({
+      message: 'Excluído com Sucesso!',
+    });
   }
 }
 
-module.exports = TipoTelefoneController
+module.exports = TipoTelefoneController;

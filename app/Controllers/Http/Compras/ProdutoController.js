@@ -1,93 +1,58 @@
-'use strict'
-
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
-/** @typedef {import('@adonisjs/framework/src/View')} View */
+const Produto = use('App/Models/Compras/Produto');
 
-/**
- * Resourceful controller for interacting with produtos
- */
 class ProdutoController {
-  /**
-   * Show a list of all produtos.
-   * GET produtos
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async index ({ request, response, view }) {
+  async index({ response }) {
+    const produtos = await Produto.all();
+
+    return response.json({
+      produtos,
+    });
   }
 
-  /**
-   * Render a form to be used for creating a new produto.
-   * GET produtos/create
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async create ({ request, response, view }) {
+  async store({ request, response }) {
+    const data = request.all();
+
+    const produto = await Produto.create(data);
+
+    return response.json({
+      produto,
+    });
   }
 
-  /**
-   * Create/save a new produto.
-   * POST produtos
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async store ({ request, response }) {
+  async show({ params, response }) {
+    const { id } = params;
+
+    const produto = await Produto.findOrFail(id);
+
+    return response.json({
+      produto,
+    });
   }
 
-  /**
-   * Display a single produto.
-   * GET produtos/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async show ({ params, request, response, view }) {
+  async update({ params, request, response }) {
+    const { id } = params;
+    const produto = await Produto.findOrFail(id);
+    const data = request.all();
+
+    produto.merge(data);
+    await produto.save();
+
+    return response.json({
+      produto,
+    });
   }
 
-  /**
-   * Render a form to update an existing produto.
-   * GET produtos/:id/edit
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async edit ({ params, request, response, view }) {
-  }
+  async destroy({ params, response }) {
+    const { id } = params;
+    const produto = await Produto.findOrFail(id);
 
-  /**
-   * Update produto details.
-   * PUT or PATCH produtos/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async update ({ params, request, response }) {
-  }
-
-  /**
-   * Delete a produto with id.
-   * DELETE produtos/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async destroy ({ params, request, response }) {
+    await produto.delete();
+    return response.json({
+      message: 'Excluído com Sucesso!',
+    });
   }
 }
 
-module.exports = ProdutoController
+module.exports = ProdutoController;

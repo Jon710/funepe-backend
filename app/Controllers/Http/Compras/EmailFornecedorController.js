@@ -1,93 +1,58 @@
-'use strict'
-
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
-/** @typedef {import('@adonisjs/framework/src/View')} View */
+const EmailFornecedor = use('App/Models/Compras/EmailFornecedor');
 
-/**
- * Resourceful controller for interacting with emailfornecedors
- */
 class EmailFornecedorController {
-  /**
-   * Show a list of all emailfornecedors.
-   * GET emailfornecedors
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async index ({ request, response, view }) {
+  async index({ response }) {
+    const emailsfornecedor = await EmailFornecedor.all();
+
+    return response.json({
+      emailsfornecedor,
+    });
   }
 
-  /**
-   * Render a form to be used for creating a new emailfornecedor.
-   * GET emailfornecedors/create
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async create ({ request, response, view }) {
+  async store({ request, response }) {
+    const data = request.all();
+
+    const emailfornecedor = await EmailFornecedor.create(data);
+
+    return response.json({
+      emailfornecedor,
+    });
   }
 
-  /**
-   * Create/save a new emailfornecedor.
-   * POST emailfornecedors
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async store ({ request, response }) {
+  async show({ params, response }) {
+    const { id } = params;
+
+    const emailfornecedor = await EmailFornecedor.findOrFail(id);
+
+    return response.json({
+      emailfornecedor,
+    });
   }
 
-  /**
-   * Display a single emailfornecedor.
-   * GET emailfornecedors/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async show ({ params, request, response, view }) {
+  async update({ params, request, response }) {
+    const { id } = params;
+    const emailfornecedor = await EmailFornecedor.findOrFail(id);
+    const data = request.all();
+
+    emailfornecedor.merge(data);
+    await emailfornecedor.save();
+
+    return response.json({
+      emailfornecedor,
+    });
   }
 
-  /**
-   * Render a form to update an existing emailfornecedor.
-   * GET emailfornecedors/:id/edit
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async edit ({ params, request, response, view }) {
-  }
+  async destroy({ params, response }) {
+    const { id } = params;
+    const emailfornecedor = await EmailFornecedor.findOrFail(id);
 
-  /**
-   * Update emailfornecedor details.
-   * PUT or PATCH emailfornecedors/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async update ({ params, request, response }) {
-  }
-
-  /**
-   * Delete a emailfornecedor with id.
-   * DELETE emailfornecedors/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async destroy ({ params, request, response }) {
+    await emailfornecedor.delete();
+    return response.json({
+      message: 'Excluído com Sucesso!',
+    });
   }
 }
 
-module.exports = EmailFornecedorController
+module.exports = EmailFornecedorController;

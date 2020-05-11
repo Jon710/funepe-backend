@@ -1,93 +1,58 @@
-'use strict'
-
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
-/** @typedef {import('@adonisjs/framework/src/View')} View */
+const UnidadeMedida = use('App/Models/Compras/UnidadeMedida');
 
-/**
- * Resourceful controller for interacting with unidademedidas
- */
 class UnidadeMedidaController {
-  /**
-   * Show a list of all unidademedidas.
-   * GET unidademedidas
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async index ({ request, response, view }) {
+  async index({ response }) {
+    const unidadesmedida = await UnidadeMedida.all();
+
+    return response.json({
+      unidadesmedida,
+    });
   }
 
-  /**
-   * Render a form to be used for creating a new unidademedida.
-   * GET unidademedidas/create
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async create ({ request, response, view }) {
+  async store({ request, response }) {
+    const data = request.all();
+
+    const unidademedida = await UnidadeMedida.create(data);
+
+    return response.json({
+      unidademedida,
+    });
   }
 
-  /**
-   * Create/save a new unidademedida.
-   * POST unidademedidas
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async store ({ request, response }) {
+  async show({ params, response }) {
+    const { id } = params;
+
+    const unidademedida = await UnidadeMedida.findOrFail(id);
+
+    return response.json({
+      unidademedida,
+    });
   }
 
-  /**
-   * Display a single unidademedida.
-   * GET unidademedidas/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async show ({ params, request, response, view }) {
+  async update({ params, request, response }) {
+    const { id } = params;
+    const unidademedida = await UnidadeMedida.findOrFail(id);
+    const data = request.all();
+
+    unidademedida.merge(data);
+    await unidademedida.save();
+
+    return response.json({
+      unidademedida,
+    });
   }
 
-  /**
-   * Render a form to update an existing unidademedida.
-   * GET unidademedidas/:id/edit
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async edit ({ params, request, response, view }) {
-  }
+  async destroy({ params, response }) {
+    const { id } = params;
+    const unidademedida = await UnidadeMedida.findOrFail(id);
 
-  /**
-   * Update unidademedida details.
-   * PUT or PATCH unidademedidas/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async update ({ params, request, response }) {
-  }
-
-  /**
-   * Delete a unidademedida with id.
-   * DELETE unidademedidas/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async destroy ({ params, request, response }) {
+    await unidademedida.delete();
+    return response.json({
+      message: 'Excluído com Sucesso!',
+    });
   }
 }
 
-module.exports = UnidadeMedidaController
+module.exports = UnidadeMedidaController;

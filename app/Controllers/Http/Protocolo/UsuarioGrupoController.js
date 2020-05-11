@@ -1,7 +1,6 @@
 /* eslint-disable class-methods-use-this */
 /* eslint-disable camelcase */
-
-const UsuarioGrupo = use('App/Models/UsuarioGrupo');
+const UsuarioGrupo = use('App/Models/Protocolo/UsuarioGrupo');
 
 class UsuarioGrupoController {
   async index({ response }) {

@@ -1,6 +1,5 @@
 /* eslint-disable camelcase */
-
-const Prioridade = use('App/Models/Prioridade');
+const Prioridade = use('App/Models/Protocolo/Prioridade');
 
 class PrioridadeController {
   async index({ response }) {
