@@ -3,7 +3,7 @@ const Model = use('Model');
 
 class Prioridade extends Model {
   documentos() {
-    return this.hasMany('App/Models/Documento');
+    return this.hasMany('App/Models/Protocolo/Documento');
   }
 
   static get table() {

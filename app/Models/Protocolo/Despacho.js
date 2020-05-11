@@ -2,11 +2,19 @@ const Model = use('Model');
 
 class Despacho extends Model {
   documento() {
-    return this.belongsTo('App/Models/Documento', 'iddocumento', 'iddocumento');
+    return this.belongsTo(
+      'App/Models/Protocolo/Documento',
+      'iddocumento',
+      'iddocumento'
+    );
   }
 
   usuario() {
-    return this.belongsTo('App/Models/Usuario', 'idusuario', 'idusuario');
+    return this.belongsTo(
+      'App/Models/Protocolo/Usuario',
+      'idusuario',
+      'idusuario'
+    );
   }
 
   static get table() {

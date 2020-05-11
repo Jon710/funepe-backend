@@ -3,7 +3,11 @@ const Env = use('Env');
 
 class ArquivoAnexo extends Model {
   documento() {
-    return this.belongsTo('App/Models/Documento', 'iddocumento', 'iddocumento');
+    return this.belongsTo(
+      'App/Models/Protocolo/Documento',
+      'iddocumento',
+      'iddocumento'
+    );
   }
 
   static get table() {

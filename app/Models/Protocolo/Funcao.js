@@ -3,7 +3,7 @@ const Model = use('Model');
 
 class Funcao extends Model {
   usuarios() {
-    return this.hasMany('App/Models/Usuario');
+    return this.hasMany('App/Models/Protocolo/Usuario');
   }
 
   static get table() {

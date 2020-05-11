@@ -3,11 +3,15 @@ const Model = use('Model');
 
 class UsuarioGrupo extends Model {
   usuario() {
-    return this.belongsTo('App/Models/Usuario', 'idusuario', 'idusuario');
+    return this.belongsTo(
+      'App/Models/Protocolo/Usuario',
+      'idusuario',
+      'idusuario'
+    );
   }
 
   grupo() {
-    return this.belongsTo('App/Models/Grupo', 'idgrupo', 'idgrupo');
+    return this.belongsTo('App/Models/Protocolo/Grupo', 'idgrupo', 'idgrupo');
   }
 
   static get table() {

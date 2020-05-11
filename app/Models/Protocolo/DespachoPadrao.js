@@ -2,7 +2,7 @@ const Model = use('Model');
 
 class DespachoPadrao extends Model {
   despachos() {
-    return this.hasMany('App/Models/Despacho');
+    return this.hasMany('App/Models/Protocolo/Despacho');
   }
 
   static get table() {

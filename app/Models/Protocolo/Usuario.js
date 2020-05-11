@@ -17,27 +17,27 @@ class Usuario extends Model {
   }
 
   tokens() {
-    return this.hasMany('App/Models/Token');
+    return this.hasMany('App/Models/Protocolo/Token');
   }
 
   gruposUsuario() {
-    return this.hasMany('App/Models/UsuarioGrupo');
+    return this.hasMany('App/Models/Protocolo/UsuarioGrupo');
   }
 
   funcao() {
-    return this.belongsTo('App/Models/Funcao');
+    return this.belongsTo('App/Models/Protocolo/Funcao');
   }
 
   caixasEntrada() {
-    return this.hasMany('App/Models/CaixaEntrada');
+    return this.hasMany('App/Models/Protocolo/CaixaEntrada');
   }
 
   documentos() {
-    return this.hasMany('App/Models/Documento');
+    return this.hasMany('App/Models/Protocolo/Documento');
   }
 
   despachos() {
-    return this.hasMany('App/Models/Despacho');
+    return this.hasMany('App/Models/Protocolo/Despacho');
   }
 
   static get table() {
