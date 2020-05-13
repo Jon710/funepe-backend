@@ -14,7 +14,7 @@ Route.get(
 Route.group(() => {
   Route.resource('usuarios', 'Protocolo/UsuarioController')
     .apiOnly()
-    .validator(new Map([[['usuarios.store'], ['Usuario']]]));
+    .validator(new Map([[['Protocolo/usuarios.store'], ['Usuario']]]));
 
   Route.resource(
     'usuarios.documents',
