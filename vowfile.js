@@ -22,7 +22,7 @@ module.exports = (cli, runner) => {
     | line, if http server is not required
     |
     */
-    use('Adonis/Src/Server').listen(process.env.HOST, process.env.PORT);
+    use('Adonis/Src/Server').listen(process.env.APP_URL);
 
     /*
     |--------------------------------------------------------------------------
