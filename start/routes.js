@@ -1,74 +1,112 @@
 const Route = use('Route');
 
-Route.post('users', 'UserController.store');
-Route.post('sessions', 'SessionController.store').validator('Session');
-Route.get('anexo/:path', 'ArquivoAnexoController.show');
+Route.post('users', 'Protocolo/UserController.store');
+Route.post('sessions', 'Protocolo/SessionController.store').validator(
+  'Session'
+);
+Route.get('anexo/:path', 'Protocolo/ArquivoAnexoController.show');
 
 Route.get(
   'usuarios/:idusuario',
-  'UsuarioController.getUsuarioById'
+  'Protocolo/UsuarioController.getUsuarioById'
 ).middleware(['auth']);
 
 Route.group(() => {
-  Route.resource('usuarios', 'UsuarioController')
+  Route.resource('usuarios', 'Protocolo/UsuarioController')
     .apiOnly()
     .validator(new Map([[['usuarios.store'], ['Usuario']]]));
 
-  Route.resource('usuarios.documents', 'DocumentoController').apiOnly();
-  Route.resource('groups', 'GrupoController').apiOnly();
-  Route.resource('roles', 'FuncaoController').apiOnly();
-  Route.resource('types', 'TipoDocumentoController').apiOnly();
-  Route.resource('documents.despachos', 'DespachoController').apiOnly();
-  Route.resource('usuarios.caixaentrada', 'CaixaEntradaController').apiOnly();
-  Route.resource('documents.arquivoanexo', 'ArquivoAnexoController').apiOnly();
-  Route.resource('despachopadrao', 'DespachoPadraoController').apiOnly();
-  Route.resource('usuariogrupo', 'UsuarioGrupoController').apiOnly();
-  Route.resource('prioridade', 'PrioridadeController').apiOnly();
+  Route.resource(
+    'usuarios.documents',
+    'Protocolo/DocumentoController'
+  ).apiOnly();
+  Route.resource('groups', 'Protocolo/GrupoController').apiOnly();
+  Route.resource('roles', 'Protocolo/FuncaoController').apiOnly();
+  Route.resource('types', 'Protocolo/TipoDocumentoController').apiOnly();
+  Route.resource(
+    'documents.despachos',
+    'Protocolo/DespachoController'
+  ).apiOnly();
+  Route.resource(
+    'usuarios.caixaentrada',
+    'Protocolo/CaixaEntradaController'
+  ).apiOnly();
+  Route.resource(
+    'documents.arquivoanexo',
+    'Protocolo/ArquivoAnexoController'
+  ).apiOnly();
+  Route.resource(
+    'despachopadrao',
+    'Protocolo/DespachoPadraoController'
+  ).apiOnly();
+  Route.resource('usuariogrupo', 'Protocolo/UsuarioGrupoController').apiOnly();
+  Route.resource('prioridade', 'Protocolo/PrioridadeController').apiOnly();
 
-  Route.resource('tipoempresa.empresa', 'TipoEmpresaController').apiOnly();
-  Route.resource('categoria.produto', 'CategoriaController').apiOnly();
-  Route.resource('tipotelefone.empresa', 'TipoTelefoneController').apiOnly();
+  Route.resource(
+    'tipoempresa.empresa',
+    'Compras/TipoEmpresaController'
+  ).apiOnly();
+  Route.resource('categoria.produto', 'Compras/CategoriaController').apiOnly();
+  Route.resource(
+    'tipotelefone.empresa',
+    'Compras/TipoTelefoneController'
+  ).apiOnly();
   Route.resource(
     'telefoneempresa.empresa',
     'TelefoneEmpresaController'
   ).apiOnly();
-  Route.resource('empresa', 'EmpresaController').apiOnly();
-  Route.resource('categoria.produto', 'CategoriaController').apiOnly();
-  Route.resource('emailempresa.empresa', 'EmailEmpresaController').apiOnly();
+  Route.resource('empresa', 'Compras/EmpresaController').apiOnly();
+  Route.resource('categoria.produto', 'Compras/CategoriaController').apiOnly();
+  Route.resource(
+    'emailempresa.empresa',
+    'Compras/EmailEmpresaController'
+  ).apiOnly();
   Route.resource(
     'telefonefavorecido.tipotelefone',
     'TelefoneFavorecidoController'
   ).apiOnly();
-  Route.resource('fornecedor', 'FornecedorController').apiOnly();
+  Route.resource('fornecedor', 'Compras/FornecedorController').apiOnly();
   Route.resource(
     'tipofornecedor.fornecedor',
-    'TipoFornecedorController'
+    'Compras/TipoFornecedorController'
   ).apiOnly();
   Route.resource(
     'emailfornecedor.fornecedor',
-    'EmailFornecedorController'
+    'Compras/EmailFornecedorController'
   ).apiOnly();
   Route.resource(
     'enderecofornecedor.fornecedor',
-    'EnderecoFornecedorController'
+    'Compras/EnderecoFornecedorController'
   ).apiOnly();
-  Route.resource('fornecimento.fornecedor', 'FornecimentoController').apiOnly();
-  Route.resource('orcamento.fornecedor', 'OrcamentoController').apiOnly();
-  Route.resource('unidademedida.produto', 'UnidadeMedidaController').apiOnly();
-  Route.resource('marca.produto', 'MarcaController').apiOnly();
-  Route.resource('produto', 'ProdutoController').apiOnly();
-  Route.resource('requisicao', 'RequisicaoController').apiOnly();
-  Route.resource('departamento.requisicao', 'DepartamentoController').apiOnly();
+  Route.resource(
+    'fornecimento.fornecedor',
+    'Compras/FornecimentoController'
+  ).apiOnly();
+  Route.resource(
+    'orcamento.fornecedor',
+    'Compras/OrcamentoController'
+  ).apiOnly();
+  Route.resource(
+    'unidademedida.produto',
+    'Compras/UnidadeMedidaController'
+  ).apiOnly();
+  Route.resource('marca.produto', 'Compras/MarcaController').apiOnly();
+  Route.resource('produto', 'Compras/ProdutoController').apiOnly();
+  Route.resource('requisicao', 'Compras/RequisicaoController').apiOnly();
+  Route.resource(
+    'departamento.requisicao',
+    'Compras/DepartamentoController'
+  ).apiOnly();
   Route.resource(
     'historicorequisicao.requisicao',
-    'HistoricoRequisicaoController'
+    'Compras/HistoricoRequisicaoController'
   ).apiOnly();
   Route.resource(
     'itemrequisicao.requisicao',
-    'ItemRequisicaoController'
+    'Compras/ItemRequisicaoController'
   ).apiOnly();
   Route.resource(
     'itemorcamento.orcamento',
-    'ItemOrcamentoController'
+    'Compras/ItemOrcamentoController'
   ).apiOnly();
 }).middleware(['auth']);
