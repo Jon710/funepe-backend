@@ -18,50 +18,49 @@ class ArquivoAnexoController {
   }
 
   async store({ request, params, response }) {
-    request.multipart
-      .file('arquivos', {}, async (file) => {
-        try {
-          const document = await Documento.findOrFail(params.documents_id);
+    request.multipart.file('arquivos', {}, async (file) => {
+      try {
+        const document = await Documento.findOrFail(params.documents_id);
 
-          const ACL = 'public-read';
-          const ContentType = file.headers['content-type'];
-          const Key = `${(Math.random() * 100).toString(32)}-${
-            file.clientName
-          }`;
+        const ACL = 'public-read';
+        const ContentType = file.headers['content-type'];
+        const Key = `${(Math.random() * 100).toString(32)}-${file.clientName}`;
 
-          const url = await Drive.put(Key, file.stream, {
-            ContentType,
-            ACL,
-          });
+        const url = await Drive.disk('s3').put(Key, file.stream, {
+          ContentType,
+          ACL,
+        });
 
-          await ArquivoAnexo.create({
-            patharquivo: url,
-            tipo: file.extname,
-            observacao: file.headers,
-            iddocumento: document.iddocumento,
-          });
-        } catch (err) {
-          return response.status(err.status).json({
-            message: 'Não foi possivel enviar o arquivo.',
-            err_message: err.message,
-          });
-        }
-      })
-      .process();
+        await ArquivoAnexo.create({
+          patharquivo: url,
+          tipo: file.extname,
+          observacao: file.headers,
+          iddocumento: document.iddocumento,
+          nomearquivo: Key,
+        });
+      } catch (err) {
+        return response.status(err.status).json({
+          message: 'Não foi possivel enviar o arquivo.',
+          err_message: err.message,
+        });
+      }
+    });
+    await request.multipart.process();
   }
 
   async show({ params, response }) {
-    // return response.download(Helpers.tmpPath(`uploads/${params.path}`));
-    const { id: patharquivo } = params;
-
     try {
-      const file = await ArquivoAnexo.findByOrFail('name', patharquivo);
+      const { documents_id, id } = params;
 
-      response.implicitEnd = false;
-      response.header('Content-Type', file.ContentType);
+      const arquivoanexo = await ArquivoAnexo.query()
+        .where('iddocumento', documents_id)
+        .where('idarquivoanexo', id)
+        .with('documento')
+        .fetch();
 
-      const stream = await Drive.getStream(file.key);
-      stream.pipe(response.response);
+      return response.json({
+        arquivoanexo,
+      });
     } catch (err) {
       return response.status(err.status).json({
         message: 'Arquivo não existe!',
@@ -83,11 +82,28 @@ class ArquivoAnexoController {
     });
   }
 
-  async destroy({ params }) {
-    const { id } = params;
-    const arquivoanexo = await ArquivoAnexo.findOrFail(id);
+  async destroy({ params, response }) {
+    try {
+      const { documents_id, id } = params;
 
-    await arquivoanexo.delete();
+      const arquivoanexo = await ArquivoAnexo.query()
+        .where('iddocumento', documents_id)
+        .where('idarquivoanexo', id)
+        .fetch();
+
+      const arquivo = arquivoanexo;
+
+      const anexo = await arquivo.toJSON();
+
+      await Drive.delete(anexo[0].nomearquivo);
+
+      await ArquivoAnexo.query().where('idarquivoanexo', id).delete();
+    } catch (err) {
+      return response.status(err.status).json({
+        message: 'Não foi possivel deletar o arquivo.',
+        err_message: err.message,
+      });
+    }
   }
 }
 
