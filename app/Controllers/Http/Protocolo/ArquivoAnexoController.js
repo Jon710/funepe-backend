@@ -1,4 +1,4 @@
-/* eslint-disable camelcase */
+const Drive = use('Drive');
 const ArquivoAnexo = use('App/Models/Protocolo/ArquivoAnexo');
 const Documento = use('App/Models/Protocolo/Documento');
 const Helpers = use('Helpers');
@@ -20,29 +20,34 @@ class ArquivoAnexoController {
   async store({ request, params, response }) {
     const document = await Documento.findOrFail(params.documents_id);
 
-    const arquivoanexo = request.file('arquivos');
+    request.multipart
+      .file('arquivos', {}, async (file) => {
+        try {
+          const ACL = 'public-read';
+          const ContentType = file.headers['content-type'];
+          const Key = `${(Math.random() * 100).toString(32)}-${
+            file.clientName
+          }`;
 
-    await arquivoanexo.moveAll(Helpers.tmpPath('uploads'), (file) => ({
-      name: `${Date.now()}-${file.clientName}`,
-    }));
+          const url = await Drive.put(Key, file.stream, {
+            ContentType,
+            ACL,
+          });
 
-    if (!arquivoanexo.movedAll()) {
-      return arquivoanexo.errors();
-    }
-
-    await Promise.all(
-      arquivoanexo.movedList().map((file) =>
-        document.arquivosAnexo().create({
-          patharquivo: file.fileName,
-          tipo: file.extname,
-          observacao: file.headers,
-        })
-      )
-    );
-
-    return response.json({
-      arquivoanexo,
-    });
+          await ArquivoAnexo.create({
+            patharquivo: url,
+            tipo: file.extname,
+            observacao: file.headers,
+            iddocumento: document.iddocumento,
+          });
+        } catch (err) {
+          return response.status(err.status).json({
+            message: 'Não foi possivel enviar o arquivo.',
+            err_message: err.message,
+          });
+        }
+      })
+      .process();
   }
 
   async show({ params, response }) {
