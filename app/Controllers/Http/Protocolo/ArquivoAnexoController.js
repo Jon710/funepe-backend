@@ -18,40 +18,37 @@ class ArquivoAnexoController {
   }
 
   async store({ request, params, response }) {
-    request.multipart
-      .file('arquivos', {}, async (file) => {
-        try {
-          const document = await Documento.findOrFail(params.documents_id);
+    request.multipart.file('arquivos', {}, async (file) => {
+      try {
+        const document = await Documento.findOrFail(params.documents_id);
 
-          console.log(document.iddocumento);
-          const ACL = 'public-read';
-          const ContentType = file.headers['content-type'];
-          const Key = `${(Math.random() * 100).toString(32)}-${
-            file.clientName
-          }`;
-          console.log(Key);
+        console.log(document.iddocumento);
+        const ACL = 'public-read';
+        const ContentType = file.headers['content-type'];
+        const Key = `${(Math.random() * 100).toString(32)}-${file.clientName}`;
+        console.log(Key);
 
-          const url = await Drive.put(Key, file.stream, {
-            ContentType,
-            ACL,
-          });
-          console.log(url);
+        const url = await Drive.disk('s3').put(Key, file.stream, {
+          ContentType,
+          ACL,
+        });
+        console.log(url);
 
-          await ArquivoAnexo.create({
-            patharquivo: url,
-            tipo: file.extname,
-            observacao: file.headers,
-            iddocumento: document.iddocumento,
-          });
-        } catch (err) {
-          console.log(response.status(err.status));
-          return response.status(err.status).json({
-            message: 'Não foi possivel enviar o arquivo.',
-            err_message: err.message,
-          });
-        }
-      })
-      .process();
+        await ArquivoAnexo.create({
+          patharquivo: url,
+          tipo: file.extname,
+          observacao: file.headers,
+          iddocumento: document.iddocumento,
+        });
+      } catch (err) {
+        console.log(response.status(err.status));
+        return response.status(err.status).json({
+          message: 'Não foi possivel enviar o arquivo.',
+          err_message: err.message,
+        });
+      }
+    });
+    await request.multipart.process();
   }
 
   async show({ params, response }) {
