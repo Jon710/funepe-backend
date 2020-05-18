@@ -125,9 +125,7 @@ module.exports = {
     | is to true. Otherwise everything is processed manually.
     |
     */
-    processManually: [
-      'https://funepe-backend.herokuapp.com/documents/:id/arquivoanexo',
-    ],
+    processManually: ['documents/:documents_id/arquivoanexo'],
 
     /*
     |--------------------------------------------------------------------------
