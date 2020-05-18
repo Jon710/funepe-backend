@@ -1,7 +1,7 @@
+/* eslint-disable camelcase */
 const Drive = use('Drive');
 const ArquivoAnexo = use('App/Models/Protocolo/ArquivoAnexo');
 const Documento = use('App/Models/Protocolo/Documento');
-const Helpers = use('Helpers');
 
 class ArquivoAnexoController {
   async index({ params, response }) {
@@ -51,7 +51,23 @@ class ArquivoAnexoController {
   }
 
   async show({ params, response }) {
-    return response.download(Helpers.tmpPath(`uploads/${params.path}`));
+    // return response.download(Helpers.tmpPath(`uploads/${params.path}`));
+    const { id: patharquivo } = params;
+
+    try {
+      const file = await ArquivoAnexo.findByOrFail('name', patharquivo);
+
+      response.implicitEnd = false;
+      response.header('Content-Type', file.ContentType);
+
+      const stream = await Drive.getStream(file.key);
+      stream.pipe(response.response);
+    } catch (err) {
+      return response.status(err.status).json({
+        message: 'Arquivo não existe!',
+        err_message: err.message,
+      });
+    }
   }
 
   async update({ params, request, response }) {
