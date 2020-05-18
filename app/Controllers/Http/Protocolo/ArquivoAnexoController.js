@@ -18,7 +18,7 @@ class ArquivoAnexoController {
   }
 
   async store({ request, params, response }) {
-    const document = await Documento.findOrFail(params.documents_id);
+    const document = await Documento.findOrFail(params.iddocumento);
 
     request.multipart
       .file('arquivos', {}, async (file) => {
