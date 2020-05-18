@@ -23,17 +23,19 @@ class ArquivoAnexoController {
         try {
           const document = await Documento.findOrFail(params.documents_id);
 
-          console.log(document);
+          console.log(document.iddocumento);
           const ACL = 'public-read';
           const ContentType = file.headers['content-type'];
           const Key = `${(Math.random() * 100).toString(32)}-${
             file.clientName
           }`;
+          console.log(Key);
 
           const url = await Drive.put(Key, file.stream, {
             ContentType,
             ACL,
           });
+          console.log(url);
 
           await ArquivoAnexo.create({
             patharquivo: url,
@@ -42,6 +44,7 @@ class ArquivoAnexoController {
             iddocumento: document.iddocumento,
           });
         } catch (err) {
+          console.log(response.status(err.status));
           return response.status(err.status).json({
             message: 'Não foi possivel enviar o arquivo.',
             err_message: err.message,
