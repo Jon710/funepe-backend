@@ -23,6 +23,7 @@ class ArquivoAnexoController {
         try {
           const document = await Documento.findOrFail(params.documents_id);
 
+          console.log(document.documents_id);
           const ACL = 'public-read';
           const ContentType = file.headers['content-type'];
           const Key = `${(Math.random() * 100).toString(32)}-${
