@@ -22,17 +22,14 @@ class ArquivoAnexoController {
       try {
         const document = await Documento.findOrFail(params.documents_id);
 
-        console.log(document.iddocumento);
         const ACL = 'public-read';
         const ContentType = file.headers['content-type'];
         const Key = `${(Math.random() * 100).toString(32)}-${file.clientName}`;
-        console.log(Key);
 
         const url = await Drive.disk('s3').put(Key, file.stream, {
           ContentType,
           ACL,
         });
-        console.log(url);
 
         await ArquivoAnexo.create({
           patharquivo: url,
@@ -41,7 +38,6 @@ class ArquivoAnexoController {
           iddocumento: document.iddocumento,
         });
       } catch (err) {
-        console.log(response.status(err.status));
         return response.status(err.status).json({
           message: 'Não foi possivel enviar o arquivo.',
           err_message: err.message,
@@ -52,7 +48,6 @@ class ArquivoAnexoController {
   }
 
   async show({ params, response }) {
-    // return response.download(Helpers.tmpPath(`uploads/${params.path}`));
     const { id: patharquivo } = params;
 
     try {
@@ -62,7 +57,7 @@ class ArquivoAnexoController {
       response.header('Content-Type', file.ContentType);
 
       const stream = await Drive.getStream(file.key);
-      stream.pipe(response.response);
+      await stream.pipe(response.response);
     } catch (err) {
       return response.status(err.status).json({
         message: 'Arquivo não existe!',
