@@ -93,13 +93,16 @@ class ArquivoAnexoController {
         .fetch();
 
       const anexo = JSON.stringify(arquivoanexo);
+      console.log(anexo);
+      console.log(anexo.nomearquivo);
+      console.log(anexo[0].nomearquivo);
 
       await Drive.delete(anexo.nomearquivo);
 
       await arquivoanexo.delete();
     } catch (err) {
       return response.status(err.status).json({
-        message: 'Não foi possivel enviar o arquivo.',
+        message: 'Não foi possivel deletar o arquivo.',
         err_message: err.message,
       });
     }
