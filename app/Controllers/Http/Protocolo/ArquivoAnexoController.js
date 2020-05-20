@@ -51,7 +51,7 @@ class ArquivoAnexoController {
     const { id: patharquivo } = params;
 
     try {
-      const file = await ArquivoAnexo.findByOrFail('name', patharquivo);
+      const file = await ArquivoAnexo.findByOrFail('patharquivo', patharquivo);
 
       response.implicitEnd = false;
       response.header('Content-Type', file.ContentType);
