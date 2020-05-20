@@ -92,7 +92,7 @@ class ArquivoAnexoController {
         .with('documento')
         .fetch();
 
-      const anexo = arquivoanexo.rows.nomearquivo;
+      const anexo = arquivoanexo.rows.toJSON();
       console.log(arquivoanexo.rows);
       console.log(anexo);
 
