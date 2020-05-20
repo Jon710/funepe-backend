@@ -49,10 +49,11 @@ class ArquivoAnexoController {
 
   async show({ params, response }) {
     try {
-      const { documents_id } = params;
+      const { documents_id, id } = params;
 
       const arquivoanexo = await ArquivoAnexo.query()
         .where('iddocumento', documents_id)
+        .where('idarquivoanexo', id)
         .with('documento')
         .fetch();
 
