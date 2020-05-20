@@ -92,7 +92,7 @@ class ArquivoAnexoController {
         .with('documento')
         .fetch();
 
-      const anexo = arquivoanexo.toJSON();
+      const anexo = await arquivoanexo.toJSON();
 
       await Drive.delete(anexo[0].nomearquivo);
 
