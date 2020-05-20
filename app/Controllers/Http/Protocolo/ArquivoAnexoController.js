@@ -92,12 +92,12 @@ class ArquivoAnexoController {
         .with('documento')
         .fetch();
 
-      const anexo = JSON.stringify(arquivoanexo);
-      console.log(anexo);
-      console.log(anexo.nomearquivo);
-      console.log(anexo[0].nomearquivo);
+      await arquivoanexo.toJSON();
+      console.log(arquivoanexo);
+      console.log(arquivoanexo.nomearquivo);
+      console.log(arquivoanexo[0].nomearquivo);
 
-      await Drive.delete(anexo.nomearquivo);
+      await Drive.delete(arquivoanexo.nomearquivo);
 
       await arquivoanexo.delete();
     } catch (err) {
