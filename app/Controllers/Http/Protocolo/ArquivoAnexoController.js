@@ -84,7 +84,7 @@ class ArquivoAnexoController {
 
   async destroy({ params, response }) {
     try {
-      const { id, documents_id } = params;
+      const { documents_id, id } = params;
 
       const arquivoanexo = await ArquivoAnexo.query()
         .where('iddocumento', documents_id)
@@ -95,7 +95,7 @@ class ArquivoAnexoController {
       const anexo = await arquivoanexo.toJSON();
       console.log(anexo[0].nomearquivo);
 
-      await Drive.delete(anexo[0].nomearquivo);
+      // await Drive.delete(anexo[0].nomearquivo);
 
       await arquivoanexo.delete();
     } catch (err) {
