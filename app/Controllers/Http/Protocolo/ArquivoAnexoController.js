@@ -48,17 +48,17 @@ class ArquivoAnexoController {
   }
 
   async show({ params, response }) {
-    const { id: patharquivo } = params;
-
     try {
-      const file = await ArquivoAnexo.findByOrFail('patharquivo', patharquivo);
+      const { documents_id } = params;
 
-      response.implicitEnd = false;
-      response.header('observacao', file.observacao);
-      console.log(file.observacao);
+      const arquivoanexo = await ArquivoAnexo.query()
+        .where('iddocumento', documents_id)
+        .with('documento')
+        .fetch();
 
-      const stream = await Drive.getStream(file.key);
-      await stream.pipe(response.response);
+      return response.json({
+        arquivoanexo,
+      });
     } catch (err) {
       return response.status(err.status).json({
         message: 'Arquivo não existe!',
