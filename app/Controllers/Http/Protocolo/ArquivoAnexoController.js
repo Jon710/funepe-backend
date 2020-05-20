@@ -94,9 +94,8 @@ class ArquivoAnexoController {
       const arquivo = arquivoanexo;
 
       const anexo = await arquivo.toJSON();
-      console.log(anexo[0].nomearquivo);
 
-      // await Drive.delete(anexo[0].nomearquivo);
+      await Drive.delete(anexo[0].nomearquivo);
 
       await ArquivoAnexo.query().where('idarquivoanexo', id).delete();
     } catch (err) {
