@@ -54,7 +54,8 @@ class ArquivoAnexoController {
       const file = await ArquivoAnexo.findByOrFail('patharquivo', patharquivo);
 
       response.implicitEnd = false;
-      response.header('observacao', file.observacao.filename);
+      response.header('observacao', file.observacao);
+      console.log(file.observacao);
 
       const stream = await Drive.getStream(file.key);
       await stream.pipe(response.response);
