@@ -36,6 +36,7 @@ class ArquivoAnexoController {
           tipo: file.extname,
           observacao: file.headers,
           iddocumento: document.iddocumento,
+          nomearquivo: Key,
         });
       } catch (err) {
         return response.status(err.status).json({
@@ -82,11 +83,15 @@ class ArquivoAnexoController {
   }
 
   async destroy({ params, response }) {
-    const { id } = params;
+    const { id, documents_id } = params;
     try {
-      const arquivoanexo = await ArquivoAnexo.findOrFail(id);
+      const arquivoanexo = await ArquivoAnexo.query()
+        .where('iddocumento', documents_id)
+        .where('idarquivoanexo', id)
+        .with('documento')
+        .fetch();
 
-      await Drive.delete(ArquivoAnexo.key);
+      await Drive.delete(arquivoanexo.nomearquivo);
 
       await arquivoanexo.delete();
     } catch (err) {
