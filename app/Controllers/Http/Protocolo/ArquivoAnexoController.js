@@ -81,11 +81,20 @@ class ArquivoAnexoController {
     });
   }
 
-  async destroy({ params }) {
+  async destroy({ params, response }) {
     const { id } = params;
-    const arquivoanexo = await ArquivoAnexo.findOrFail(id);
+    try {
+      const arquivoanexo = await ArquivoAnexo.findOrFail(id);
 
-    await arquivoanexo.delete();
+      await Drive.delete(ArquivoAnexo.key);
+
+      await arquivoanexo.delete();
+    } catch (err) {
+      return response.status(err.status).json({
+        message: 'Não foi possivel enviar o arquivo.',
+        err_message: err.message,
+      });
+    }
   }
 }
 
