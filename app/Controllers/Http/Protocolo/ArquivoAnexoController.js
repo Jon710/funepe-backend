@@ -98,7 +98,7 @@ class ArquivoAnexoController {
 
       // await Drive.delete(anexo[0].nomearquivo);
 
-      await arquivoanexo.delete();
+      await ArquivoAnexo.where('idarquivoanexo', id).delete();
     } catch (err) {
       return response.status(err.status).json({
         message: 'Não foi possivel deletar o arquivo.',
