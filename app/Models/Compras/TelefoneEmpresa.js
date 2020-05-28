@@ -19,11 +19,11 @@ class TelefoneEmpresa extends Model {
   }
 
   static get table() {
-    return 'comp_tipotelefone';
+    return 'comp_telefoneempresa';
   }
 
   static get primaryKey() {
-    return 'idtipotelefone';
+    return 'idtelefone';
   }
 
   static get createdAtColumn() {

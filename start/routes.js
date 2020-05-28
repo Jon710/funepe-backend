@@ -42,71 +42,55 @@ Route.group(() => {
   Route.resource('usuariogrupo', 'Protocolo/UsuarioGrupoController').apiOnly();
   Route.resource('prioridade', 'Protocolo/PrioridadeController').apiOnly();
 
+  Route.resource('tipoempresa', 'Compras/TipoEmpresaController').apiOnly();
+  Route.resource('categoria', 'Compras/CategoriaController').apiOnly();
+  Route.resource('tipotelefone', 'Compras/TipoTelefoneController').apiOnly();
   Route.resource(
-    'tipoempresa.empresa',
-    'Compras/TipoEmpresaController'
-  ).apiOnly();
-  Route.resource('categoria.produto', 'Compras/CategoriaController').apiOnly();
-  Route.resource(
-    'tipotelefone.empresa',
-    'Compras/TipoTelefoneController'
-  ).apiOnly();
-  Route.resource(
-    'telefoneempresa.empresa',
-    'TelefoneEmpresaController'
+    'empresa.telefoneempresa',
+    'Compras/TelefoneEmpresaController'
   ).apiOnly();
   Route.resource('empresa', 'Compras/EmpresaController').apiOnly();
-  Route.resource('categoria.produto', 'Compras/CategoriaController').apiOnly();
   Route.resource(
-    'emailempresa.empresa',
+    'empresa.emailempresa',
     'Compras/EmailEmpresaController'
   ).apiOnly();
   Route.resource(
-    'telefonefavorecido.tipotelefone',
-    'TelefoneFavorecidoController'
+    'fornecedor.telefonefavorecido',
+    'Compras/TelefoneFavorecidoController'
   ).apiOnly();
   Route.resource('fornecedor', 'Compras/FornecedorController').apiOnly();
   Route.resource(
-    'tipofornecedor.fornecedor',
+    'tipofornecedor',
     'Compras/TipoFornecedorController'
   ).apiOnly();
   Route.resource(
-    'emailfornecedor.fornecedor',
+    'fornecedor.emailfornecedor',
     'Compras/EmailFornecedorController'
   ).apiOnly();
   Route.resource(
-    'enderecofornecedor.fornecedor',
+    'fornecedor.enderecofornecedor',
     'Compras/EnderecoFornecedorController'
   ).apiOnly();
+  Route.resource('fornecimento', 'Compras/FornecimentoController').apiOnly();
   Route.resource(
-    'fornecimento.fornecedor',
-    'Compras/FornecimentoController'
-  ).apiOnly();
-  Route.resource(
-    'orcamento.fornecedor',
+    'fornecedor.orcamento',
     'Compras/OrcamentoController'
   ).apiOnly();
-  Route.resource(
-    'unidademedida.produto',
-    'Compras/UnidadeMedidaController'
-  ).apiOnly();
-  Route.resource('marca.produto', 'Compras/MarcaController').apiOnly();
+  Route.resource('unidademedida', 'Compras/UnidadeMedidaController').apiOnly();
+  Route.resource('marca', 'Compras/MarcaController').apiOnly();
   Route.resource('produto', 'Compras/ProdutoController').apiOnly();
   Route.resource('requisicao', 'Compras/RequisicaoController').apiOnly();
+  Route.resource('departamento', 'Compras/DepartamentoController').apiOnly();
   Route.resource(
-    'departamento.requisicao',
-    'Compras/DepartamentoController'
-  ).apiOnly();
-  Route.resource(
-    'historicorequisicao.requisicao',
+    'requisicao.historicorequisicao',
     'Compras/HistoricoRequisicaoController'
   ).apiOnly();
   Route.resource(
-    'itemrequisicao.requisicao',
+    'requisicao.itemrequisicao',
     'Compras/ItemRequisicaoController'
   ).apiOnly();
   Route.resource(
-    'itemorcamento.orcamento',
+    'orcamento.itemorcamento',
     'Compras/ItemOrcamentoController'
   ).apiOnly();
 }).middleware(['auth']);

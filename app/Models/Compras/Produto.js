@@ -35,11 +35,11 @@ class Produto extends Model {
   }
 
   static get table() {
-    return 'proto_caixaentrada';
+    return 'comp_produto';
   }
 
   static get primaryKey() {
-    return 'idcaixaentrada';
+    return 'idproduto';
   }
 
   static get createdAtColumn() {
