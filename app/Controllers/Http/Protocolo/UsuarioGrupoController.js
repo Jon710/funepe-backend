@@ -3,13 +3,28 @@
 const UsuarioGrupo = use('App/Models/Protocolo/UsuarioGrupo');
 
 class UsuarioGrupoController {
-  async index({ response }) {
-    const usuariosgrupo = await UsuarioGrupo.all();
+  // async index({ response }) {
+  //   const usuariosgrupo = await UsuarioGrupo.all();
+  //   return response.json({
+  //     usuariosgrupo,
+  //   });
+  // }
+  // /grupo/:grupo_id/usuariogrupo
+  async index({ params, response }) {
+    const { grupo_id } = params;
+
+    const usuariosgrupo = await UsuarioGrupo.query()
+      .where('idgrupo', grupo_id)
+      .with('grupo')
+      .with('usuario')
+      .fetch();
+
     return response.json({
       usuariosgrupo,
     });
   }
 
+  // /grupo/:grupo_id/usuariogrupo
   async store({ request, response }) {
     const data = request.all();
     const usuariogrupo = await UsuarioGrupo.create(data);
@@ -19,6 +34,7 @@ class UsuarioGrupoController {
     });
   }
 
+  // /grupo/:grupo_id/usuariogrupo/:id
   async show({ params, response }) {
     const { id } = params;
     const usuariogrupo = await UsuarioGrupo.findOrFail(id);
@@ -28,6 +44,7 @@ class UsuarioGrupoController {
     });
   }
 
+  // /grupo/:grupo_id/usuariogrupo/:id
   async update({ params, request, response }) {
     const { id } = params;
     const usuariogrupo = await UsuarioGrupo.findOrFail(id);
@@ -41,6 +58,7 @@ class UsuarioGrupoController {
     });
   }
 
+  // /grupo/:grupo_id/usuariogrupo/:id
   async destroy({ params, response }) {
     const { id } = params;
     const usuariogrupo = await UsuarioGrupo.findOrFail(id);

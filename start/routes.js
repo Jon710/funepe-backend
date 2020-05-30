@@ -39,7 +39,10 @@ Route.group(() => {
     'despachopadrao',
     'Protocolo/DespachoPadraoController'
   ).apiOnly();
-  Route.resource('usuariogrupo', 'Protocolo/UsuarioGrupoController').apiOnly();
+  Route.resource(
+    'grupo.usuariogrupo',
+    'Protocolo/UsuarioGrupoController'
+  ).apiOnly();
   Route.resource('prioridade', 'Protocolo/PrioridadeController').apiOnly();
 
   Route.resource('tipoempresa', 'Compras/TipoEmpresaController').apiOnly();
