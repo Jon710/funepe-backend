@@ -11,6 +11,7 @@ class CaixaEntradaController {
       .with('documento.tipoDocumento')
       .with('documento.usuario')
       .with('usuario')
+      .with('destinatario')
       .fetch();
 
     return response.json({

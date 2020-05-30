@@ -4,6 +4,14 @@ class CaixaEntrada extends Model {
   usuario() {
     return this.belongsTo(
       'App/Models/Protocolo/Usuario',
+      'idusuario',
+      'idusuario'
+    );
+  }
+
+  destinatario() {
+    return this.belongsTo(
+      'App/Models/Protocolo/Usuario',
       'iddestinatario',
       'idusuario'
     );
