@@ -25,9 +25,13 @@ class UsuarioGrupoController {
   }
 
   // /grupo/:grupo_id/usuariogrupo
-  async store({ request, response }) {
+  async store({ params, request, response }) {
+    const { grupo_id } = params;
     const data = request.all();
-    const usuariogrupo = await UsuarioGrupo.create(data);
+    const usuariogrupo = await UsuarioGrupo.create({
+      ...data,
+      idgrupo: grupo_id,
+    });
 
     return response.json({
       usuariogrupo,
