@@ -1,10 +1,33 @@
+/* eslint-disable camelcase */
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 const Requisicao = use('App/Models/Compras/Requisicao');
 
 class RequisicaoController {
-  async index({ response }) {
-    const requisicoes = await Requisicao.all();
+  // /usuario/:usuario_id/requisicao
+  async index({ response, params }) {
+    const { usuario_id } = params;
+    console.log('ID: ', usuario_id);
+
+    const requisicoes = await Requisicao.query()
+      .where('idsolicitante', usuario_id)
+      .with('departamento')
+      .with('usuario')
+      .fetch();
+    console.log('requisicoes: ', requisicoes.toJSON());
+    return response.json({
+      requisicoes,
+    });
+  }
+
+  async getReqById({ params, response }) {
+    const { idreq } = params;
+
+    const requisicoes = await Requisicao.query()
+      .where('idrequisicao', idreq)
+      .with('departamento')
+      .with('usuario')
+      .fetch();
 
     return response.json({
       requisicoes,

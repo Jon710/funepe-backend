@@ -4,10 +4,10 @@ const Categoria = use('App/Models/Compras/Categoria');
 
 class CategoriaController {
   async index({ response }) {
-    const categoria = await Categoria.all();
+    const categorias = await Categoria.all();
 
     return response.json({
-      categoria,
+      categorias,
     });
   }
 

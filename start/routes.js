@@ -45,6 +45,7 @@ Route.group(() => {
   ).apiOnly();
   Route.resource('prioridade', 'Protocolo/PrioridadeController').apiOnly();
 
+  // COMPRAS
   Route.resource('tipoempresa', 'Compras/TipoEmpresaController').apiOnly();
   Route.resource('categoria', 'Compras/CategoriaController').apiOnly();
   Route.resource('tipotelefone', 'Compras/TipoTelefoneController').apiOnly();
@@ -82,7 +83,23 @@ Route.group(() => {
   Route.resource('unidademedida', 'Compras/UnidadeMedidaController').apiOnly();
   Route.resource('marca', 'Compras/MarcaController').apiOnly();
   Route.resource('produto', 'Compras/ProdutoController').apiOnly();
-  Route.resource('requisicao', 'Compras/RequisicaoController').apiOnly();
+  // Route.resource('requisicao', 'Compras/RequisicaoController').apiOnly();
+  Route.resource(
+    'usuario.requisicao',
+    'Compras/RequisicaoController'
+  ).apiOnly();
+
+  Route.get('requisicao/:idreq', 'Protocolo/RequisicaoController.getReqById');
+  Route.get('requisicao/:dtreq', 'Protocolo/RequisicaoController.getReqByDate');
+  Route.get(
+    'requisicao/:periodoreq',
+    'Protocolo/RequisicaoController.getReqByPeriodo'
+  );
+
+  Route.resource(
+    'requisicao.orcamento',
+    'Compras/RequisicaoController'
+  ).apiOnly();
   Route.resource('departamento', 'Compras/DepartamentoController').apiOnly();
   Route.resource(
     'requisicao.historicorequisicao',

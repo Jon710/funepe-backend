@@ -26,6 +26,14 @@ class Requisicao extends Model {
     );
   }
 
+  usuario() {
+    return this.belongsTo(
+      'App/Models/Protocolo/Usuario',
+      'idsolicitante',
+      'idusuario'
+    );
+  }
+
   static get table() {
     return 'comp_requisicao';
   }
