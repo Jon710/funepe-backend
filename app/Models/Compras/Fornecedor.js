@@ -6,7 +6,7 @@ class Fornecedor extends Model {
     return this.hasMany('App/Models/Compras/TelefoneFavorecido');
   }
 
-  tipofornecedor() {
+  tipofornece() {
     return this.belongsTo(
       'App/Models/Compras/TipoFornecedor',
       'idtipofornecedor',

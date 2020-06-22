@@ -4,7 +4,7 @@ const Fornecedor = use('App/Models/Compras/Fornecedor');
 
 class FornecedorController {
   async index({ response }) {
-    const fornecedores = await Fornecedor.all();
+    const fornecedores = await Fornecedor.query().with('tipofornece').fetch();
 
     return response.json({
       fornecedores,
@@ -12,19 +12,26 @@ class FornecedorController {
   }
 
   async store({ request, response }) {
-    const data = request.all();
+    try {
+      const data = request.except('idfornecedor');
 
-    const fornecedor = await Fornecedor.create(data);
+      const fornecedor = await Fornecedor.create(data);
 
-    return response.json({
-      fornecedor,
-    });
+      return response.json({
+        fornecedor,
+      });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   async show({ params, response }) {
     const { id } = params;
 
-    const fornecedor = await Fornecedor.findOrFail(id);
+    const fornecedor = await Fornecedor.query()
+      .where('idfornecedor', id)
+      .with('tipofornece')
+      .fetch();
 
     return response.json({
       fornecedor,

@@ -12,7 +12,7 @@ class UnidadeMedidaController {
   }
 
   async store({ request, response }) {
-    const data = request.all();
+    const data = request.only('descricao');
 
     const unidademedida = await UnidadeMedida.create(data);
 

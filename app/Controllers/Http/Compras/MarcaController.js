@@ -12,7 +12,7 @@ class MarcaController {
   }
 
   async store({ request, response }) {
-    const data = request.all();
+    const data = request.only('descricao');
 
     const marca = await Marca.create(data);
 

@@ -1,0 +1,3 @@
+Pra controllers, geralmente se faz teste de integração.
+NOTA: tirei APP_URL do .env
+APP_URL=http://${HOST}:${PORT}

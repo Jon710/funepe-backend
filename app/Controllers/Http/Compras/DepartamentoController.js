@@ -1,6 +1,7 @@
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 const Departamento = use('App/Models/Compras/Departamento');
+const ViolatesFkException = use('App/Exceptions/ViolatesFkException');
 
 class DepartamentoController {
   async index({ response }) {
@@ -12,7 +13,7 @@ class DepartamentoController {
   }
 
   async store({ request, response }) {
-    const data = request.all();
+    const data = request.only('descricao');
 
     const departamento = await Departamento.create(data);
 
@@ -45,13 +46,17 @@ class DepartamentoController {
   }
 
   async destroy({ params, response }) {
-    const { id } = params;
-    const departamento = await Departamento.findOrFail(id);
+    try {
+      const { id } = params;
+      const departamento = await Departamento.findOrFail(id);
 
-    await departamento.delete();
-    return response.json({
-      message: 'Excluído com Sucesso!',
-    });
+      await departamento.delete();
+      return response.json({
+        message: 'Excluído com Sucesso!',
+      });
+    } catch (err) {
+      throw new ViolatesFkException();
+    }
   }
 }
 

@@ -1,10 +1,11 @@
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
+const ViolatesFkException = use('App/Exceptions/ViolatesFkException');
 const Empresa = use('App/Models/Compras/Empresa');
 
 class EmpresaController {
   async index({ response }) {
-    const empresas = await Empresa.all();
+    const empresas = await Empresa.query().with('tipoempresa').fetch();
 
     return response.json({
       empresas,
@@ -12,19 +13,27 @@ class EmpresaController {
   }
 
   async store({ request, response }) {
-    const data = request.all();
+    try {
+      const data = request.except('idempresa');
 
-    const empresa = await Empresa.create(data);
+      const empresa = await Empresa.create(data);
 
-    return response.json({
-      empresa,
-    });
+      return response.json({
+        empresa,
+      });
+    } catch (error) {
+      console.log(error);
+      throw new ViolatesFkException();
+    }
   }
 
   async show({ params, response }) {
     const { id } = params;
 
-    const empresa = await Empresa.findOrFail(id);
+    const empresa = await Empresa.query()
+      .where('idempresa', id)
+      .with('tipoempresa')
+      .fetch();
 
     return response.json({
       empresa,
