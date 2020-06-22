@@ -11,6 +11,11 @@ Route.get(
   'Protocolo/UsuarioController.getUsuarioById'
 ).middleware(['auth']);
 
+Route.get(
+  'produtos/:descricao',
+  'Compras/ProdutoController.getProdutoByDescricao'
+);
+
 Route.group(() => {
   Route.resource('usuarios', 'Protocolo/UsuarioController')
     .apiOnly()

@@ -1,5 +1,6 @@
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
+const Database = use('Database');
 const Produto = use('App/Models/Compras/Produto');
 
 class ProdutoController {
@@ -8,6 +9,20 @@ class ProdutoController {
 
     return response.json({
       produtos,
+    });
+  }
+
+  async getProdutoByDescricao({ params, response }) {
+    const { descricao } = params;
+
+    const produtos = await Database.raw(
+      'select * from comp_produto where descricao like ?',
+      [`%${descricao}%`]
+    );
+    const listaProdutos = produtos.rows;
+
+    return response.json({
+      listaProdutos,
     });
   }
 

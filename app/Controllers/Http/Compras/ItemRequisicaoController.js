@@ -3,8 +3,17 @@
 const ItemRequisicao = use('App/Models/Compras/ItemRequisicao');
 
 class ItemRequisicaoController {
-  async index({ response }) {
-    const itensrequisicao = await ItemRequisicao.all();
+  // /requisicao/:requisicao_id/itemrequisicao
+  async index({ response, params }) {
+    const { requisicao_id } = params;
+    // console.log('ID: ', requisicao_id);
+
+    const itensrequisicao = await ItemRequisicao.query()
+      .where('idrequisicao', requisicao_id)
+      .with('requisicao')
+      .with('produto')
+      .fetch();
+    // console.log('itensrequisicao: ', itensrequisicao.toJSON());
 
     return response.json({
       itensrequisicao,
@@ -24,10 +33,10 @@ class ItemRequisicaoController {
   async show({ params, response }) {
     const { id } = params;
 
-    const empresa = await Empresa.findOrFail(id);
+    const itemrequisicao = await ItemRequisicao.findOrFail(id);
 
     return response.json({
-      empresa,
+      itemrequisicao,
     });
   }
 

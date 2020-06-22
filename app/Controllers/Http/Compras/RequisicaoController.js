@@ -12,7 +12,8 @@ class RequisicaoController {
     const requisicoes = await Requisicao.query()
       .where('idsolicitante', usuario_id)
       .with('departamento')
-      .with('usuario')
+      .with('solicitante')
+      .with('destinatario')
       .fetch();
     console.log('requisicoes: ', requisicoes.toJSON());
     return response.json({
@@ -26,7 +27,8 @@ class RequisicaoController {
     const requisicoes = await Requisicao.query()
       .where('idrequisicao', idreq)
       .with('departamento')
-      .with('usuario')
+      .with('solicitante')
+      .with('destinatario')
       .fetch();
 
     return response.json({

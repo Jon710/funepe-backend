@@ -26,10 +26,18 @@ class Requisicao extends Model {
     );
   }
 
-  usuario() {
+  solicitante() {
     return this.belongsTo(
       'App/Models/Protocolo/Usuario',
       'idsolicitante',
+      'idusuario'
+    );
+  }
+
+  destinatario() {
+    return this.belongsTo(
+      'App/Models/Protocolo/Usuario',
+      'iddestinatario',
       'idusuario'
     );
   }
