@@ -16,7 +16,7 @@ class ProdutoController {
     const { descricao } = params;
 
     const produtos = await Database.raw(
-      'select * from comp_produto where descricao like ?',
+      'select * from comp_produto where descricao ilike ?',
       [`%${descricao}%`]
     );
     const listaProdutos = produtos.rows;
