@@ -16,10 +16,10 @@ module.exports = {
     debug: Env.get('DB_DEBUG', false),
   },
 
-  sqlite: {
-    client: 'sqlite',
-    connection: {
-      filename: './adonis.sqlite',
-    },
-  },
+  // sqlite: {
+  //   client: 'sqlite',
+  //   connection: {
+  //     filename: './adonis.sqlite',
+  //   },
+  // },
 };
