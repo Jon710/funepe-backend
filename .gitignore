@@ -2,6 +2,9 @@
 node_modules
 .vscode
 
+.nyc_output
+test
+.nycrc
 
 # Adonis directory for storing tmp files
 tmp/uploads/*
