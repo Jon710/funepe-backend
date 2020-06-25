@@ -7,7 +7,7 @@ class RequisicaoController {
   // /usuario/:usuario_id/requisicao
   async index({ response, params }) {
     const { usuario_id } = params;
-    console.log('ID: ', usuario_id);
+    // console.log('ID: ', usuario_id);
 
     const requisicoes = await Requisicao.query()
       .where('idsolicitante', usuario_id)
@@ -15,7 +15,7 @@ class RequisicaoController {
       .with('solicitante')
       .with('destinatario')
       .fetch();
-    console.log('requisicoes: ', requisicoes.toJSON());
+    // console.log('requisicoes: ', requisicoes.toJSON());
     return response.json({
       requisicoes,
     });
