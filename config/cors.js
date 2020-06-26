@@ -46,7 +46,7 @@ module.exports = {
   | Function - Receives the current header and should return one of the above values.
   |
   */
-  headers: ['*'],
+  headers: ['*', 'Authorization'],
 
   /*
   |--------------------------------------------------------------------------
