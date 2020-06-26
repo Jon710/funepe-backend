@@ -1,3 +1,5 @@
+const Env = use('Env');
+
 module.exports = {
   /*
   | Origin
@@ -10,13 +12,18 @@ module.exports = {
   | String: * - A wildcard to allow current request origin
   | Function - Receives the current origin and should return one of the above values.
   */
-  // origin: true,
-  origin: [
-    'https://funepe-frontend.herokuapp.com',
-    'http://localhost:3000/',
-    'https://funepe-backend.herokuapp.com',
-    'https://funepe-backend.herokuapp.com/sessions',
-  ],
+  origin(currentOrigin) {
+    if (Env.get('NODE_ENV​') === 'production') {
+      return currentOrigin === 'https://funepe-frontend.herokuapp.com';
+    }
+    return true;
+  },
+  // origin: [
+  //   'https://funepe-frontend.herokuapp.com',
+  //   'http://localhost:3000/',
+  //   'https://funepe-backend.herokuapp.com',
+  //   'https://funepe-backend.herokuapp.com/sessions',
+  // ],
 
   /*
   | Methods
