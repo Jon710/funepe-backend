@@ -14,8 +14,8 @@ module.exports = {
   | Function - Receives the current origin and should return one of the above values.
   |
   */
-  // origin: true,
-  origin: ['https://funepe-frontend.herokuapp.com'],
+  origin: true,
+  // origin: ['https://funepe-frontend.herokuapp.com', 'http://localhost:3000/'],
 
   /*
   |--------------------------------------------------------------------------
@@ -46,7 +46,7 @@ module.exports = {
   | Function - Receives the current header and should return one of the above values.
   |
   */
-  headers: ['https://funepe-frontend.herokuapp.com'],
+  headers: true,
 
   /*
   |--------------------------------------------------------------------------
@@ -61,7 +61,7 @@ module.exports = {
   | Array - An array of allowed headers
   |
   */
-  exposeHeaders: false,
+  exposeHeaders: true,
 
   /*
   |--------------------------------------------------------------------------
@@ -72,7 +72,7 @@ module.exports = {
   | boolean.
   |
   */
-  credentials: false,
+  credentials: true,
 
   /*
   |--------------------------------------------------------------------------
