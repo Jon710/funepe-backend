@@ -14,11 +14,11 @@ module.exports = {
   | Function - Receives the current origin and should return one of the above values.
   |
   */
-  origin: true,
-  // origin: [
-  //   'https://funepe-frontend.herokuapp.com',
-  //   'dbfunepeinstance.c2jzriahor3a.sa-east-1.rds.amazonaws.com',
-  // ],
+  // origin: true,
+  origin: [
+    'https://funepe-frontend.herokuapp.com',
+    'dbfunepeinstance.c2jzriahor3a.sa-east-1.rds.amazonaws.com',
+  ],
 
   /*
   |--------------------------------------------------------------------------
