@@ -38,13 +38,17 @@ module.exports = {
   | String: * - A wildcard to allow current request headers
   | Function - Receives the current header and should return one of the above values.
   */
-  headers: ['Authorization', 'Accept'],
+  headers: [
+    'Authorization',
+    'Accept',
+    'Access-Control-Allow-Headers',
+    'X-Requested-With',
+  ],
 
   /*
   | Expose Headers
   | A list of headers to be exposed via `Access-Control-Expose-Headers`
   | header. The value can be one of the following.
-  |
   | Boolean: false - Disallow all
   | String: Comma separated list of allowed headers
   | Array - An array of allowed headers
