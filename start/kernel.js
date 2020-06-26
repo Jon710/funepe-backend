@@ -47,9 +47,8 @@ const namedMiddleware = {
 | control over request lifecycle.
 |
 */
-const serverMiddleware = ['Adonis/Middleware/Static'];
+const serverMiddleware = ['Adonis/Middleware/Static', 'Adonis/Middleware/Cors'];
 
-Server.use(['Adonis/Middleware/Cors'])
-  .registerGlobal(globalMiddleware)
+Server.registerGlobal(globalMiddleware)
   .registerNamed(namedMiddleware)
   .use(serverMiddleware);

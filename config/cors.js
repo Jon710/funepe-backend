@@ -14,8 +14,7 @@ module.exports = {
   | Function - Receives the current origin and should return one of the above values.
   |
   */
-  // origin: true,
-  origin: '*',
+  origin: true,
 
   /*
   |--------------------------------------------------------------------------
