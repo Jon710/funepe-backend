@@ -14,7 +14,7 @@ module.exports = {
   | Function - Receives the current origin and should return one of the above values.
   |
   */
-  origin: '*',
+  origin: true,
   // origin: ['https://funepe-frontend.herokuapp.com', 'http://localhost:3000/'],
 
   /*
@@ -46,8 +46,8 @@ module.exports = {
   | Function - Receives the current header and should return one of the above values.
   |
   */
-  headers: ['Authorization', 'Access-Control-Allow-Headers: Authorization'],
-
+  // headers: ['Authorization', 'Access-Control-Allow-Headers: Authorization'],
+  headers: true,
   /*
   |--------------------------------------------------------------------------
   | Expose Headers
@@ -84,3 +84,4 @@ module.exports = {
   */
   maxAge: 90,
 };
+// dbfunepeinstance.c2jzriahor3a.sa-east-1.rds.amazonaws.com
