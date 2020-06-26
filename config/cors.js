@@ -15,10 +15,7 @@ module.exports = {
   |
   */
   // origin: true,
-  origin: [
-    'https://funepe-frontend.herokuapp.com/sessions',
-    'http://localhost:3000/',
-  ],
+  origin: ['https://funepe-frontend.herokuapp.com', 'http://localhost:3000/'],
 
   /*
   |--------------------------------------------------------------------------
@@ -50,7 +47,7 @@ module.exports = {
   |
   */
   // headers: ['Authorization', 'Access-Control-Allow-Headers: Authorization'],
-  headers: true,
+  headers: ['https://funepe-frontend.herokuapp.com'],
   /*
   |--------------------------------------------------------------------------
   | Expose Headers
@@ -64,7 +61,7 @@ module.exports = {
   | Array - An array of allowed headers
   |
   */
-  exposeHeaders: false,
+  exposeHeaders: ['https://funepe-frontend.herokuapp.com', 'Authorization'],
 
   /*
   |--------------------------------------------------------------------------
@@ -75,7 +72,7 @@ module.exports = {
   | boolean.
   |
   */
-  credentials: false,
+  credentials: true,
 
   /*
   |--------------------------------------------------------------------------
