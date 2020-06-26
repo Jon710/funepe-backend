@@ -14,8 +14,11 @@ module.exports = {
   | Function - Receives the current origin and should return one of the above values.
   |
   */
-  origin: true,
-  // origin: ['https://funepe-frontend.herokuapp.com', 'http://localhost:3000/'],
+  // origin: true,
+  origin: [
+    'https://funepe-frontend.herokuapp.com/sessions',
+    'http://localhost:3000/',
+  ],
 
   /*
   |--------------------------------------------------------------------------
