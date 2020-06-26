@@ -61,7 +61,7 @@ module.exports = {
   | Array - An array of allowed headers
   |
   */
-  exposeHeaders: true,
+  exposeHeaders: false,
 
   /*
   |--------------------------------------------------------------------------
@@ -72,7 +72,7 @@ module.exports = {
   | boolean.
   |
   */
-  credentials: true,
+  credentials: false,
 
   /*
   |--------------------------------------------------------------------------
