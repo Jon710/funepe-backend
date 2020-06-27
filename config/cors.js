@@ -10,7 +10,7 @@ module.exports = {
   | String: * - A wildcard to allow current request origin
   | Function - Receives the current origin and should return one of the above values.
   */
-  origin: ['https://funepe-frontend.herokuapp.com'],
+  origin: 'https://funepe-frontend.herokuapp.com',
 
   /*
   | Methods
@@ -32,12 +32,7 @@ module.exports = {
   | String: * - A wildcard to allow current request headers
   | Function - Receives the current header and should return one of the above values.
   */
-  headers: [
-    'Origins',
-    'Accept',
-    'Content-Type',
-    'Access-Control-Allow-Headers',
-  ],
+  headers: true,
 
   /*
   | Expose Headers
