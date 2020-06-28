@@ -46,7 +46,9 @@ module.exports = {
   | Array - An array of allowed headers
   |
   */
-  exposeHeaders: false,
+  exposeHeaders: [
+    'Origin, Accept, X-Requested-With, Content-Type, XMLHttpRequest, Authorization',
+  ],
 
   /*
   | Credentials
