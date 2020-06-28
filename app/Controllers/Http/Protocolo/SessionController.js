@@ -11,10 +11,6 @@ class SessionController {
         return response.status(401).json({ error: 'Senha incorreta.' });
       }
       const { token } = await auth.attempt(username, senha);
-      response.setHeader(
-        'Access-Control-Allow-Origin',
-        'https://funepe-frontend.herokuapp.com'
-      );
 
       return response.json({
         user,
