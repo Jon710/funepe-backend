@@ -35,7 +35,7 @@ module.exports = {
   | String: * - A wildcard to allow current request headers
   | Function - Receives the current header and should return one of the above values.
   */
-  headers: true,
+  headers: [('X-Requested-With', 'XMLHttpRequest')],
 
   /*
   | Expose Headers
