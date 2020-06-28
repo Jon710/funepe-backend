@@ -10,7 +10,7 @@ module.exports = {
   | String: * - A wildcard to allow current request origin
   | Function - Receives the current origin and should return one of the above values.
   */
-  origin: 'https://funepe-frontend.herokuapp.com',
+  origin: true,
 
   /*
   | Methods
