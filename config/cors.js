@@ -33,7 +33,7 @@ module.exports = {
   | Function - Receives the current header and should return one of the above values.
   */
   headers: [
-    'Access-Control-Allow-Headers, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, XMLHttpRequest',
+    'Access-Control-Allow-Headers, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, XMLHttpRequest, Authorization',
   ],
   // ('X-Requested-With', 'XMLHttpRequest'),
   // ('Content-Type', 'application/x-www-form-urlencoded'),
