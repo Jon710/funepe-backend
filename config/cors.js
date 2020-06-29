@@ -10,7 +10,7 @@ module.exports = {
   | String: * - A wildcard to allow current request origin
   | Function - Receives the current origin and should return one of the above values.
   */
-  origin: 'https://funepe-frontend.herokuapp.com',
+  origin: true,
 
   /*
   | Methods
@@ -32,16 +32,8 @@ module.exports = {
   | String: * - A wildcard to allow current request headers
   | Function - Receives the current header and should return one of the above values.
   */
-  headers: [
-    'Origin',
-    'Accept',
-    'X-Requested-With',
-    'Content-Type',
-    'XMLHttpRequest',
-    'Authorization',
-  ],
-  // ('X-Requested-With', 'XMLHttpRequest'),
-  // ('Content-Type', 'application/x-www-form-urlencoded'),
+  headers: true,
+
   /*
   | Expose Headers
   | A list of headers to be exposed via `Access-Control-Expose-Headers`
@@ -51,14 +43,7 @@ module.exports = {
   | Array - An array of allowed headers
   |
   */
-  exposeHeaders: [
-    'Origin',
-    'Accept',
-    'X-Requested-With',
-    'Content-Type',
-    'XMLHttpRequest',
-    'Authorization',
-  ],
+  exposeHeaders: false,
 
   /*
   | Credentials
