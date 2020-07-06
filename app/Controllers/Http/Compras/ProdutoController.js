@@ -5,7 +5,11 @@ const Produto = use('App/Models/Compras/Produto');
 
 class ProdutoController {
   async index({ response }) {
-    const produtos = await Produto.all();
+    const produtos = await Produto.query()
+      .with('unidademedida')
+      .with('marca')
+      .with('categoria')
+      .fetch();
 
     return response.json({
       produtos,
