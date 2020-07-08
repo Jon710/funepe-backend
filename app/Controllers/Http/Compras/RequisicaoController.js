@@ -2,12 +2,12 @@
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 const Requisicao = use('App/Models/Compras/Requisicao');
+const ViolatesFkException = use('App/Exceptions/ViolatesFkException');
 
 class RequisicaoController {
   // /usuario/:usuario_id/requisicao
   async index({ response, params }) {
     const { usuario_id } = params;
-    // console.log('ID: ', usuario_id);
 
     const requisicoes = await Requisicao.query()
       .where('idsolicitante', usuario_id)
@@ -15,7 +15,7 @@ class RequisicaoController {
       .with('solicitante')
       .with('destinatario')
       .fetch();
-    // console.log('requisicoes: ', requisicoes.toJSON());
+
     return response.json({
       requisicoes,
     });
@@ -70,13 +70,17 @@ class RequisicaoController {
   }
 
   async destroy({ params, response }) {
-    const { id } = params;
-    const requisicao = await Requisicao.findOrFail(id);
+    try {
+      const { id } = params;
+      const requisicao = await Requisicao.findOrFail(id);
 
-    await requisicao.delete();
-    return response.json({
-      message: 'Excluído com Sucesso!',
-    });
+      await requisicao.delete();
+      return response.json({
+        message: 'Excluído com Sucesso!',
+      });
+    } catch (err) {
+      throw new ViolatesFkException();
+    }
   }
 }
 
