@@ -3,8 +3,14 @@
 const HistoricoRequisicao = use('App/Models/Compras/HistoricoRequisicao');
 
 class HistoricoRequisicaoController {
-  async index({ response }) {
-    const historicosrequisicao = await HistoricoRequisicao.all();
+  async index({ response, params }) {
+    // eslint-disable-next-line camelcase
+    const { requisicao_id } = params;
+
+    const historicosrequisicao = await HistoricoRequisicao.query()
+      .where('idrequisicao', requisicao_id)
+      .with('requisicao')
+      .fetch();
 
     return response.json({
       historicosrequisicao,
