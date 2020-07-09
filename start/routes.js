@@ -88,17 +88,16 @@ Route.group(() => {
   Route.resource('unidademedida', 'Compras/UnidadeMedidaController').apiOnly();
   Route.resource('marca', 'Compras/MarcaController').apiOnly();
   Route.resource('produto', 'Compras/ProdutoController').apiOnly();
-  // Route.resource('requisicao', 'Compras/RequisicaoController').apiOnly();
   Route.resource(
     'usuario.requisicao',
     'Compras/RequisicaoController'
   ).apiOnly();
 
-  Route.get('requisicao/:idreq', 'Protocolo/RequisicaoController.getReqById');
-  Route.get('requisicao/:dtreq', 'Protocolo/RequisicaoController.getReqByDate');
+  Route.get('requisicao/:idreq', 'Compras/RequisicaoController.getReqById');
+  Route.get('requisicao/:dtreq', 'Compras/RequisicaoController.getReqByDate');
   Route.get(
     'requisicao/:periodoreq',
-    'Protocolo/RequisicaoController.getReqByPeriodo'
+    'Compras/RequisicaoController.getReqByPeriodo'
   );
 
   Route.resource(

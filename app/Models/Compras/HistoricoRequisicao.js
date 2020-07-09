@@ -10,6 +10,22 @@ class HistoricoRequisicao extends Model {
     );
   }
 
+  despachante() {
+    return this.belongsTo(
+      'App/Models/Protocolo/Usuario',
+      'iddespachante',
+      'idusuario'
+    );
+  }
+
+  destinatario() {
+    return this.belongsTo(
+      'App/Models/Protocolo/Usuario',
+      'iddestinatario',
+      'idusuario'
+    );
+  }
+
   static get table() {
     return 'comp_historicorequisicao';
   }

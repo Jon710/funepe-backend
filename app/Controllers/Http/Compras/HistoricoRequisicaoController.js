@@ -10,6 +10,8 @@ class HistoricoRequisicaoController {
     const historicosrequisicao = await HistoricoRequisicao.query()
       .where('idrequisicao', requisicao_id)
       .with('requisicao')
+      .with('despachante')
+      .with('destinatario')
       .fetch();
 
     return response.json({
