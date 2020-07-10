@@ -10,7 +10,7 @@ class RequisicaoController {
     const { usuario_id } = params;
 
     const requisicoes = await Requisicao.query()
-      .where('idsolicitante', usuario_id)
+      .where('iddestinatario', usuario_id)
       .with('departamento')
       .with('solicitante')
       .with('destinatario')
