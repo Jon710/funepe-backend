@@ -40,6 +40,10 @@ class Usuario extends Model {
     return this.hasMany('App/Models/Protocolo/Despacho');
   }
 
+  static get connection() {
+    return 'pgauth';
+  }
+
   static get table() {
     return 'arq_usuario';
   }

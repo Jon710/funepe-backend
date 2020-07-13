@@ -16,6 +16,18 @@ module.exports = {
     debug: Env.get('DB_DEBUG', false),
   },
 
+  pgauth: {
+    client: 'pg',
+    connection: {
+      host: Env.get('DB_HOST_AUTH', 'localhost'),
+      port: Env.get('DB_PORT_AUTH', ''),
+      user: Env.get('DB_USER_AUTH', ''),
+      password: Env.get('DB_PASSWORD_AUTH', ''),
+      database: Env.get('DB_DATABASE_AUTH', ''),
+    },
+    debug: Env.get('DB_DEBUG', false),
+  },
+
   // sqlite: {
   //   client: 'sqlite',
   //   connection: {
