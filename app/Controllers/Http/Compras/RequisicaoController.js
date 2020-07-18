@@ -21,6 +21,22 @@ class RequisicaoController {
     });
   }
 
+  // /solicitante/:solicitante_id/requisicao
+  async getMyReq({ response, params }) {
+    const { solicitante_id } = params;
+
+    const myOwnReq = await Requisicao.query()
+      .where('idsolicitante', solicitante_id)
+      .with('departamento')
+      .with('solicitante')
+      .with('destinatario')
+      .fetch();
+
+    return response.json({
+      myOwnReq,
+    });
+  }
+
   async getReqById({ params, response }) {
     const { idreq } = params;
 

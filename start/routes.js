@@ -92,6 +92,10 @@ Route.group(() => {
     'usuario.requisicao',
     'Compras/RequisicaoController'
   ).apiOnly();
+  Route.get(
+    '/solicitante/:solicitante_id/requisicao',
+    'Compras/RequisicaoController.getMyReq'
+  );
 
   Route.get('requisicao/:idreq', 'Compras/RequisicaoController.getReqById');
   Route.get('requisicao/:dtreq', 'Compras/RequisicaoController.getReqByDate');
