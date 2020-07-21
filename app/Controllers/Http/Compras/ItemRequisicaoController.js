@@ -12,6 +12,7 @@ class ItemRequisicaoController {
       .where('idrequisicao', requisicao_id)
       .with('requisicao')
       .with('produto')
+      .with('produto.unidademedida')
       .fetch();
 
     return response.json({

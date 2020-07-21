@@ -43,7 +43,12 @@ class ProdutoController {
   async show({ params, response }) {
     const { id } = params;
 
-    const produto = await Produto.findOrFail(id);
+    const produto = await Produto.query()
+      .where('idproduto', id)
+      .with('unidademedida')
+      .with('marca')
+      .with('categoria')
+      .fetch();
 
     return response.json({
       produto,
