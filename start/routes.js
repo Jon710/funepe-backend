@@ -5,6 +5,7 @@ Route.post('sessions', 'Protocolo/SessionController.store').validator(
   'Session'
 );
 Route.get('anexo/:path', 'Protocolo/ArquivoAnexoController.show');
+Route.get('anexo/:path', 'Compras/ArquivoAnexoController.show');
 
 Route.get(
   'usuarios/:idusuario',
@@ -39,6 +40,10 @@ Route.group(() => {
   Route.resource(
     'documents.arquivoanexo',
     'Protocolo/ArquivoAnexoController'
+  ).apiOnly();
+  Route.resource(
+    'requisicao.arquivoanexo',
+    'Compras/ArquivoAnexoController'
   ).apiOnly();
   Route.resource(
     'despachopadrao',

@@ -16,6 +16,10 @@ class Usuario extends Model {
     return Hash.verify(password, this.senha);
   }
 
+  static get connection() {
+    return 'pgauth';
+  }
+
   tokens() {
     return this.hasMany('App/Models/Protocolo/Token');
   }
@@ -38,10 +42,6 @@ class Usuario extends Model {
 
   despachos() {
     return this.hasMany('App/Models/Protocolo/Despacho');
-  }
-
-  static get connection() {
-    return 'pgauth';
   }
 
   static get table() {

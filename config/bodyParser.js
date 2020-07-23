@@ -125,7 +125,10 @@ module.exports = {
     | is to true. Otherwise everything is processed manually.
     |
     */
-    processManually: ['/documents/:documents_id/arquivoanexo'],
+    processManually: [
+      '/documents/:documents_id/arquivoanexo',
+      '/requisicao/:requisicao_id/arquivoanexo',
+    ],
 
     /*
     |--------------------------------------------------------------------------
