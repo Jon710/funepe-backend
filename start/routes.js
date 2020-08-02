@@ -17,6 +17,11 @@ Route.get(
   'Compras/ProdutoController.getProdutoByDescricao'
 );
 
+Route.get(
+  '/orcamento/:requisicao_id/itensorcamentoreq',
+  'Compras/ItemOrcamentoController.getItensOrcamento'
+).middleware(['auth']);
+
 Route.group(() => {
   Route.resource('usuarios', 'Protocolo/UsuarioController')
     .apiOnly()
@@ -111,7 +116,7 @@ Route.group(() => {
 
   Route.resource(
     'requisicao.orcamento',
-    'Compras/RequisicaoController'
+    'Compras/OrcamentoController'
   ).apiOnly();
   Route.resource('departamento', 'Compras/DepartamentoController').apiOnly();
   Route.resource(

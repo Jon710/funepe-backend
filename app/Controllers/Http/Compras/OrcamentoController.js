@@ -1,10 +1,18 @@
+/* eslint-disable camelcase */
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 const Orcamento = use('App/Models/Compras/Orcamento');
 
 class OrcamentoController {
-  async index({ response }) {
-    const orcamentos = await Orcamento.all();
+  // /requisicao/:requisicao_id/orcamento
+  async index({ response, params }) {
+    const { requisicao_id } = params;
+
+    const orcamentos = await Orcamento.query()
+      .where('idrequisicao', requisicao_id)
+      .with('fornecedor')
+      .with('solicitante')
+      .fetch();
 
     return response.json({
       orcamentos,

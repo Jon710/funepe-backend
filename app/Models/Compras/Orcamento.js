@@ -10,9 +10,17 @@ class Orcamento extends Model {
     );
   }
 
+  solicitante() {
+    return this.belongsTo(
+      'App/Models/Protocolo/Usuario',
+      'idsolicitante',
+      'idusuario'
+    );
+  }
+
   requisicao() {
     return this.belongsTo(
-      'App/Models/Compras/Requisicao',
+      'App/Models/Protocolo/Requisicao',
       'idrequisicao',
       'idrequisicao'
     );
