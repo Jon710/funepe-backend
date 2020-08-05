@@ -31,7 +31,23 @@ class ProdutoController {
   }
 
   async store({ request, response }) {
-    const data = request.all();
+    const data = request.only([
+      'idproduto',
+      'idmarca',
+      'idunidade',
+      'descricao',
+    ]);
+
+    const productExists = await Database.raw(
+      `SELECT descricao FROM public.comp_produto
+    WHERE descricao ilike ?
+    `,
+      [data.descricao]
+    );
+
+    if (productExists) {
+      return response.status(400).json({ error: 'Esse produto já existe!' });
+    }
 
     const produto = await Produto.create(data);
 
