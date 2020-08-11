@@ -34,7 +34,8 @@
     "@adonisjs/vow": "^1.0.17",
     "aws-sdk": "^2.678.0",
     "date-fns": "^2.14.0",
-    "pg": "^8.0.0"
+    "pg": "^8.0.0",
+    "validar-cpf": "^2.1.2"
   },
   "devDependencies": {
     "eslint": "^6.8.0",
