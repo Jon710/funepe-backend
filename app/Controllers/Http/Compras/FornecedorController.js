@@ -50,16 +50,6 @@ class FornecedorController {
       fornecedor,
     });
   }
-
-  async destroy({ params, response }) {
-    const { id } = params;
-    const fornecedor = await Fornecedor.findOrFail(id);
-
-    await fornecedor.delete();
-    return response.json({
-      message: 'Excluído com Sucesso!',
-    });
-  }
 }
 
 module.exports = FornecedorController;

@@ -43,16 +43,6 @@ class TipoFornecedorController {
       tipofornecedor,
     });
   }
-
-  async destroy({ params, response }) {
-    const { id } = params;
-    const tipofornecedor = await TipoFornecedor.findOrFail(id);
-
-    await tipofornecedor.delete();
-    return response.json({
-      message: 'Excluído com Sucesso!',
-    });
-  }
 }
 
 module.exports = TipoFornecedorController;
