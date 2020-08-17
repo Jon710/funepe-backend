@@ -13,7 +13,13 @@ class FornecedorController {
 
   async store({ request, response }) {
     try {
-      const data = request.except('idfornecedor');
+      const data = request.only([
+        'idtipofornecedor',
+        'ativo',
+        'prod_servicos',
+        'tipofornecedor',
+        'idfornecedor',
+      ]);
 
       const fornecedor = await Fornecedor.create(data);
 
@@ -21,7 +27,9 @@ class FornecedorController {
         fornecedor,
       });
     } catch (error) {
-      console.log(error);
+      return response
+        .status(400)
+        .json({ error: 'Erro ao cadastrar fornecedor.' });
     }
   }
 
