@@ -13,13 +13,15 @@ class FornecedorController {
 
   async store({ request, response }) {
     try {
-      const data = request.only([
-        'idtipofornecedor',
-        'ativo',
-        'prod_servicos',
-        'tipofornecedor',
-        'idfornecedor',
-      ]);
+      // const data = request.only([
+      //   'idtipofornecedor',
+      //   'ativo',
+      //   'prod_servicos',
+      //   'tipofornecedor',
+      //   'idfornecedor',
+      // ]);
+
+      const data = request.except(['codigoextra']);
 
       const fornecedor = await Fornecedor.create(data);
 
