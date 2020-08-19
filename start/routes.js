@@ -21,6 +21,10 @@ Route.get(
   '/orcamento/:requisicao_id/itensorcamentoreq',
   'Compras/ItemOrcamentoController.getItensOrcamento'
 ).middleware(['auth']);
+Route.get(
+  '/orcamento/:requisicao_id/itensorcamentoreq/:produto_id',
+  'Compras/ItemOrcamentoController.getItensOrcamentoProduto'
+).middleware(['auth']);
 
 Route.group(() => {
   Route.resource('usuarios', 'Protocolo/UsuarioController')
