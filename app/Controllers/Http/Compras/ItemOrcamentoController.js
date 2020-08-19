@@ -20,6 +20,29 @@ class ItemOrcamentoController {
     });
   }
 
+  // /orcamento/:requisicao_id/itensorcamentoreq/:produto_id
+  async getItensOrcamentoProduto({ response, params }) {
+    const { requisicao_id, produto_id } = params;
+
+    const itensOrcamentoReq = await Database.raw(
+      `select i.idproduto, i.idorcamento, i.quantidade, i.valorunitario, p.descricao, f.nomefantasia, i.valortotal
+      from comp_itemorcamento as i, comp_orcamento as o, comp_produto as p, comp_fornecedor as f
+      where (i.idorcamento = o.idorcamento and
+        p.idproduto = i.idproduto and
+        f.idfornecedor = o.idfornecedor and
+        o.idrequisicao = ? and i.idproduto = ?)
+
+      `,
+      [requisicao_id, produto_id]
+    );
+
+    const itensOrcamentoProduto = itensOrcamentoReq.rows;
+
+    return response.json({
+      itensOrcamentoProduto,
+    });
+  }
+
   // /orcamento/:requisicao_id/itensorcamentoreq
   async getItensOrcamento({ response, params }) {
     const { requisicao_id } = params;

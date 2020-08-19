@@ -40,10 +40,11 @@ class ItemRequisicaoController {
     });
   }
 
+  // /requisicao/:requisicao_id/itemrequisicao/:id
   async update({ params, request, response }) {
     const { id } = params;
     const itemrequisicao = await ItemRequisicao.findOrFail(id);
-    const data = request.all();
+    const data = request.only(['observacao']);
 
     itemrequisicao.merge(data);
     await itemrequisicao.save();
