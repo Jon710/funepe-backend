@@ -1,16 +1,13 @@
 const Route = use('Route');
 
-Route.post('users', 'Protocolo/UserController.store');
 Route.post('sessions', 'Protocolo/SessionController.store').validator(
   'Session'
 );
 Route.get('anexo/:path', 'Protocolo/ArquivoAnexoController.show');
 Route.get('anexo/:path', 'Compras/ArquivoAnexoController.show');
 
-Route.get(
-  'usuarios/:idusuario',
-  'Protocolo/UsuarioController.getUsuarioById'
-).middleware(['auth']);
+Route.get('usuarios/:idusuario', 'Protocolo/UsuarioController.getUsuarioById');
+Route.post('sendmail', 'Compras/SendMailController.store');
 
 Route.get(
   'produtos/:descricao',
@@ -20,11 +17,11 @@ Route.get(
 Route.get(
   '/orcamento/:requisicao_id/itensorcamentoreq',
   'Compras/ItemOrcamentoController.getItensOrcamento'
-).middleware(['auth']);
+);
 Route.get(
   '/orcamento/:requisicao_id/itensorcamentoreq/:produto_id',
   'Compras/ItemOrcamentoController.getItensOrcamentoProduto'
-).middleware(['auth']);
+);
 
 Route.group(() => {
   Route.resource('usuarios', 'Protocolo/UsuarioController')
@@ -135,4 +132,5 @@ Route.group(() => {
     'orcamento.itemorcamento',
     'Compras/ItemOrcamentoController'
   ).apiOnly();
-}).middleware(['auth']);
+});
+// .middleware(['auth'])
