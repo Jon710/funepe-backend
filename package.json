@@ -33,9 +33,11 @@
     "@adonisjs/mail": "^3.0.10",
     "@adonisjs/validator": "^5.0.6",
     "@adonisjs/vow": "^1.0.17",
+    "@sendgrid/mail": "^7.2.4",
     "aws-sdk": "^2.678.0",
     "date-fns": "^2.14.0",
     "pg": "^8.0.0",
+    "sendgrid": "^5.2.3",
     "validar-cpf": "^2.1.2"
   },
   "devDependencies": {

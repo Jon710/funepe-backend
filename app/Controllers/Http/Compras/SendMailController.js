@@ -1,6 +1,8 @@
 const Env = use('Env');
 const Mail = use('Mail');
 
+const sgMail = require('@sendgrid/mail');
+
 const { randomBytes } = require('crypto');
 const { promisify } = require('util');
 
@@ -10,6 +12,10 @@ const Token = use('App/Models/Protocolo/Token');
 class SendMailController {
   async store({ request, response }) {
     const fornecedor = request.all();
+
+    const sgKey = `${Env.get('SENDGRID_API_KEY')}`;
+
+    sgMail.setApiKey(sgKey);
 
     const fornecedorData = await Fornecedor.findByOrFail(
       'idfornecedor',
@@ -36,16 +42,45 @@ class SendMailController {
       'FRONT_URL'
     )}/mailtoforn?token=${token}`;
 
-    await Mail.send(
-      'emails.orcamentofornecedor',
-      { fornecedor: fornecedorData.nomefantasia, emailToFornecedorUrl },
-      (message) => {
-        message
-          .to(fornecedorData.emailprincipal) // email do fornecedor
-          .from('leonard.predovic3@ethereal.email') // funepe email (sempre o msm)
-          .subject('Orçamento de Preços - FUNEPE');
+    const emailContent = `<h2> Olá ${fornecedorData.nomefantasia},</h2>
+    <p>
+      Favor preencher os preços de cada produto pedido.
+    </p>
+    <p>
+    <a href="${emailToFornecedorUrl}" target="_blank">Colocar preços</a>
+    </p>
+    <p>
+      <strong>FUNEPE</strong>
+    </p>`;
+
+    const msg = {
+      to: 'jonmoraesnl@gmail.com',
+      from: 'jonmoraesnl@gmail.com', // Use the email address or domain you verified above
+      subject: 'FUNEPE - Orçamento de Preços',
+      html: emailContent,
+    };
+
+    sgMail.send(msg).then(
+      () => {},
+      (error) => {
+        console.error(error);
+
+        if (error.response) {
+          console.error(error.response.body);
+        }
       }
     );
+
+    // await Mail.send(
+    //   'emails.orcamentofornecedor',
+    //   { fornecedor: fornecedorData.nomefantasia, emailToFornecedorUrl },
+    //   (message) => {
+    //     message
+    //       .to(fornecedorData.emailprincipal) // email do fornecedor
+    //       .from('leonard.predovic3@ethereal.email') // funepe email (sempre o msm)
+    //       .subject('Orçamento de Preços - FUNEPE');
+    //   }
+    // );
   }
 }
 
