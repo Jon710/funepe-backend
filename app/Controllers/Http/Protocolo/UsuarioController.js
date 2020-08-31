@@ -1,4 +1,5 @@
 const Usuario = use('App/Models/Protocolo/Usuario');
+// const formatarCPF = require('../../../../lib/formatarCPF');
 
 class UsuarioController {
   async index({ response }) {
@@ -9,30 +10,44 @@ class UsuarioController {
     });
   }
 
-  async store({ request, response }) {
-    const data = request.all();
-    const user = await Usuario.create(data);
+  //   async store({ request, response }) {
+  //     const data = request.all();
 
-    return response.json({
-      user,
-    });
-  }
+  //     const cpf = formatarCPF(data.cpfusuario);
 
-  async getUsuarioById({ params, response }) {
-    const { idusuario } = params;
-    const user = await Usuario.find(idusuario);
+  //     const userExists = await Usuario.findBy({
+  //       cpfusuario: cpf,
+  //     });
 
-    return response.json({
-      user,
-    });
-  }
+  //     if (userExists) {
+  //       return response.status(400).json({ error: 'CPF já cadastrado!' });
+  //     }
 
-  async destroy({ params }) {
-    const { id } = params;
-    const users = await Usuario.findOrFail(id);
+  //     const user = await Usuario.create(data);
 
-    await users.delete();
-  }
+  //     return response.json({
+  //       user,
+  //     });
+  //   }
+
+  //   async getUsuarioById({ params, response }) {
+  //     const { idusuario } = params;
+
+  //     const user = await Usuario.find(idusuario);
+
+  //     return response.json({
+  //       user,
+  //     });
+  //   }
+
+  //   async update({ request, response }) {}
+
+  //   async destroy({ params }) {
+  //     const { id } = params;
+  //     const users = await Usuario.findOrFail(id);
+
+  //     await users.delete();
+  //   }
 }
 
 module.exports = UsuarioController;
