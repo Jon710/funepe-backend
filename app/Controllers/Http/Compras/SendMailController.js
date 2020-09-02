@@ -1,5 +1,5 @@
 const Env = use('Env');
-const Mail = use('Mail');
+// const Mail = use('Mail');
 
 const sgMail = require('@sendgrid/mail');
 
@@ -22,12 +22,11 @@ class SendMailController {
       fornecedor.idfornecedor
     );
 
-    // validar se o fornecedor tem email cadastrado no sistema
-    // if (!fornecedor) {
-    //   return response
-    //     .status(400)
-    //     .json({ error: 'Email do Fornecedor não cadastrado no sistema!' });
-    // }
+    if (fornecedorData.emailprincipal === null) {
+      return response
+        .status(400)
+        .json({ error: 'Email do Fornecedor não cadastrado no sistema!' });
+    }
 
     const random = await promisify(randomBytes)(16);
     const token = random.toString('hex');
@@ -54,20 +53,18 @@ class SendMailController {
     </p>`;
 
     const msg = {
-      to: 'jonmoraesnl@gmail.com',
-      from: 'jonmoraesnl@gmail.com', // Use the email address or domain you verified above
+      to: `${fornecedorData.emailprincipal}`,
+      from: 'jonmoraesnl@gmail.com',
       subject: 'FUNEPE - Orçamento de Preços',
       html: emailContent,
     };
 
-    sgMail.send(msg).then(
-      () => {},
+    sgMail.send(msg, true).then(
+      () => {
+        return response.response.statusCode;
+      },
       (error) => {
         console.error(error);
-
-        if (error.response) {
-          console.error(error.response.body);
-        }
       }
     );
 
@@ -76,8 +73,8 @@ class SendMailController {
     //   { fornecedor: fornecedorData.nomefantasia, emailToFornecedorUrl },
     //   (message) => {
     //     message
-    //       .to(fornecedorData.emailprincipal) // email do fornecedor
-    //       .from('leonard.predovic3@ethereal.email') // funepe email (sempre o msm)
+    //       .to(fornecedorData.emailprincipal)
+    //       .from('leonard.predovic3@ethereal.email')
     //       .subject('Orçamento de Preços - FUNEPE');
     //   }
     // );
