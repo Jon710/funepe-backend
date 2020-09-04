@@ -4,6 +4,22 @@ const Database = use('Database');
 const Produto = use('App/Models/Compras/Produto');
 
 class ProdutoController {
+  async index({ response }) {
+    const produtos = await Database.raw(
+      `select p.idproduto, p.descricao as produto, p.idunidade, p.idmarca, m.descricao as marca, u.descricao as unidade
+      from comp_produto p, comp_marca m, comp_unidademedida u
+      where p.idunidade = u.idunidade and p.idmarca = m.idmarca
+      order by p.descricao
+      `
+    );
+
+    const listaProdutos = produtos.rows;
+
+    return response.json({
+      listaProdutos,
+    });
+  }
+
   async getProdutoByDescricao({ params, response }) {
     const { descricao } = params;
 

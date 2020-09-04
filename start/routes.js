@@ -98,7 +98,7 @@ Route.group(() => {
   ).apiOnly();
   Route.resource('unidademedida', 'Compras/UnidadeMedidaController').apiOnly();
   Route.resource('marca', 'Compras/MarcaController').apiOnly();
-  Route.resource('produto', 'Compras/ProdutoController').apiOnly();
+  Route.resource('produtos', 'Compras/ProdutoController').apiOnly();
   Route.resource(
     'usuario.requisicao',
     'Compras/RequisicaoController'
