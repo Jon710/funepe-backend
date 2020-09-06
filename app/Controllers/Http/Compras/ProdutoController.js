@@ -6,7 +6,8 @@ const Produto = use('App/Models/Compras/Produto');
 class ProdutoController {
   async index({ response }) {
     const produtos = await Database.raw(
-      `select p.idproduto, p.descricao as produto, p.idunidade, p.idmarca, m.descricao as marca, u.descricao as unidade
+      `select p.idproduto, p.descricao as produto, p.idunidade, p.idmarca, m.descricao as marca, u.descricao as unidade,
+      p.valorunitario as valor, p.qtdestoque as quantidade
       from comp_produto p, comp_marca m, comp_unidademedida u
       where p.idunidade = u.idunidade and p.idmarca = m.idmarca
       order by p.descricao
@@ -80,16 +81,20 @@ class ProdutoController {
   }
 
   async update({ params, request, response }) {
-    const { id } = params;
-    const produto = await Produto.findOrFail(id);
-    const data = request.all();
+    try {
+      const { id } = params;
+      const produto = await Produto.findOrFail(id);
+      const data = request.only(['valorunitario', 'qtdestoque']);
 
-    produto.merge(data);
-    await produto.save();
+      produto.merge(data);
+      await produto.save();
 
-    return response.json({
-      produto,
-    });
+      return response.json({
+        produto,
+      });
+    } catch (error) {
+      return response.status(400).json({ error: 'Erro ao atualizar produto!' });
+    }
   }
 }
 
