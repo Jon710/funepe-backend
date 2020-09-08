@@ -12,7 +12,9 @@ class ItemOrcamentoController {
     const itensorcamento = await ItemOrcamento.query()
       .where('idorcamento', orcamento_id)
       .with('orcamento')
+      .with('orcamento.fornecedor')
       .with('produto')
+      .orderBy('iditemorcamento', 'asc')
       .fetch();
 
     return response.json({
@@ -88,27 +90,23 @@ class ItemOrcamentoController {
     });
   }
 
+  // /orcamento/:orcamento_id/itemorcamento/:id
   async update({ params, request, response }) {
-    const { id } = params;
-    const itemorcamento = await ItemOrcamento.findOrFail(id);
-    const data = request.all();
+    try {
+      const { id } = params;
+      const itemorcamento = await ItemOrcamento.findOrFail(id);
 
-    itemorcamento.merge(data);
-    await itemorcamento.save();
+      const data = request.all(['valorunitario']);
 
-    return response.json({
-      itemorcamento,
-    });
-  }
+      itemorcamento.merge(data);
+      await itemorcamento.save();
 
-  async destroy({ params, response }) {
-    const { id } = params;
-    const itemorcamento = await ItemOrcamento.findOrFail(id);
-
-    await itemorcamento.delete();
-    return response.json({
-      message: 'Excluído com Sucesso!',
-    });
+      return response.json({
+        itemorcamento,
+      });
+    } catch (error) {
+      return response.status(400).json({ error: 'Erro ao atualizar produto!' });
+    }
   }
 }
 
