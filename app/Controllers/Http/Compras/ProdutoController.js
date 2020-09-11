@@ -25,7 +25,7 @@ class ProdutoController {
     const { descricao } = params;
 
     const produtos = await Database.raw(
-      `select p.idproduto, p.descricao as produto, p.idunidade, p.idmarca, m.descricao as marca, u.descricao as unidade
+      `select *, p.idproduto, p.descricao as produto, p.idunidade, p.idmarca, m.descricao as marca, u.descricao as unidade
       from comp_produto p, comp_marca m, comp_unidademedida u
       where p.idunidade = u.idunidade and p.idmarca = m.idmarca and
       p.descricao ilike ?`,
@@ -84,7 +84,7 @@ class ProdutoController {
     try {
       const { id } = params;
       const produto = await Produto.findOrFail(id);
-      const data = request.only(['valorunitario', 'qtdestoque']);
+      const data = request.all();
 
       produto.merge(data);
       await produto.save();
