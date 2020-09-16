@@ -37,6 +37,24 @@ class RequisicaoController {
     });
   }
 
+  // /requisicao?datareq
+  async getReqByDate({ request, response }) {
+    const { datareq } = request.get();
+
+    const reqs = await Requisicao.query()
+      .where('datareq', datareq)
+      .with('departamento')
+      .with('solicitante')
+      .with('destinatario')
+      .fetch();
+
+    const listaRequisicoes = reqs.rows;
+
+    return response.json({
+      listaRequisicoes,
+    });
+  }
+
   async getReqById({ params, response }) {
     const { idreq } = params;
 

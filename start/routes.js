@@ -109,7 +109,7 @@ Route.group(() => {
   );
 
   Route.get('requisicao/:idreq', 'Compras/RequisicaoController.getReqById');
-  Route.get('requisicao/:dtreq', 'Compras/RequisicaoController.getReqByDate');
+  Route.get('requisicao', 'Compras/RequisicaoController.getReqByDate');
   Route.get(
     'requisicao/:periodoreq',
     'Compras/RequisicaoController.getReqByPeriodo'
