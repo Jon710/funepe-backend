@@ -12,6 +12,8 @@ const providers = [
   '@adonisjs/drive/providers/DriveProvider',
   '@adonisjs/mail/providers/MailProvider',
   '@adonisjs/framework/providers/ViewProvider',
+  '@quantumlabs/adonisjs-cerberus/providers/CerberusProvider',
+
   // path.join(__dirname, '..', 'providers', 'CustomValidationProvider'),
 ];
 
@@ -22,6 +24,7 @@ const providers = [
 const aceProviders = [
   '@adonisjs/lucid/providers/MigrationsProvider',
   '@adonisjs/vow/providers/VowProvider',
+  '@quantumlabs/adonisjs-cerberus/providers/CommandsProvider',
 ];
 
 const aliases = {};
