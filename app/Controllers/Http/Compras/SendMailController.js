@@ -55,19 +55,19 @@ class SendMailController {
 
     const msg = {
       to: `${fornecedorData.emailprincipal}`,
-      from: 'jonmoraesnl@gmail.com',
+      from: 'departamento.compras@funepe.edu.br',
       subject: 'FUNEPE - Orçamento de Preços',
       html: emailContent,
     };
 
-    sgMail.send(msg, true).then(
-      () => {
+    sgMail
+      .send(msg, true)
+      .then(() => {
         return response.response.statusCode;
-      },
-      (error) => {
-        console.error(error);
-      }
-    );
+      })
+      .catch((err) => {
+        console.log(err.response.body);
+      });
 
     // await Mail.send(
     //   'emails.orcamentofornecedor',
