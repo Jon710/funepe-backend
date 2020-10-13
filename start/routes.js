@@ -5,9 +5,18 @@ Route.post('sessions', 'Protocolo/SessionController.store').validator(
 );
 Route.get('anexo/:path', 'Protocolo/ArquivoAnexoController.show');
 Route.get('anexo/:path', 'Compras/ArquivoAnexoController.show');
-
 Route.get('usuarios/:idusuario', 'Protocolo/UsuarioController.getUsuarioById');
+
 Route.post('sendmail', 'Compras/SendMailController.store');
+Route.get(
+  'orcamentotoken/:token',
+  'Compras/SendMailController.getOrcamentoByToken'
+);
+
+Route.put(
+  'orcamento/:iditemorcamento',
+  'Compras/SendMailController.updateMailPrice'
+);
 
 Route.get(
   'produtos/:descricao',
