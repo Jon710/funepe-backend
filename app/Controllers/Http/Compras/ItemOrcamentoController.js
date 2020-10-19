@@ -54,14 +54,12 @@ class ItemOrcamentoController {
       from comp_itemorcamento as i, comp_orcamento as o, comp_produto as p, comp_fornecedor as f
       where (i.idorcamento = o.idorcamento and
         p.idproduto = i.idproduto and
-        i.valorunitario != 0 and
         f.idfornecedor = o.idfornecedor and
-        o.idrequisicao = ?) and i.valorunitario IN
-      (select min(i.valorunitario)
-      from comp_itemorcamento as i, comp_orcamento as o
-      group by i.idproduto
-      order by p.descricao)
-      `,
+        o.idrequisicao = ?) and
+        i.valorunitario in (select min(i.valorunitario)
+      from comp_itemorcamento as i
+      where i.valorunitario > 0
+      group by i.idproduto)`,
       [requisicao_id]
     );
 
