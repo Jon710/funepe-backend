@@ -63,10 +63,16 @@ class SendMailController {
     sgMail
       .send(msg, true)
       .then(() => {
-        return response.response.statusCode;
+        return response.json({
+          message: 'E-mail enviado!',
+        });
       })
       .catch((err) => {
-        console.log(err.response.body);
+        if (err.response.body.errors.length > 0) {
+          return response.status(501).json({
+            message: 'Erro no envio de e-mail.',
+          });
+        }
       });
 
     // await Mail.send(
