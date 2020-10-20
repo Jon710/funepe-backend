@@ -15,7 +15,6 @@ class SendMailController {
     const fornecedor = request.all();
 
     const sgKey = `${Env.get('SENDGRID_API_KEY')}`;
-
     sgMail.setApiKey(sgKey);
 
     const fornecedorData = await Fornecedor.findByOrFail(
@@ -53,16 +52,29 @@ class SendMailController {
       <strong>FUNEPE</strong>
     </p>`;
 
-    const msg = {
-      to: `${fornecedorData.emailprincipal}`,
-      from: 'departamento.compras@funepe.edu.br',
-      subject: 'FUNEPE - Orçamento de Preços',
-      html: emailContent,
-    };
+    const emailSucesso = `<p>
+    E-mail para ${fornecedorData.nomefantasia} enviado com sucesso!
+  </p>`;
+
+    const msg = [
+      {
+        to: `${fornecedorData.emailprincipal}`,
+        from: `${Env.get('EMAIL_FUNEPE')}`,
+        subject: 'FUNEPE - Orçamento de Preços',
+        html: emailContent,
+      },
+      {
+        to: `${Env.get('EMAIL_FUNEPE')}`,
+        from: `${Env.get('EMAIL_FUNEPE')}`,
+        subject: 'FUNEPE - Orçamento de Preços',
+        html: emailSucesso,
+      },
+    ];
 
     sgMail
-      .send(msg, true)
+      .send(msg[0], true)
       .then(() => {
+        sgMail.send(msg[1], true);
         return response.json({
           message: 'E-mail enviado!',
         });
