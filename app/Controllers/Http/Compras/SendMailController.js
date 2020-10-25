@@ -5,6 +5,7 @@ const Fornecedor = use('App/Models/Compras/Fornecedor');
 const Orcamento = use('App/Models/Compras/Orcamento');
 const ItemOrcamento = use('App/Models/Compras/ItemOrcamento');
 const Token = use('App/Models/Protocolo/Token');
+const Notification = use('App/Models/Compras/Notification');
 
 const sgMail = require('@sendgrid/mail');
 const { randomBytes } = require('crypto');
@@ -131,10 +132,25 @@ class SendMailController {
   async updateMailPrice({ params, request, response }) {
     const { iditemorcamento } = params;
     const itemorcamento = await ItemOrcamento.findOrFail(iditemorcamento);
+
     const data = request.all();
 
     itemorcamento.merge(data);
     await itemorcamento.save();
+
+    const newItemOrcamento = await ItemOrcamento.query()
+      .where('iditemorcamento', iditemorcamento)
+      .with('orcamento')
+      .with('orcamento.fornecedor')
+      .fetch();
+
+    const newItemOrcamentoJSON = newItemOrcamento.toJSON();
+
+    Notification.create({
+      idusuario: newItemOrcamentoJSON[0].orcamento.idsolicitante,
+      content: `Você recebeu o orçamento ${newItemOrcamentoJSON[0].idorcamento} do Fornecedor ${newItemOrcamentoJSON[0].orcamento.fornecedor.nomefantasia}!`,
+      read: false,
+    });
 
     return response.json({
       itemorcamento,

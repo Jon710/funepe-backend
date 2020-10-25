@@ -36,6 +36,7 @@ Route.group(() => {
   Route.resource('usuarios', 'Protocolo/UsuarioController')
     .apiOnly()
     .validator(new Map([[['Protocolo/usuarios.store'], ['Usuario']]]));
+  Route.resource('notification', 'Compras/NotificationController').apiOnly();
 
   Route.resource(
     'usuarios.documents',
