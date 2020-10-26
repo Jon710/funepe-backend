@@ -55,6 +55,25 @@ class RequisicaoController {
     });
   }
 
+  // /requisicao?start&end
+  async getReqByPeriod({ request, response }) {
+    const { start, end } = request.get();
+
+    const reqPeriodo = await Requisicao.query()
+      .where('datareq', '>=', start)
+      .where('datareq', '<', end)
+      .with('departamento')
+      .with('solicitante')
+      .with('destinatario')
+      .fetch();
+
+    const requisicoesPorPeriodo = reqPeriodo.rows;
+
+    return response.json({
+      requisicoesPorPeriodo,
+    });
+  }
+
   async getReqById({ params, response }) {
     const { idreq } = params;
 
