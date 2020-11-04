@@ -50,16 +50,19 @@ class ItemOrcamentoController {
     const { requisicao_id } = params;
 
     const itensOrcamentoReq = await Database.raw(
-      `select i.idproduto, i.idorcamento, i.quantidade, i.valorunitario, p.descricao, f.nomefantasia, i.valortotal
-      from comp_itemorcamento as i, comp_orcamento as o, comp_produto as p, comp_fornecedor as f
-      where (i.idorcamento = o.idorcamento and
-        p.idproduto = i.idproduto and
-        f.idfornecedor = o.idfornecedor and
-        o.idrequisicao = ?) and
-        i.valorunitario in (select min(i.valorunitario)
-      from comp_itemorcamento as i
-      where i.valorunitario > 0
-      group by i.idproduto)`,
+      `select i.idproduto,
+    i.idorcamento,
+    i.quantidade,
+    i.valorunitario,
+    p.descricao,
+    f.nomefantasia,
+    i.valortotal
+   FROM comp_itemorcamento i,
+    comp_orcamento o,
+    comp_produto p,
+    comp_fornecedor f
+  WHERE i.idorcamento = o.idorcamento AND p.idproduto = i.idproduto AND f.idfornecedor = o.idfornecedor AND o.idrequisicao = ?
+  ORDER BY i.idproduto`,
       [requisicao_id]
     );
 
