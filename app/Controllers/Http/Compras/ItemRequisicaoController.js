@@ -54,6 +54,7 @@ class ItemRequisicaoController {
     });
   }
 
+  // /requisicao/:requisicao_id/itemrequisicao/:id
   async destroy({ params, response }) {
     const { id } = params;
     const itemrequisicao = await ItemRequisicao.findOrFail(id);
