@@ -30,9 +30,13 @@ class OrcamentoController {
   }
 
   async show({ params, response }) {
-    const { id } = params;
+    const { requisicao_id } = params;
 
-    const orcamento = await Orcamento.findOrFail(id);
+    const orc = await Orcamento.query()
+      .where('idrequisicao', requisicao_id)
+      .fetch();
+
+    const orcamento = orc.rows;
 
     return response.json({
       orcamento,

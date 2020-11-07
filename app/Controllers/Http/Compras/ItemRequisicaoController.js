@@ -2,6 +2,7 @@
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 const ItemRequisicao = use('App/Models/Compras/ItemRequisicao');
+const ItemOrcamento = use('App/Models/Compras/ItemOrcamento');
 
 class ItemRequisicaoController {
   // /requisicao/:requisicao_id/itemrequisicao
@@ -57,6 +58,9 @@ class ItemRequisicaoController {
   // /requisicao/:requisicao_id/itemrequisicao/:id
   async destroy({ params, response }) {
     const { id } = params;
+
+    await ItemOrcamento.query().where('iditemrequisicao', id).delete();
+
     const itemrequisicao = await ItemRequisicao.findOrFail(id);
 
     await itemrequisicao.delete();
