@@ -74,6 +74,25 @@ class RequisicaoController {
     });
   }
 
+  // 'requisicao/finalidade/:finalidade'
+  async getReqByFinalidade({ params, response }) {
+    const { finalidade } = params;
+
+    const req = await Requisicao.query()
+      .where('finalidade', 'like', `%${finalidade}%`)
+      .with('departamento')
+      .with('solicitante')
+      .with('destinatario')
+      .fetch();
+
+    const listaRequisicoes = req.rows;
+
+    return response.json({
+      listaRequisicoes,
+    });
+  }
+
+  // /requisicao/:idreq
   async getReqById({ params, response }) {
     const { idreq } = params;
 
