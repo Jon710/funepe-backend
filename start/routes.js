@@ -126,6 +126,10 @@ Route.group(() => {
     'Compras/RequisicaoController.getReqByFinalidade'
   );
 
+  Route.resource('historico', 'HistoricoController')
+    .except(['update', 'destroy'])
+    .apiOnly();
+
   Route.resource(
     'requisicao.orcamento',
     'Compras/OrcamentoController'
