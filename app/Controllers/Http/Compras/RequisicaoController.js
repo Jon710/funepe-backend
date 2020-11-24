@@ -96,7 +96,7 @@ class RequisicaoController {
   async getReqById({ params, response }) {
     const { idreq } = params;
 
-    const requisicoes = await Requisicao.query()
+    const requisicaoPorID = await Requisicao.query()
       .where('idrequisicao', idreq)
       .with('departamento')
       .with('solicitante')
@@ -104,7 +104,7 @@ class RequisicaoController {
       .fetch();
 
     return response.json({
-      requisicoes,
+      requisicaoPorID,
     });
   }
 
