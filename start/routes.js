@@ -13,6 +13,11 @@ Route.get(
   'Compras/SendMailController.getOrcamentoByToken'
 );
 
+Route.get(
+  'fornecedor/:nomefantasia',
+  'Compras/FornecedorController.getFornecedorByNomeFantasia'
+);
+
 Route.put(
   'orcamento/:iditemorcamento',
   'Compras/SendMailController.updateMailPrice'
@@ -22,6 +27,7 @@ Route.get(
   'produtos/:descricao',
   'Compras/ProdutoController.getProdutoByDescricao'
 );
+Route.get('produtos/id/:idproduto', 'Compras/ProdutoController.getProdutoByID');
 
 Route.get(
   '/orcamento/:requisicao_id/itensorcamentoreq',

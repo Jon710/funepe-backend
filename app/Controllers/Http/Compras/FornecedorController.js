@@ -52,6 +52,22 @@ class FornecedorController {
       fornecedor,
     });
   }
+
+  // fornecedor/:nomefantasia
+  async getFornecedorByNomeFantasia({ params, response }) {
+    const { nomefantasia } = params;
+
+    const forn = await Fornecedor.query()
+      .where('nomefantasia', 'like', `%${nomefantasia}%`)
+      .with('tipofornece')
+      .fetch();
+
+    const fornecedoresPorNome = forn.rows;
+
+    return response.json({
+      fornecedoresPorNome,
+    });
+  }
 }
 
 module.exports = FornecedorController;

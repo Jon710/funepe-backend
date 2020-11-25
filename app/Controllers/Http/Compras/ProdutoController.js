@@ -39,6 +39,25 @@ class ProdutoController {
     });
   }
 
+  // produtos/id/:idproduto
+  async getProdutoByID({ params, response }) {
+    const { idproduto } = params;
+
+    const produto = await Database.raw(
+      `select p.idproduto, p.descricao as produto, p.idunidade, p.idmarca, m.descricao as marca, u.descricao as unidade
+      from comp_produto p, comp_marca m, comp_unidademedida u
+      where p.idunidade = u.idunidade and p.idmarca = m.idmarca and
+      p.idproduto = ?`,
+      [idproduto]
+    );
+
+    const produtoPorID = produto.rows;
+
+    return response.json({
+      produtoPorID,
+    });
+  }
+
   async store({ request, response }) {
     const data = request.only([
       'idproduto',
