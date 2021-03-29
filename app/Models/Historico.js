@@ -1,21 +1,17 @@
 /** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
 const Model = use('Model');
 
-class Token extends Model {
-  fornecedor() {
-    return this.belongsTo(
-      'App/Models/Compras/Fornecedor',
-      'idfornecedor',
-      'idfornecedor'
-    );
+class Historico extends Model {
+  static get connection() {
+    return 'pgauth';
   }
 
   static get table() {
-    return 'comp_tokens';
+    return 'arq_historico';
   }
 
   static get primaryKey() {
-    return 'id';
+    return 'idhistorico';
   }
 
   static get createdAtColumn() {
@@ -27,4 +23,4 @@ class Token extends Model {
   }
 }
 
-module.exports = Token;
+module.exports = Historico;

@@ -30,6 +30,10 @@ class Fornecedor extends Model {
     return this.hasMany('App/Models/Compras/EmailFornecedor');
   }
 
+  tokens() {
+    return this.hasMany('App/Models/Protocolo/Token');
+  }
+
   static get table() {
     return 'comp_fornecedor';
   }

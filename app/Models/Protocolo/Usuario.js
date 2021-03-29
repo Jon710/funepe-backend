@@ -4,6 +4,8 @@ const Hash = use('Hash');
 class Usuario extends Model {
   static boot() {
     super.boot();
+    this.addTrait('@provider:Cerberus/Traits/Role');
+    this.addTrait('@provider:Cerberus/Traits/Permission');
 
     this.addHook('beforeSave', async (userInstance) => {
       if (userInstance.dirty.senha) {

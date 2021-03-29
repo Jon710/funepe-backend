@@ -43,16 +43,6 @@ class MarcaController {
       marca,
     });
   }
-
-  async destroy({ params, response }) {
-    const { id } = params;
-    const marca = await Marca.findOrFail(id);
-
-    await marca.delete();
-    return response.json({
-      message: 'Excluído com Sucesso!',
-    });
-  }
 }
 
 module.exports = MarcaController;

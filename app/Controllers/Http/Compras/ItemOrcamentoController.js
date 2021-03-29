@@ -1,13 +1,75 @@
+/* eslint-disable camelcase */
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 const ItemOrcamento = use('App/Models/Compras/ItemOrcamento');
+const Database = use('Database');
 
 class ItemOrcamentoController {
-  async index({ response }) {
-    const itensorcamento = await ItemOrcamento.all();
+  // /orcamento/:orcamento_id/itemorcamento
+  async index({ response, params }) {
+    const { orcamento_id } = params;
+
+    const itensorcamento = await ItemOrcamento.query()
+      .where('idorcamento', orcamento_id)
+      .with('orcamento')
+      .with('orcamento.fornecedor')
+      .with('produto')
+      .orderBy('iditemorcamento', 'asc')
+      .fetch();
 
     return response.json({
       itensorcamento,
+    });
+  }
+
+  // /orcamento/:requisicao_id/itensorcamentoreq/:produto_id
+  async getItensOrcamentoProduto({ response, params }) {
+    const { requisicao_id, produto_id } = params;
+
+    const itensOrcamentoReq = await Database.raw(
+      `select i.iditemorcamento, i.idproduto, i.idorcamento, i.quantidade, i.valorunitario, p.descricao, f.nomefantasia, i.valortotal
+      from comp_itemorcamento as i, comp_orcamento as o, comp_produto as p, comp_fornecedor as f
+      where (i.idorcamento = o.idorcamento and
+        p.idproduto = i.idproduto and
+        f.idfornecedor = o.idfornecedor and
+        o.idrequisicao = ? and i.idproduto = ?)
+
+      `,
+      [requisicao_id, produto_id]
+    );
+
+    const itensOrcamentoProduto = itensOrcamentoReq.rows;
+
+    return response.json({
+      itensOrcamentoProduto,
+    });
+  }
+
+  // /orcamento/:requisicao_id/itensorcamentoreq
+  async getItensOrcamento({ response, params }) {
+    const { requisicao_id } = params;
+
+    const itensOrcamentoReq = await Database.raw(
+      `select i.idproduto,
+    i.idorcamento,
+    i.quantidade,
+    i.valorunitario,
+    p.descricao,
+    f.nomefantasia,
+    i.valortotal
+   FROM comp_itemorcamento i,
+    comp_orcamento o,
+    comp_produto p,
+    comp_fornecedor f
+  WHERE i.idorcamento = o.idorcamento AND p.idproduto = i.idproduto AND f.idfornecedor = o.idfornecedor AND o.idrequisicao = ?
+  ORDER BY i.idproduto`,
+      [requisicao_id]
+    );
+
+    const itensOrcamento = itensOrcamentoReq.rows;
+
+    return response.json({
+      itensOrcamento,
     });
   }
 
@@ -31,27 +93,23 @@ class ItemOrcamentoController {
     });
   }
 
+  // /orcamento/:orcamento_id/itemorcamento/:id
   async update({ params, request, response }) {
-    const { id } = params;
-    const itemorcamento = await ItemOrcamento.findOrFail(id);
-    const data = request.all();
+    try {
+      const { id } = params;
+      const itemorcamento = await ItemOrcamento.findOrFail(id);
 
-    itemorcamento.merge(data);
-    await itemorcamento.save();
+      const data = request.all(['valorunitario']);
 
-    return response.json({
-      itemorcamento,
-    });
-  }
+      itemorcamento.merge(data);
+      await itemorcamento.save();
 
-  async destroy({ params, response }) {
-    const { id } = params;
-    const itemorcamento = await ItemOrcamento.findOrFail(id);
-
-    await itemorcamento.delete();
-    return response.json({
-      message: 'Excluído com Sucesso!',
-    });
+      return response.json({
+        itemorcamento,
+      });
+    } catch (error) {
+      return response.status(400).json({ error: 'Erro ao atualizar produto!' });
+    }
   }
 }
 

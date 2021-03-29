@@ -13,7 +13,7 @@ class FornecedorController {
 
   async store({ request, response }) {
     try {
-      const data = request.except('idfornecedor');
+      const data = request.except(['codigoextra']);
 
       const fornecedor = await Fornecedor.create(data);
 
@@ -21,7 +21,9 @@ class FornecedorController {
         fornecedor,
       });
     } catch (error) {
-      console.log(error);
+      return response
+        .status(400)
+        .json({ error: 'Erro ao cadastrar fornecedor.' });
     }
   }
 
@@ -51,13 +53,19 @@ class FornecedorController {
     });
   }
 
-  async destroy({ params, response }) {
-    const { id } = params;
-    const fornecedor = await Fornecedor.findOrFail(id);
+  // fornecedor/:nomefantasia
+  async getFornecedorByNomeFantasia({ params, response }) {
+    const { nomefantasia } = params;
 
-    await fornecedor.delete();
+    const forn = await Fornecedor.query()
+      .where('nomefantasia', 'like', `%${nomefantasia}%`)
+      .with('tipofornece')
+      .fetch();
+
+    const fornecedoresPorNome = forn.rows;
+
     return response.json({
-      message: 'Excluído com Sucesso!',
+      fornecedoresPorNome,
     });
   }
 }

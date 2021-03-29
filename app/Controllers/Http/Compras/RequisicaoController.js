@@ -37,10 +37,66 @@ class RequisicaoController {
     });
   }
 
+  // /requisicao?datareq
+  async getReqByDate({ request, response }) {
+    const { datareq } = request.get();
+
+    const reqs = await Requisicao.query()
+      .where('datareq', datareq)
+      .with('departamento')
+      .with('solicitante')
+      .with('destinatario')
+      .fetch();
+
+    const listaRequisicoes = reqs.rows;
+
+    return response.json({
+      listaRequisicoes,
+    });
+  }
+
+  // /requisicao?start&end
+  async getReqByPeriod({ request, response }) {
+    const { start, end } = request.get();
+
+    const reqPeriodo = await Requisicao.query()
+      .where('datareq', '>=', start)
+      .where('datareq', '<', end)
+      .with('departamento')
+      .with('solicitante')
+      .with('destinatario')
+      .fetch();
+
+    const requisicoesPorPeriodo = reqPeriodo.rows;
+
+    return response.json({
+      requisicoesPorPeriodo,
+    });
+  }
+
+  // 'requisicao/finalidade/:finalidade'
+  async getReqByFinalidade({ params, response }) {
+    const { finalidade } = params;
+
+    const req = await Requisicao.query()
+      .where('finalidade', 'like', `%${finalidade}%`)
+      .with('departamento')
+      .with('solicitante')
+      .with('destinatario')
+      .fetch();
+
+    const listaRequisicoes = req.rows;
+
+    return response.json({
+      listaRequisicoes,
+    });
+  }
+
+  // /requisicao/:idreq
   async getReqById({ params, response }) {
     const { idreq } = params;
 
-    const requisicoes = await Requisicao.query()
+    const requisicaoPorID = await Requisicao.query()
       .where('idrequisicao', idreq)
       .with('departamento')
       .with('solicitante')
@@ -48,7 +104,7 @@ class RequisicaoController {
       .fetch();
 
     return response.json({
-      requisicoes,
+      requisicaoPorID,
     });
   }
 

@@ -43,16 +43,6 @@ class UnidadeMedidaController {
       unidademedida,
     });
   }
-
-  async destroy({ params, response }) {
-    const { id } = params;
-    const unidademedida = await UnidadeMedida.findOrFail(id);
-
-    await unidademedida.delete();
-    return response.json({
-      message: 'Excluído com Sucesso!',
-    });
-  }
 }
 
 module.exports = UnidadeMedidaController;
