@@ -151,6 +151,7 @@ class SendMailController {
       content: `Você recebeu o orçamento ${newItemOrcamentoJSON[0].idorcamento} do Fornecedor ${newItemOrcamentoJSON[0].orcamento.fornecedor.nomefantasia}!`,
       read: false,
     });
+    
 
     return response.json({
       itemorcamento,
